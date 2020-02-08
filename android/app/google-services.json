@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1040673971851",
+    "firebase_url": "https://titan-2a457.firebaseio.com",
+    "project_id": "titan-2a457",
+    "storage_bucket": "titan-2a457.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040673971851:android:2bc377ec05910b3d14be8e",
+        "android_client_info": {
+          "package_name": "com.stoerr.omnus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040673971851-n26bg0hj4eg3rs003ecluq2cpleu7e3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDClsWqOaOKVxSc0tp4LHlf_1kyqbDQQ1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040673971851-n26bg0hj4eg3rs003ecluq2cpleu7e3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
