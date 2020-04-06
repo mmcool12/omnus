@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:omnus/Auth/AuthFunctions.dart';
+//import 'package:omnus/Auth/AuthFunctions.dart';
 
 
 
 class CardsScreen extends StatelessWidget {
 
-  final AuthFunctions _auth = AuthFunctions();
+  //final AuthFunctions _auth = AuthFunctions();
 
   
   @override

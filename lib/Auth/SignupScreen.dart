@@ -3,15 +3,12 @@
 // found in the LICENSE file.
 
 
-import 'package:flutter/gestures.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/AuthConstants.dart';
 import 'package:omnus/Auth/AuthLoading.dart';
-import 'package:omnus/Auth/AuthScreen.dart';
 import 'package:omnus/Auth/BabyScreen.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
-import 'package:omnus/Auth/LoginScreen.dart';
-import 'package:omnus/MainScreens/HomeScreen.dart';
 
 
 class SignupScreen extends StatefulWidget {
@@ -44,29 +41,29 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  Future<void> attemptSignUp(email, password, first, last, number, zip, context) async {
-    _formKey.currentState.save();
-    if(_formKey.currentState.validate()){
-      setState(() => loading = true);
-      if(await AuthFunctions().cognitoSignIn(email, password, first, last, number, zip)){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-      } else {
-        _formKey.currentState.validate();
-      }
-    }
-  }
+  // Future<void> attemptSignUp(email, password, first, last, number, zip, context) async {
+  //   _formKey.currentState.save();
+  //   if(_formKey.currentState.validate()){
+  //     setState(() => loading = true);
+  //     if(await AuthFunctions().cognitoSignIn(email, password, first, last, number, zip)){
+  //       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+  //     } else {
+  //       _formKey.currentState.validate();
+  //     }
+  //   }
+  // }
 
   fireSignup () async {
     _formKey.currentState.save();
     if(_formKey.currentState.validate()){
       setState(() => loading = true);
-      dynamic result = await _auth.signUp(_email.trim(), _password.trim());
-      if(result == null){
+      FirebaseUser user = await AuthFunctions().signUp(_email.trim(), _password.trim());
+      if(user == null){
         setState(() => loading = false);
         print('error');
       } else {
         setState(() => loading = false);
-        Navigator.pushNamedAndRemoveUntil(context, '/Plaid/Onboard', ModalRoute.withName('/') ,arguments: {'email': _email});
+        Navigator.pushNamedAndRemoveUntil(context, '/Plaid/Onboard', ModalRoute.withName('/') ,arguments: {'id' : user.uid,'email': _email});
       }
     }
   }

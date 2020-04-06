@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Auth/AuthScreen.dart';
@@ -12,7 +13,6 @@ import 'package:omnus/MainScreens/HomeScreen.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:omnus/Plaid/BankScreen.dart';
 import 'package:omnus/Plaid/OnboardScreen.dart';
-import 'package:omnus/Plaid/LoadingScreen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -20,9 +20,13 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthFunctions().user,
-      child: MaterialApp(
+    return MultiProvider(
+      providers: [
+        StreamProvider<FirebaseUser>.value(
+          value: FirebaseAuth.instance.onAuthStateChanged
+        ),
+      ],
+          child: MaterialApp(
         home: AuthScreen(),
         routes: {
           '/Auth': (context) => BabyScreen(),

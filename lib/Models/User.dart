@@ -1,10 +1,18 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:omnus/Models/Account.dart';
 
-class User{
+class User with ChangeNotifier{
 
-  final String uid;
+  String id;
+  String firstName;
+  String lastName;
+  String name;
+  String zipcode;
+  String chefId;
+
+  String uid;
   int numAccounts;
   bool verified;
   String publicToken;
@@ -12,7 +20,6 @@ class User{
   Map<String, Account> accounts;
   
 
-  final CollectionReference userCollection = Firestore.instance.collection('users');
 
   User({this.uid}){
     this.numAccounts = 0;
@@ -22,20 +29,22 @@ class User{
     this.accounts = {};
   }
 
-  Account addAccount(Map<String, dynamic> account){
-    Account newAccount = Account.fromMap(account);
-    accounts[newAccount.id] =newAccount;
-    return newAccount;
+  User.fromMap(String id, Map<String, dynamic> map){
+    this.id = id;
+    this.firstName = map['firstName'];
+    this.lastName = map['lastName'];
+    this.name = this.firstName + ' ' + this.lastName;
+    this.zipcode = map['zipcode'];
+    this.chefId = map['chefId'];
   }
 
-  Future createFirebaseUser(String email, String firstName, String lastName, String phone, String zip) async {
-    return await userCollection.document(this.uid).setData({
-      'email': email,
-      'firstName': firstName,
-      'lastName': lastName,
-      'phone': phone,
-      'zip': zip,
-    });
+  factory User.fromFirestore(DocumentSnapshot snapshot){
+    return User.fromMap(snapshot.documentID,snapshot.data);
   }
-}
+
+  void addAccount(Account account){
+    this.accounts[account.id] = account;
+  }
+
+  }
 

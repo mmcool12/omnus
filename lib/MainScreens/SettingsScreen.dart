@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:omnus/Auth/AuthFunctions.dart';
-import 'package:omnus/Plaid/PlaidServiceFunctions.dart';
-import 'package:page_view_indicators/circle_page_indicator.dart';
+//import 'package:omnus/Auth/AuthFunctions.dart';
 
 
 class SettingsScreen extends StatelessWidget {
 
-  final AuthFunctions _auth = AuthFunctions();
+  //final AuthFunctions _auth = AuthFunctions();
 
   
   @override

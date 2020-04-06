@@ -2,11 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:async';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:omnus/MainScreens/HomeScreen.dart';
+import 'package:omnus/Database/DataFunctions.dart';
+import 'package:omnus/Models/Account.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:omnus/Plaid/PlaidServiceFunctions.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +17,7 @@ class BankScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    MediaQueryData queryData = MediaQuery.of(context);
-    WebViewController _controller;
+    //MediaQueryData queryData = MediaQuery.of(context);
 
     final _key = UniqueKey();
     //print(PlaidSerivceFunctions().linkInittwo);
@@ -30,23 +27,28 @@ class BankScreen extends StatelessWidget {
           key: _key,
           initialUrl: "https://cdn.plaid.com/link/v2/stable/link.html" + PlaidSerivceFunctions().linkInittwo,
           javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) {
-            _controller = webViewController;
-          },
-          navigationDelegate: (NavigationRequest nav){
+          navigationDelegate: (NavigationRequest nav) async {
             debugPrint(nav.url);
             if(nav.url.startsWith('plaidlink://exit')){
               Navigator.popUntil(context, ModalRoute.withName('/Auth'));
-              return null;
+              return NavigationDecision.prevent;
             }
             if(nav.url.startsWith('plaidlink://connected')){
               String _publicToken = PlaidSerivceFunctions().extractToken(nav.url);
+              Map response = await PlaidSerivceFunctions().getAccessToken(_publicToken);
+              String accessToken = response['access_token'];
+              String itemId = response['item_id'];
+              print(accessToken);
               List _accounts = PlaidSerivceFunctions().extractAccounts(nav.url);
-              user.publicToken = _publicToken;
-              for (Map account in _accounts) user.addAccount(account);
-
+              for (dynamic account in _accounts) {
+                try {
+                  await DataFunctions().saveAccount(Account.fromMap(account, accessToken, itemId));
+                  print('SAVED');
+                } catch (error) {
+                  print(error);
+                }
+              }
               Navigator.pushReplacementNamed(context, '/Home');
-              return null;
             }
             if(nav.url.startsWith('http')){
               return NavigationDecision.navigate;

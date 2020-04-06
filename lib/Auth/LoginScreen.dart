@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/AuthConstants.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Auth/AuthLoading.dart';
-import 'package:omnus/Auth/AuthScreen.dart';
-import 'package:omnus/Auth/BabyScreen.dart';
-import 'package:omnus/Auth/SignupScreen.dart';
-import 'package:omnus/MainScreens/HomeScreen.dart';
+import 'package:provider/provider.dart';
+
 
 
 class LoginScreen extends StatefulWidget {
@@ -35,17 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
         print('error');
       } else {
         setState(() => loading = false);
-        print(result.newUser == true);
-        //if(result.hasAccount >= 0) {
-          Navigator.pushReplacementNamed(context, '/Plaid/Onboard', arguments: {'email': _email});
-        //} else {
-        //  Navigator.popUntil(context, ModalRoute.withName('/Auth'));
-        //}
+          Navigator.popUntil(context, ModalRoute.withName('/'));
       }
     }
   }
   
   Widget build(BuildContext context) {
+    final FirebaseUser firebaseUser = Provider.of<FirebaseUser>(context);
     MediaQueryData queryData = MediaQuery.of(context);
     var ratio = queryData.devicePixelRatio;
 

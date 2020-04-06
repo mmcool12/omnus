@@ -23,6 +23,25 @@ class PlaidSerivceFunctions{
     }
   }
 
+  dynamic getAccessToken(String publicToken) async {
+    String url = 'https://development.plaid.com/item/public_token/exchange';
+    Map<String, String> header = {
+        'Content-type': 'application/json',
+        'User-Agent': 'Plaid Postman'
+    };
+    try{
+      Response response = await post(url,
+      headers: header,
+      body:'{"client_id": "5e21ec08dad2b80015cc8cdd", "secret": "6f7d6f9da36d6fe4aa654ddc2d70aa", "public_token": "$publicToken"}'
+      );
+      print(response.body);
+      return json.decode(response.body);
+    } catch (error){
+      print(error);
+      return null;
+    }
+  }
+
   String linkInit = '{'+
     '"key" : "9422ca3c1450bb04842b93f741d0d7",'+
     '"product" : "auth",'+
@@ -43,8 +62,9 @@ class PlaidSerivceFunctions{
     return json.decode(list);
   }
 
+
   String extractToken(String url){
     return url.substring(url.lastIndexOf("=")+1);
   }
 
-}
+ }

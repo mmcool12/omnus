@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/AuthConstants.dart';
-import 'package:omnus/Auth/AuthFunctions.dart';
+import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:omnus/Plaid/BankScreen.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -16,9 +18,9 @@ class OnboardScreen extends StatefulWidget {
 }
 
 class _OnboardScreenState extends State<OnboardScreen> {
-  @override
+  //@override
 
-  final AuthFunctions _auth = AuthFunctions();
+  //final AuthFunctions _auth = AuthFunctions();
   final _formKey = GlobalKey<FormState>();
   
   String _email;
@@ -28,6 +30,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
   String _zip;
 
   Widget build(BuildContext context) {
+    final user = Provider.of<FirebaseUser>(context);
     MediaQueryData queryData = MediaQuery.of(context);
     var ratio = queryData.devicePixelRatio;
     Map data = ModalRoute.of(context).settings.arguments;
@@ -110,8 +113,8 @@ class _OnboardScreenState extends State<OnboardScreen> {
                             color: Colors.yellow[800],
                             splashColor: Colors.white70,
                             onPressed: () {
-                              User().createFirebaseUser(_email, _firstName, _lastName, _phone, _zip);
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BankScreen()));
+                              UserFunctions().createFireStoreUser(user.uid, _email, _firstName, _lastName, _phone, _zip);
+                              Navigator.pop(context);
                               },
                             child: Text(
                               'Next',
