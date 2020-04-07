@@ -26,21 +26,28 @@ class ChefScreen extends StatelessWidget {
     }
 
 
-    if (chef != null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Chef, ${chef.lastName}'),
-        ),
-        body: Center(
-            child: SizedBox(
-              width: 300,
-              height: 100,
-          child: FlatButton(
-              color: Colors.blue,
-              onPressed: () => UserFunctions().createChef(user),
-              child: Text('Congrats on being a chef')),
-        )),
-      );
+    if (user.chefId != null) {
+      if(chef != null){
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Chef, ${chef.lastName}'),
+          ),
+          body: Center(
+              child: SizedBox(
+                width: 300,
+                height: 100,
+            child: FlatButton(
+                color: Colors.blue,
+                onPressed: () => null,
+                child: Text('Congrats on being a chef')),
+          )),
+        );
+      } else {
+        return Scaffold(
+          appBar: AppBar(),
+          body: Center(child: Text('Loading')),
+        );
+      }
     } else {
       return Scaffold(
         appBar: AppBar(

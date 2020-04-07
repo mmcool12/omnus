@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:omnus/Auth/BabyScreen.dart';
 import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/MainScreens/AccountScreen.dart';
+import 'package:omnus/MainScreens/ChatScreen.dart';
 import 'package:omnus/MainScreens/ChefScreen.dart';
 import 'package:omnus/MainScreens/HomeScreen.dart';
 import 'package:omnus/Plaid/BankScreen.dart';
@@ -31,14 +32,8 @@ User user;
 class _LoadingScreenState extends State<LoadingScreen> {
 
   
-  int currentIndex = 0;
+  int currentIndex = 1;
   User user;
-  
-  @override
-  void initState() {
-    UserFunctions().getUserByID(widget.fire.uid).
-      then((result) => user = User.fromFirestore(result));
-  }
 
   void handleTap(int index) {
     setState(() {
@@ -51,15 +46,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     
 
     final List<Widget> _children = [
+      AccountScreen(),
       HomeScreen(),
-      MultiProvider(
-        providers: [
-          StreamProvider<DocumentSnapshot>(create: (_) => UserFunctions().getChefStreamByID(user.chefId)),
-          Provider<User>(create:(_) => user)
-        ],
-        child: ChefScreen(user: user),
-      ),
-      AccountScreen()
+      ChatScreen(),
     ];
 
     return MultiProvider(
@@ -73,16 +62,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 currentIndex: currentIndex,
                 items: [
                   BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    title: Text('account'),
+                  ),
+                  BottomNavigationBarItem(
                     icon: Icon(Icons.fastfood),
                     title: Text('home'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.monetization_on),
-                    title: Text('chef'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    title: Text('account'),
+                    icon: Icon(Icons.message),
+                    title: Text('messages'),
                   ),
                 ])),
       );

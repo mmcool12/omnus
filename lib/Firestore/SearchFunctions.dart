@@ -7,4 +7,8 @@ class SearchFunctions {
     return _db.collection('chefs').getDocuments();
   }
 
+  Future<QuerySnapshot> getChefbyName(String query){
+    return _db.collection('chefs').where('name', isGreaterThanOrEqualTo: query).getDocuments();
+  }
+
 }

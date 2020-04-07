@@ -17,13 +17,11 @@ class Chef {
     this.firstName = map['firstName'];
     this.lastName = map['lastName'];
     this.name = this.firstName + ' ' + this.lastName;
-    this.zip = map['zipcode'];
+    this.zip = map['zip'];
     this.menu = map['menu'];
-    print('sucess');
   }
 
   factory Chef.fromFirestore(DocumentSnapshot snapshot){
-    print('HEEELLLOOLOLEOLEOE');
     return Chef.fromMap(snapshot.documentID,snapshot.data);
   }
 

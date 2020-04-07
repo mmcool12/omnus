@@ -12,7 +12,7 @@ class UserFunctions {
       'firstName': firstName,
       'lastName': lastName,
       'phone': phone,
-      'zip': zip,
+      'zipcode': zip,
       'chefId' : ''
     });
   }

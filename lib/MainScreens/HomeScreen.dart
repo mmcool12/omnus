@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
+import 'package:omnus/Components/SearchBar.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
 import 'package:omnus/MainScreens/LoadingScreen.dart';
 //import 'package:omnus/Auth/AuthFunctions.dart';
@@ -35,33 +35,49 @@ class _HomeScreenState extends State<HomeScreen> {
     return chefs;
   }
 
+  void showChefPopup(BuildContext context, Chef chef){
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    Dialog chefPopup = Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+        child: Container(
+          height: height * .4,
+          width: width*.9,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(chef.name),
+                FlatButton(
+                  onPressed: null, 
+                  child: Container(
+                    color: Colors.blue,
+                    height: height*.05,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text('Message ${chef.name}', 
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+
+    showDialog(context: context, builder : (BuildContext context) => chefPopup);
+  }
+
   Widget title = Text('Hello');
   Widget leading = Icon(Icons.search);
-
-  toggleSearch(firstName){
-    
-    setState(() {
-
-      if(searching){
-        title = SearchBar<Chef>(
-                onSearch: getChefs,
-                onItemFound: (Chef chef, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(chef.name),
-                    ),
-                  );
-                },
-                searchBarStyle:
-                    SearchBarStyle(backgroundColor: Colors.lightGreen),
-              );
-        leading = Icon(Icons.close);
-      } else{
-        title = Text('Hello, $firstName');
-        leading = Icon(Icons.search);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,21 +94,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if (user != null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Hello ${user.firstName}')
-        ),
-        body: SearchBar<Chef>(
-        onSearch: getChefs,
-        onItemFound: (Chef chef, int index) {
-          return Card(
-            child: ListTile(
-              title: Text(chef.name),
-            ),
-          );
-        },
-        searchBarStyle:
-            SearchBarStyle(backgroundColor: Colors.lightGreen),
-                  ),
-              
+          title: Text('Hello ${user.firstName}'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search), 
+              onPressed: () => showSearch(context: context, delegate: SearchBar())
+            )
+          ],
+        ),    
       );
     } else {
       return Scaffold(
