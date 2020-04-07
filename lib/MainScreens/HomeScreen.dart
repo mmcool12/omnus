@@ -1,17 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
-import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Components/SearchBar.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
-import 'package:omnus/MainScreens/LoadingScreen.dart';
 //import 'package:omnus/Auth/AuthFunctions.dart';
-import 'package:omnus/MainScreens/OverviewScreen.dart';
-import 'package:omnus/MainScreens/SettingsScreen.dart';
-import 'package:omnus/MainScreens/CardsScreen.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
-import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -81,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     User user;
 
     DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);

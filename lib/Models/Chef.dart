@@ -8,6 +8,7 @@ class Chef {
   String name;
   String zip;
   Map menu;
+  String type;
 
   Chef({this.id, this.rate, this.name, this.menu});
 
@@ -19,6 +20,7 @@ class Chef {
     this.name = this.firstName + ' ' + this.lastName;
     this.zip = map['zip'];
     this.menu = map['menu'];
+    this.type = map['type'];
   }
 
   factory Chef.fromFirestore(DocumentSnapshot snapshot){

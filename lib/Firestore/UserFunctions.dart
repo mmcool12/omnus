@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:omnus/Models/User.dart';
 
 class UserFunctions {
@@ -20,6 +21,11 @@ class UserFunctions {
   Stream<DocumentSnapshot> getUserStreamByID(String id) {
     return _db.collection('users').document(id).snapshots();
   }
+
+  // Future<Stream<User>> getUserStream(String id) {
+  //   Stream<DocumentSnapshot> stream = _db.collection('users').document(id).snapshots();
+  //   return stream.forEach((snapshot) => User.fromFirestore(snapshot));
+  // }
 
     Future<DocumentSnapshot> getUserByID(String id) async {
     return await _db.collection('users').document(id).get();

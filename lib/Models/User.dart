@@ -1,9 +1,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:omnus/Models/Account.dart';
 
-class User with ChangeNotifier{
+
+class User {
 
   String id;
   String firstName;
@@ -11,23 +10,10 @@ class User with ChangeNotifier{
   String name;
   String zipcode;
   String chefId;
-
-  String uid;
-  int numAccounts;
-  bool verified;
-  String publicToken;
-  String accessToken;
-  Map<String, Account> accounts;
   
 
 
-  User({this.uid}){
-    this.numAccounts = 0;
-    this.verified = false;
-    this.publicToken = "";
-    this.accessToken = "";
-    this.accounts = {};
-  }
+  User({this.id});
 
   User.fromMap(String id, Map<String, dynamic> map){
     this.id = id;
@@ -40,10 +26,6 @@ class User with ChangeNotifier{
 
   factory User.fromFirestore(DocumentSnapshot snapshot){
     return User.fromMap(snapshot.documentID,snapshot.data);
-  }
-
-  void addAccount(Account account){
-    this.accounts[account.id] = account;
   }
 
   }

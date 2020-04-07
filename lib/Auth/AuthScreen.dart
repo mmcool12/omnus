@@ -5,11 +5,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/BabyScreen.dart';
-import 'package:omnus/MainScreens/HomeScreen.dart';
 import 'package:omnus/MainScreens/LoadingScreen.dart';
-import 'package:omnus/Plaid/BankScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:omnus/Models/User.dart';
 
 
 class AuthScreen extends StatelessWidget {

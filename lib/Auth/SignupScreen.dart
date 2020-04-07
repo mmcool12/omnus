@@ -19,7 +19,6 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
 
   final _formKey = GlobalKey<FormState>();
-  final AuthFunctions _auth = AuthFunctions();
   
   FocusNode passwordfocus;   
   String _password;  

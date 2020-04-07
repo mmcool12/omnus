@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/Models/User.dart';
 
 
@@ -9,7 +8,7 @@ class AuthFunctions with ChangeNotifier{
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User _createUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+    return user != null ? User(id: user.uid) : null;
   }
 
   Stream<User> get user {

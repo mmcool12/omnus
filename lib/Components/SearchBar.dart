@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
+import 'package:omnus/MainScreens/ChefDetailsScreen.dart';
 import 'package:omnus/Models/Chef.dart';
 
 class SearchBar extends SearchDelegate<Chef>{
@@ -27,7 +28,7 @@ class SearchBar extends SearchDelegate<Chef>{
 
   @override
   Widget buildResults(BuildContext context){
-    
+    return buildSuggestions(context);
   }
 
   @override
@@ -43,10 +44,10 @@ class SearchBar extends SearchDelegate<Chef>{
         });
     } else{
     return FutureBuilder<QuerySnapshot>(
-      future: SearchFunctions().getChefbyName(query),
+      future: SearchFunctions().getChefbyType(query),
       builder: (context,  snapshot) {
         if(snapshot.hasData){
-          if(snapshot.data.documents == null || snapshot.data.documents.isEmpty){
+          if(snapshot.data.documents.isEmpty){
             return Center(child: Text('No Results'));
           } else {
             List<Chef> temp = [];
@@ -58,6 +59,9 @@ class SearchBar extends SearchDelegate<Chef>{
               itemCount: results.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () => Navigator.push(context, 
+                    MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: results[index]))
+                  ),
                   title: Text(results[index].name),
                 );
               });

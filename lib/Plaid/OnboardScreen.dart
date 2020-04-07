@@ -6,8 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/AuthConstants.dart';
 import 'package:omnus/Firestore/UserFunctions.dart';
-import 'package:omnus/Models/User.dart';
-import 'package:omnus/Plaid/BankScreen.dart';
 import 'package:provider/provider.dart';
 
 

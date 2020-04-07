@@ -4,14 +4,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Auth/AuthScreen.dart';
 import 'package:omnus/Auth/BabyScreen.dart';
 import 'package:omnus/Auth/LoginScreen.dart';
 import 'package:omnus/Auth/SignupScreen.dart';
 import 'package:omnus/MainScreens/HomeScreen.dart';
-import 'package:omnus/Models/User.dart';
-import 'package:omnus/Plaid/BankScreen.dart';
 import 'package:omnus/Plaid/OnboardScreen.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +30,6 @@ class MyApp extends StatelessWidget {
           '/Auth/Login': (context) => LoginScreen(),
           '/Auth/Signup': (context) => SignupScreen(),
           '/Plaid/Onboard': (context) => OnboardScreen(),
-          '/Plaid/Bank': (context) => BankScreen(),
           '/Home': (context) => HomeScreen(),
         },
       ),
