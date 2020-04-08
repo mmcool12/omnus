@@ -4,8 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
 import 'package:omnus/MainScreens/ChefDetailsScreen.dart';
 import 'package:omnus/Models/Chef.dart';
+import 'package:omnus/Models/User.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends SearchDelegate<Chef>{
+
+  final User user;
+
+  SearchBar({
+      Key key,
+      @required this.user
+    }) : super();
 
   final recentSearches = [];
 
@@ -33,6 +42,7 @@ class SearchBar extends SearchDelegate<Chef>{
 
   @override
   Widget buildSuggestions(BuildContext context){
+        
     List<Chef> results = [];
     if(query == ""){
       return ListView.builder(
@@ -60,7 +70,7 @@ class SearchBar extends SearchDelegate<Chef>{
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () => Navigator.push(context, 
-                    MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: results[index]))
+                    MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: results[index], user: user))
                   ),
                   title: Text(results[index].name),
                 );

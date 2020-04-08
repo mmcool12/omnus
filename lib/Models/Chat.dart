@@ -24,4 +24,6 @@ class Chat {
   factory Chat.fromFirestore(DocumentSnapshot snap) {
     return Chat.fromMap(snap.documentID, snap.data);
   }
+
+  
 }

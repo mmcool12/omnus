@@ -9,6 +9,8 @@ class Chef {
   String zip;
   Map menu;
   String type;
+  double rating;
+  int numReviews;
 
   Chef({this.id, this.rate, this.name, this.menu});
 
@@ -21,6 +23,8 @@ class Chef {
     this.zip = map['zip'];
     this.menu = map['menu'];
     this.type = map['type'];
+    this.rating = map['rating'].toDouble();
+    this.numReviews = map['numReviews'];
   }
 
   factory Chef.fromFirestore(DocumentSnapshot snapshot){

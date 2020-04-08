@@ -86,11 +86,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (user != null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Hello ${user.firstName}'),
+          title: Text('Hello ${user.firstName}', style: TextStyle(color: Colors.black),),
+          backgroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.search), 
-              onPressed: () => showSearch(context: context, delegate: SearchBar())
+              icon: Icon(Icons.search, color: Colors.black,), 
+              onPressed: () => showSearch(context: context, delegate: SearchBar(user: user))
             )
           ],
         ),    

@@ -1,11 +1,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:omnus/Models/Chef.dart';
+import 'package:omnus/Models/User.dart';
 
 class ChatFunctions {
   final Firestore _db = Firestore.instance;
 
-  Future<QuerySnapshot> getChats(){
-    return _db.collection('chat').getDocuments();
+  Future<QuerySnapshot> getChats() async {
+    return await _db.collection('chat').getDocuments();
   }
 
   Stream<QuerySnapshot> getUsersChats(String id){
@@ -16,7 +18,7 @@ class ChatFunctions {
     return _db.collection('chat').document(id).snapshots();
   }
 
-  createChat(String docId, String senderId, String message) async {
+  createMessage(String docId, String senderId, String message) async {
     await _db.collection('chat').document(docId).updateData({
       'messages' : FieldValue.arrayUnion([
         {
@@ -25,6 +27,27 @@ class ChatFunctions {
         }
       ])},
     );
+  }
+
+  Future<DocumentSnapshot> createChat(User buyer, Chef chef) async {
+    // First check if chat exists
+    QuerySnapshot snapshot;
+    await _db.collection('chat').where('buyerId', isEqualTo: buyer.id).where('chefId', isEqualTo: chef.id).getDocuments()
+      .then((result) => snapshot = result);
+      
+    if (snapshot.documents.isEmpty){
+      DocumentReference ref =  await _db.collection('chat').add({
+        'buyerId' : buyer.id,
+        'buyerName' : buyer.name,
+        'chefId' : chef.id,
+        'chefName' : chef.name,
+        'messages' : []
+      });
+      return ref.get();
+    } else {
+      return snapshot.documents[0];
+    }
+
   }
 
 

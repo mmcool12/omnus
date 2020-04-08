@@ -109,7 +109,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
               trailing: IconButton(
                 icon: Icon(Icons.send),
                 onPressed: () {
-                  textController.text == "" ? null : ChatFunctions().createChat(widget.chat.id, widget.user.id, textController.text);
+                  textController.text == "" ? null : ChatFunctions().createMessage(widget.chat.id, widget.user.id, textController.text);
                   textController.clear();
                 },
               ),

@@ -10,9 +10,13 @@ import 'package:omnus/Auth/BabyScreen.dart';
 import 'package:omnus/Auth/LoginScreen.dart';
 import 'package:omnus/Auth/SignupScreen.dart';
 import 'package:omnus/Firestore/UserFunctions.dart';
+import 'package:omnus/MainScreens/ChefDetailsScreen.dart';
 import 'package:omnus/MainScreens/HomeScreen.dart';
+import 'package:omnus/MainScreens/LoadingScreen.dart';
 import 'package:omnus/Plaid/OnboardScreen.dart';
 import 'package:provider/provider.dart';
+
+import 'Models/Chef.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,6 +37,7 @@ class MyApp extends StatelessWidget {
           '/Auth/Signup': (context) => SignupScreen(),
           '/Plaid/Onboard': (context) => OnboardScreen(),
           '/Home': (context) => HomeScreen(),
+          '/Loading': (context) => LoadingScreen(),
         },
       ),
     );
