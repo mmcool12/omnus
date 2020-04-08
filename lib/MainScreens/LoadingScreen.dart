@@ -13,18 +13,18 @@ import 'package:provider/provider.dart';
 import 'package:omnus/Models/User.dart';
 
 class LoadingScreen extends StatefulWidget {
-  final FirebaseUser fire;
+  //final FirebaseUser fire;
 
-  const LoadingScreen({
-      Key key,
-      @required this.fire
-    }) : super(key: key);
+  // const LoadingScreen({
+  //     Key key,
+  //     @required this.fire
+  //   }) : super(key: key);
 
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
 
-User user;
+//User user;
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
@@ -48,30 +48,24 @@ class _LoadingScreenState extends State<LoadingScreen> {
       ChatScreen(),
     ];
 
-    return MultiProvider(
-      providers: [
-        StreamProvider<DocumentSnapshot>(create: (_) => UserFunctions().getUserStreamByID(widget.fire.uid)),
-        //StreamProvider<User>(create: (_) => UserFunctions().getUserStream(widget.fire.uid)),
-      ],
-      child: Scaffold(
-            body: _children[currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-                onTap: handleTap,
-                currentIndex: currentIndex,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    title: Text('account'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.fastfood),
-                    title: Text('home'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.message),
-                    title: Text('messages'),
-                  ),
-                ])),
-      );
+    return Scaffold(
+          body: _children[currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+              onTap: handleTap,
+              currentIndex: currentIndex,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  title: Text('account'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.fastfood),
+                  title: Text('home'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.message),
+                  title: Text('messages'),
+                ),
+              ]));
   }
 }

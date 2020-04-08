@@ -3,17 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/MainScreens/MessagingScreen.dart';
 import 'package:omnus/Models/Chat.dart';
+import 'package:omnus/Models/User.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    User user;
+    DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
+    if (snapshot != null) {
+      if (snapshot.data != null) {
+        user = User.fromFirestore(snapshot);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Messages')
       ),
-      body: FutureBuilder<QuerySnapshot>(
-        future: ChatFunctions().getChats(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: ChatFunctions().getUsersChats(user.id),
         builder: (context, snapshot){
           if(snapshot.hasData){
             if (snapshot.data.documents.isEmpty){
@@ -37,7 +47,7 @@ class ChatScreen extends StatelessWidget{
                         backgroundColor: Colors.blueAccent,
                       ),
                       onTap: () => Navigator.push(context, 
-                        MaterialPageRoute(builder: (context) => MessagingScreen())),
+                        MaterialPageRoute(builder: (context) => MessagingScreen(user: user, chat: chats[index],))),
                       title: Text(chats[index].chefName ?? "help"),
                     ),
                   );
