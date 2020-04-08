@@ -9,13 +9,6 @@ import 'package:provider/provider.dart';
 
 class SearchBar extends SearchDelegate<Chef>{
 
-  final User user;
-
-  SearchBar({
-      Key key,
-      @required this.user
-    }) : super();
-
   final recentSearches = [];
 
   @override
@@ -42,6 +35,13 @@ class SearchBar extends SearchDelegate<Chef>{
 
   @override
   Widget buildSuggestions(BuildContext context){
+    User user;
+    DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
+    if (snapshot != null) {
+      if (snapshot.data != null) {
+        user = User.fromFirestore(snapshot);
+      }
+    }
         
     List<Chef> results = [];
     if(query == ""){
@@ -70,7 +70,7 @@ class SearchBar extends SearchDelegate<Chef>{
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () => Navigator.push(context, 
-                    MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: results[index], user: user))
+                    MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: results[index]))
                   ),
                   title: Text(results[index].name),
                 );

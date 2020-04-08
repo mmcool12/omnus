@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:omnus/Auth/AuthFunctions.dart';
+import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:provider/provider.dart';
 
@@ -19,13 +21,21 @@ class AccountScreen extends StatelessWidget {
     if(user == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Hello, Nobody'),
+          backgroundColor: Colors.white,
+          title: Text('Hello, Nobody', style: TextStyle(color: Colors.black),),
         ),
       );
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Profile'),
+          backgroundColor: Colors.white,
+          title: Text('Profile', style: TextStyle(color: Colors.black),),
+          iconTheme: IconThemeData(
+            color: Colors.black
+          ),
+          actions: <Widget>[
+            FlatButton(onPressed: () async {AuthFunctions().signOut();}, child: Text('Sign out'))
+          ],
         ),
       );
     }

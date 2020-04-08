@@ -20,12 +20,7 @@ class AuthScreen extends StatelessWidget {
     if (user == null){
       return BabyScreen();
     } else{
-      return MultiProvider(
-        providers: [
-          StreamProvider<DocumentSnapshot>(create: (_) => UserFunctions().getUserStreamByID(user.uid)),
-        ],
-        child: LoadingScreen()
-      );
+      return LoadingScreen();
     }
    
   }

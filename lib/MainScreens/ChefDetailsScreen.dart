@@ -14,18 +14,23 @@ import 'MessagingScreen.dart';
 
 class ChefDetailsScreen extends StatelessWidget {
   final Chef chef;
-  final User user;
 
   @override
   const ChefDetailsScreen({
       Key key,
       @required this.chef,
-      @required this.user
     }) : super(key: key);
 
   
   @override
   Widget build(BuildContext context) {
+    User user;
+    DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
+    if (snapshot != null) {
+      if (snapshot.data != null) {
+        user = User.fromFirestore(snapshot);
+      }
+    }
 
     double height = MediaQuery.of(context).size.height;
 
@@ -114,7 +119,7 @@ class ChefDetailsScreen extends StatelessWidget {
                                   Chat chat;
                                   await ChatFunctions().createChat(user, chef).then((result) => chat = Chat.fromFirestore(result));
                                   return Navigator.push(context, 
-                                  MaterialPageRoute(builder: (context) => MessagingScreen(user: user, chat: chat)));
+                                  MaterialPageRoute(builder: (context) => MessagingScreen(chat: chat)));
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(

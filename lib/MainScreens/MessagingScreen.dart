@@ -8,11 +8,9 @@ import 'package:provider/provider.dart';
 
 class MessagingScreen extends StatefulWidget{
   final Chat chat;
-  final User user;
 
   MessagingScreen({
     Key key,
-    @required this.user,
     @required this.chat
   }) : super(key: key);
 
@@ -28,6 +26,13 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User user;
+    DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
+    if (snapshot != null) {
+      if (snapshot.data != null) {
+        user = User.fromFirestore(snapshot);
+      }
+    }
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -54,10 +59,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
               itemBuilder: (context, index){
                 Message message = messages[index];
                   return Align(
-          alignment: message.sender == widget.user.id ? Alignment.centerRight : Alignment.centerLeft,
+          alignment: message.sender == user.id ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
             width: width*.6,
-            color: message.sender == widget.user.id ? Colors.blueAccent : Colors.blueGrey,
+            color: message.sender == user.id ? Colors.blueAccent : Colors.blueGrey,
             child: Center(
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -109,7 +114,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
               trailing: IconButton(
                 icon: Icon(Icons.send),
                 onPressed: () {
-                  textController.text == "" ? null : ChatFunctions().createMessage(widget.chat.id, widget.user.id, textController.text);
+                  textController.text == "" ? null : ChatFunctions().createMessage(widget.chat.id, user.id, textController.text);
                   textController.clear();
                 },
               ),

@@ -47,7 +47,7 @@ class ChatScreen extends StatelessWidget{
                         backgroundColor: Colors.blueAccent,
                       ),
                       onTap: () => Navigator.push(context, 
-                        MaterialPageRoute(builder: (context) => MessagingScreen(user: user, chat: chats[index]))),
+                        MaterialPageRoute(builder: (context) => MessagingScreen(chat: chats[index]))),
                       title: Text(chats[index].chefName ?? "help"),
                     ),
                   );

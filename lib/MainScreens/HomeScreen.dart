@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search, color: Colors.black,), 
-              onPressed: () => showSearch(context: context, delegate: SearchBar(user: user))
+              onPressed: () => showSearch(context: context, delegate: SearchBar())
             )
           ],
         ),    
