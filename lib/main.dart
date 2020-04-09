@@ -6,9 +6,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Auth/SplashScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 
-void main() => runApp(MyApp());
+void main(){
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.black.withOpacity(0),
+    // statusBarBrightness: Brightness.dark,
+    // statusBarIconBrightness: Brightness.dark
+  ));
+
+  runApp(MyApp());  
+} 
 
 class MyApp extends StatelessWidget {
   @override
