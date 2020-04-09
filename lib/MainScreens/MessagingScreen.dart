@@ -1,3 +1,4 @@
+import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
@@ -52,41 +53,48 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
 
     Widget listview(List<Message> messages) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-        child: ListView.separated(
-          reverse: true,
-            controller: ScrollController(
-              initialScrollOffset: 20
-            ),
-              separatorBuilder: (context, index) {
-                  return Padding(padding: EdgeInsets.symmetric(vertical: 2.0));
-              },
-              itemCount: messages.length,
-              itemBuilder: (context, index){
-                Message message = messages[index];
-                  return Align(
-          alignment: message.sender == user.id ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: width*.6,
-            color: message.sender == user.id ? Colors.blueAccent : Colors.blueGrey,
-            child: Center(
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    message.message,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white
-                    ),
-                  ),
-              )
-            ),
+      return ListView.separated(
+        reverse: true,
+          controller: ScrollController(
+            initialScrollOffset: 20
           ),
-                  );
-              },
-            ),
-      );
+            separatorBuilder: (context, index) {
+                return Padding(padding: EdgeInsets.symmetric(vertical: 2.0));
+            },
+            itemCount: messages.length,
+            itemBuilder: (context, index){
+              Message message = messages[index];
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Align(
+        alignment: message.sender == user.id ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: width*.65
+          ),
+          color: Colors.transparent,
+          child: Bubble(
+            radius: Radius.circular(25),
+            nipRadius: 3,
+            nipOffset: 5,
+            color: message.sender == user.id ? Colors.blueAccent : Colors.blueGrey,
+            nip: message.sender == user.id ? BubbleNip.rightBottom : BubbleNip.leftBottom,
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                  message.message,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white
+                  ),
+              ),
+            )
+          ),
+        ),
+                  ),
+                );
+            },
+          );
     }
 
     return Scaffold(
@@ -113,7 +121,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             ),
           ),
           Container(
-            color: Colors.grey,
+            color: Colors.grey[200],
             child: ListTile(
               leading: Icon(Icons.image),
               title: TextField(

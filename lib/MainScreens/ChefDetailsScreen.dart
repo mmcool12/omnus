@@ -111,7 +111,7 @@ class ChefDetailsScreen extends StatelessWidget {
                                             ),
                                           )
                                         : Text(
-                                            'No reviews yet',
+                                            'No reviews',
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20),
@@ -243,7 +243,7 @@ class ReviewTile extends StatelessWidget {
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: ListTile(
                           leading: Stack(
                             alignment: AlignmentDirectional.center,
@@ -281,7 +281,12 @@ class ReviewTile extends StatelessWidget {
                   ),
               );
             } else {
-              return Text('No reviews');
+              return Center(
+                child: Text('No reviews',
+                style: TextStyle(
+                  fontSize: 20
+                ),)
+              );
             }
           } else {
             return Text('Loading');

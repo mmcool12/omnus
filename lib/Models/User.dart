@@ -10,6 +10,7 @@ class User {
   String name;
   String zipcode;
   String chefId;
+  String profileImage;
   
 
 
@@ -22,6 +23,7 @@ class User {
     this.name = this.firstName + ' ' + this.lastName;
     this.zipcode = map['zipcode'];
     this.chefId = map['chefId'];
+    this.profileImage = map['profileImage'];
   }
 
   factory User.fromFirestore(DocumentSnapshot snapshot){

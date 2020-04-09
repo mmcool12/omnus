@@ -4,9 +4,9 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:omnus/MainScreens/AccountScreen.dart';
 import 'package:omnus/MainScreens/ChatScreen.dart';
 import 'package:omnus/MainScreens/HomeScreen.dart';
+import 'package:omnus/MainScreens/ProfileScreen.dart';
 import 'package:omnus/Models/User.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     
 
     final List<Widget> _children = [
-      AccountScreen(),
+      ProfileScreen(),
       HomeScreen(),
       ChatScreen(),
     ];

@@ -90,18 +90,19 @@ class _HomeScreenState extends State<HomeScreen> {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Hello ${user.firstName}',
+            'Hello, ${user.firstName}',
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
           actions: <Widget>[
-            IconButton(
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.black,
-                ),
-                onPressed: () =>
-                    showSearch(context: context, delegate: SearchBar()))
+            // IconButton(
+            //     icon: Icon(
+            //       Icons.search,
+            //       color: Colors.black,
+            //     ),
+            //     onPressed: () =>
+            //         showSearch(context: context, delegate: SearchBar())
+            // ),
           ],
         ),
         body: FutureBuilder<QuerySnapshot>(

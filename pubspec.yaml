@@ -29,6 +29,9 @@ dependencies:
   flutter_spinkit: ^4.1.1+1
   cloud_firestore: ^0.13.0
   getflutter: ^1.0.11
+  bubble: ^1.1.9+1
+  image_picker: ^0.6.4
+  firebase_storage: ^3.1.5
 
 
 
