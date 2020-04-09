@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:getflutter/components/avatar/gf_avatar.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Components/SearchBar.dart';
+import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
 import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/MainScreens/ChefDetailsScreen.dart';
@@ -65,15 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget title = Text('Hello');
   Widget leading = Icon(Icons.search);
 
-  String chefType(String type) {
-    if (type == 'both') {
-      return 'Chef & Prep';
-    } else if (type == 'chef') {
-      return 'Chef';
-    } else {
-      return 'Prep';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,66 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: List.generate(chefs.length, (index) {
                     return Padding(
                       padding: const EdgeInsets.all(8),
-                      child: Card(
-                        child: InkWell(
-                          onTap: () => Navigator.push(
-                            context, 
-                            MaterialPageRoute(builder: (context) => ChefDetailsScreen(chef: chefs[index]))),
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  color: Colors.blueAccent,
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          chefs[index].name,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25,
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 1)),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              chefType(chefs[index].type),
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            GFRating(
-                                              allowHalfRating: true,
-                                              value: chefs[index].rating,
-                                              color: Colors.amber,
-                                              borderColor: Colors.amber,
-                                              size: 25,
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                      child: GridCard(chefs: chefs, index: index,),
                     );
                   }),
                 );
@@ -189,5 +122,104 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return Center(child: Text('Loading'));
     }
+  }
+}
+
+class GridCard extends StatelessWidget {
+  const GridCard({
+    Key key,
+    @required this.chefs,
+    @required this.index
+  }) : super(key: key);
+
+  final List<Chef> chefs;
+  final int index;
+
+    String chefType(String type) {
+    if (type == 'both') {
+      return 'Chef & Prep';
+    } else if (type == 'chef') {
+      return 'Chef';
+    } else {
+      return 'Prep';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onTap: () => Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (context) => ChefDetailsScreen(chef: chefs[index]))),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: FutureBuilder<dynamic>(
+                  future: ImageFunctions().getImage(chefs[index].mainImage),
+                  builder: (context, snapshot) {
+                    if(snapshot.connectionState == ConnectionState.done){
+                      return FadeInImage.memoryNetwork(
+                        fadeInDuration: const Duration(milliseconds: 200),
+                        fadeOutDuration: const Duration(milliseconds: 200),
+                        placeholder: kTransparentImage, 
+                        image: snapshot.data
+                      );
+                    } else {
+                      return Center(child: Text('Loading'));
+                    }
+                  }
+                  ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        chefs[index].name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1)),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            chefType(chefs[index].type),
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          GFRating(
+                            allowHalfRating: true,
+                            value: chefs[index].rating,
+                            color: Colors.amber,
+                            borderColor: Colors.amber,
+                            size: 25,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
