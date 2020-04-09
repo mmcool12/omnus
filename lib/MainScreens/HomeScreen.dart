@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -85,12 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
             'Hello, ${user.firstName}',
             style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: Colors.white,
           actions: <Widget>[
             // IconButton(
             //     icon: Icon(
             //       Icons.search,
-            //       color: Colors.black,
             //     ),
             //     onPressed: () =>
             //         showSearch(context: context, delegate: SearchBar())
@@ -160,13 +159,16 @@ class GridCard extends StatelessWidget {
                 child: FutureBuilder<dynamic>(
                   future: ImageFunctions().getImage(chefs[index].mainImage),
                   builder: (context, snapshot) {
-                    if(snapshot.connectionState == ConnectionState.done){
+                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
                       return FadeInImage.memoryNetwork(
                         fadeInDuration: const Duration(milliseconds: 200),
                         fadeOutDuration: const Duration(milliseconds: 200),
                         placeholder: kTransparentImage, 
                         image: snapshot.data
                       );
+                      // return Image(
+                      //   image: CachedNetworkImageProvider(snapshot.data)
+                      // );
                     } else {
                       return Center(child: Text('Loading'));
                     }
@@ -209,6 +211,9 @@ class GridCard extends StatelessWidget {
                             color: Colors.amber,
                             borderColor: Colors.amber,
                             size: 25,
+                          ),
+                          Text(
+                            '(${chefs[index].numReviews})'
                           )
                         ],
                       ),

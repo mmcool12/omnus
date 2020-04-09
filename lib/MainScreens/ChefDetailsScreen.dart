@@ -60,8 +60,6 @@ class ChefDetailsScreen extends StatelessWidget {
           'Chef ${chef.name}',
           style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -138,6 +136,9 @@ class ChefDetailsScreen extends StatelessWidget {
                                                 : Text(''));
                                           }),
                                     ),
+                                    Text(
+                                      (chef.numReviews > 0 ? '(${chef.numReviews})' : "")                                      
+                                    )
                                   ],
                                 ),
                                 FlatButton(

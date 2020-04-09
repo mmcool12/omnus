@@ -24,9 +24,8 @@ class ProfileScreen extends StatelessWidget {
       print(user.profileImage);
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
           title: Text(
-            'Hello, Nobody',
+            'Loading',
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -34,7 +33,6 @@ class ProfileScreen extends StatelessWidget {
     } else {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
           title: Text(
             'Profile',
             style: TextStyle(color: Colors.black),
