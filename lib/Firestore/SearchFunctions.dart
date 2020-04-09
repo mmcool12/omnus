@@ -4,7 +4,7 @@ class SearchFunctions {
   final Firestore _db = Firestore.instance;
 
   Future<QuerySnapshot> getAllChefs() async {
-    return await _db.collection('chefs').getDocuments();
+    return await _db.collection('chefs').limit(20).getDocuments();
   }
 
   Future<DocumentSnapshot> getChefById(String id) async {

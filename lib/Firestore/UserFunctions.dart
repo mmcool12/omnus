@@ -36,6 +36,10 @@ class UserFunctions {
     return _db.collection('chefs').document(id).snapshots();
   }
 
+    Future<QuerySnapshot> getAllChefs() async{
+    return await _db.collection('chefs').limit(20).getDocuments();
+  }
+
   createChef(User user) async{
     DocumentReference ref;
     await _db.collection('chefs').add({

@@ -2,14 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/MainScreens/AccountScreen.dart';
 import 'package:omnus/MainScreens/ChatScreen.dart';
 import 'package:omnus/MainScreens/HomeScreen.dart';
-import 'package:provider/provider.dart';
 import 'package:omnus/Models/User.dart';
 
 class LoadingScreen extends StatefulWidget {

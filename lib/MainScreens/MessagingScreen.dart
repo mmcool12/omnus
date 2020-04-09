@@ -35,8 +35,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
 
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    //double height = MediaQuery.of(context).size.height;
     final textController = TextEditingController();
+
+    void sendMessage(){
+      if(textController.text != "") {
+        ChatFunctions().createMessage(widget.chat.id, user.id, textController.text);
+        textController.clear();
+      }
+    }
 
     @override
     void dispose() {
@@ -84,7 +91,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.chat.chefName)
+        title: Text(widget.chat.chefName, style: TextStyle(color: Colors.black)),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,14 +118,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
               leading: Icon(Icons.image),
               title: TextField(
                 controller: textController,
-                onSubmitted: null,
+                onSubmitted: (string) =>  sendMessage(),
               ),
               trailing: IconButton(
                 icon: Icon(Icons.send),
-                onPressed: () {
-                  textController.text == "" ? null : ChatFunctions().createMessage(widget.chat.id, user.id, textController.text);
-                  textController.clear();
-                },
+                onPressed: () => sendMessage(),
               ),
             ),
           ),
