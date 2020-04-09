@@ -24,6 +24,14 @@ class SplashScreen extends StatelessWidget {
         ],
         child: MaterialApp(
           home: AuthScreen(),
+          theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              color: Colors.white,
+              iconTheme: IconThemeData(
+                color: Colors.black
+              ),
+              ),
+            ),
           routes: {
           '/Auth': (context) => BabyScreen(),
           '/Auth/Login': (context) => LoginScreen(),

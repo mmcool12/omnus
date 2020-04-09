@@ -21,11 +21,11 @@ class ProfileScreen extends StatelessWidget {
     }
 
     if (user == null) {
+      print(user.profileImage);
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
           title: Text(
-            'Hello, Nobody',
+            'Loading',
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -33,8 +33,11 @@ class ProfileScreen extends StatelessWidget {
     } else {
       return Scaffold(
         appBar: AppBar(
+<<<<<<< HEAD
           backgroundColor: Colors.white,
           brightness: Brightness.light,
+=======
+>>>>>>> 3b51d1a9c32b2868f9ca254c45fda49675e9c1d6
           title: Text(
             'Profile',
             style: TextStyle(color: Colors.black),
@@ -48,85 +51,106 @@ class ProfileScreen extends StatelessWidget {
                 child: Text('Sign out'))
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () async {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                              child: Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: () async => ImageFunctions()
-                                          .pickThenUploadProfile(
-                                              ImageSource.camera, user.id),
-                                      child: ListTile(
-                                        leading: Icon(Icons.camera_alt),
-                                        title: Text('Image from Camera'),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () async {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      InkWell(
+                                        onTap: () async => ImageFunctions()
+                                            .pickThenUploadProfile(
+                                                ImageSource.camera, user.id),
+                                        child: ListTile(
+                                          leading: Icon(Icons.camera_alt),
+                                          title: Text('Image from Camera'),
+                                        ),
                                       ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        ImageFunctions().pickThenUploadProfile(
-                                            ImageSource.gallery, user.id);
-                                        Navigator.pop(context);
-                                      },
-                                      child: ListTile(
-                                        leading: Icon(
-                                            Icons.photo_size_select_actual),
-                                        title: Text('Image from Photos'),
-                                      ),
-                                    )
-                                  ],
+                                      InkWell(
+                                        onTap: () async {
+                                          ImageFunctions()
+                                              .pickThenUploadProfile(
+                                                  ImageSource.gallery,
+                                                  user.id);
+                                          Navigator.pop(context);
+                                        },
+                                        child: ListTile(
+                                          leading: Icon(
+                                              Icons.photo_size_select_actual),
+                                          title: Text('Image from Photos'),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          });
-                    },
-                    child: GFAvatar(
-                      backgroundColor: Colors.blueAccent,
-                      radius: 65,
-                      backgroundImage: NetworkImage(
-                        'gs://titan-2a457.appspot.com/' + user.profileImage,
-                        scale: 65
-                        ),
-                      child: Text(
-                          user.firstName.substring(0, 1) +
-                              user.lastName.substring(0, 1),
-                          style: TextStyle(fontSize: 65)),
+                              );
+                            });
+                      },
+                      child: FutureBuilder<dynamic>(
+                          future:
+                              ImageFunctions().getImage(user.profileImage),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==ConnectionState.done && snapshot.hasData) {
+                              return GFAvatar(
+                                backgroundColor: Colors.transparent,
+                                radius: 65,
+                                backgroundImage: NetworkImage(
+                                  snapshot.data ??
+                                      'https://via.placeholder.com/150',
+                                ),
+                              );
+                            } else {
+                              return GFAvatar(
+                                backgroundColor: Colors.blueAccent,
+                                radius: 65,
+                                child: Text(
+                                    user.firstName.substring(0, 1) +
+                                        user.lastName.substring(0, 1),
+                                    style: TextStyle(fontSize: 65)),
+                              );
+                            }
+                          }),
                     ),
-                  ),
-                  Container(
-                      color: Colors.pink,
-                      child: Column(
-                        children: <Widget>[Text(user.name)],
-                      ))
-                ],
+                    Expanded(
+                      child: Container(
+                          color: Colors.pink,
+                          child: Column(
+                            children: <Widget>[Text(user.name)],
+                          )),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(padding: EdgeInsets.all(8.0)),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(width: 1), bottom: BorderSide(width: 1)),
-                  color: Colors.white),
-              child: ListTile(
-                leading: Icon(Icons.credit_card),
-                title: Text('Payment Methods'),
-                trailing: Icon(Icons.navigate_next),
-              ),
-            )
-          ],
+              Padding(padding: EdgeInsets.all(8.0)),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(width: 1),
+                        bottom: BorderSide(width: 1)),
+                    color: Colors.white),
+                child: ListTile(
+                  leading: Icon(Icons.credit_card),
+                  title: Text('Payment Methods'),
+                  trailing: Icon(Icons.navigate_next),
+                ),
+              )
+            ],
+          ),
         ),
       );
     }

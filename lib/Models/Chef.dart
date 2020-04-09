@@ -11,6 +11,7 @@ class Chef {
   String type;
   double rating;
   int numReviews;
+  String mainImage;
 
   Chef({this.id, this.rate, this.name, this.menu});
 
@@ -25,6 +26,7 @@ class Chef {
     this.type = map['type'];
     this.rating = map['rating'].toDouble();
     this.numReviews = map['numReviews'];
+    this.mainImage = map['mainImage'];
   }
 
   factory Chef.fromFirestore(DocumentSnapshot snapshot){
