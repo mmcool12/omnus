@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/Firestore/ReviewFunctions.dart';
 import 'package:omnus/Models/Chat.dart';
@@ -119,22 +120,14 @@ class ChefDetailsScreen extends StatelessWidget {
                                             horizontal: 2)),
                                     Container(
                                       height: 30,
-                                      child: ListView.builder(
-                                          shrinkWrap: true,
-                                          reverse: true,
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: 5,
-                                          itemBuilder: (context, index) {
-                                            return (chef.numReviews > 0
-                                                ? Icon(
-                                                    chef.rating > index
-                                                        ? Icons.star
-                                                        : Icons.star_border,
-                                                    color: Colors.amber,
-                                                    size: 22,
-                                                  )
-                                                : Text(''));
-                                          }),
+                                      alignment: Alignment.centerLeft,
+                                      child: GFRating(
+                                        itemCount: (chef.numReviews > 0 ? 5: 0),
+                                        value: chef.rating,
+                                        size: 24,
+                                        color: Colors.amber,
+                                        borderColor: Colors.amber,
+                                      ),
                                     ),
                                     Text(
                                       (chef.numReviews > 0 ? '(${chef.numReviews})' : "")                                      
