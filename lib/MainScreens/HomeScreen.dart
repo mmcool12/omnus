@@ -88,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
           //   'Hello, ${user.firstName}',
             style: TextStyle(color: Colors.black),
           ),
-<<<<<<< HEAD
           brightness: Brightness.light,
           backgroundColor: Colors.white,
           actions: <Widget>[
@@ -101,16 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () =>
                     showSearch(context: context, delegate: SearchBar())
             ),
-=======
-          actions: <Widget>[
-            // IconButton(
-            //     icon: Icon(
-            //       Icons.search,
-            //     ),
-            //     onPressed: () =>
-            //         showSearch(context: context, delegate: SearchBar())
-            // ),
->>>>>>> 3b51d1a9c32b2868f9ca254c45fda49675e9c1d6
           ],
         ),
         body: FutureBuilder<QuerySnapshot>(

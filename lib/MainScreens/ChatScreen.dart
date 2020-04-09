@@ -20,14 +20,10 @@ class ChatScreen extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
         title: Text('Messages', style: TextStyle(color: Colors.black)),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         brightness: Brightness.light,
-=======
-        title: Text('Messages',style: TextStyle(color: Colors.black)),
->>>>>>> 3b51d1a9c32b2868f9ca254c45fda49675e9c1d6
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: ChatFunctions().getUsersChats(user.id),

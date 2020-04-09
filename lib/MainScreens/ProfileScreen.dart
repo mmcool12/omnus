@@ -33,11 +33,8 @@ class ProfileScreen extends StatelessWidget {
     } else {
       return Scaffold(
         appBar: AppBar(
-<<<<<<< HEAD
           backgroundColor: Colors.white,
           brightness: Brightness.light,
-=======
->>>>>>> 3b51d1a9c32b2868f9ca254c45fda49675e9c1d6
           title: Text(
             'Profile',
             style: TextStyle(color: Colors.black),
