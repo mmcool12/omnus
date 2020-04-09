@@ -26,6 +26,7 @@ class SplashScreen extends StatelessWidget {
           home: AuthScreen(),
           theme: ThemeData(
             appBarTheme: AppBarTheme(
+              brightness: Brightness.light,
               color: Colors.white,
               iconTheme: IconThemeData(
                 color: Colors.black

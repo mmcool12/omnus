@@ -31,7 +31,6 @@ class ChefScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('Chef, ${chef.lastName}'),
-            brightness: Brightness.light,
           ),
           body: Center(
               child: SizedBox(
@@ -53,7 +52,6 @@ class ChefScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text('Become a chef today'),
-          brightness: Brightness.light,
         ),
         body: Center(
             child: SizedBox(

@@ -61,9 +61,6 @@ class ChefDetailsScreen extends StatelessWidget {
           'Chef ${chef.name}',
           style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
-        brightness: Brightness.light,
-        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Padding(

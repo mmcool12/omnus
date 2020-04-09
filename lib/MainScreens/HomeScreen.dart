@@ -88,8 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
           //   'Hello, ${user.firstName}',
             style: TextStyle(color: Colors.black),
           ),
-          brightness: Brightness.light,
-          backgroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
                 alignment: Alignment.centerLeft,

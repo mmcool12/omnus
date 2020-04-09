@@ -100,9 +100,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.chat.chefName, style: TextStyle(color: Colors.black)),
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        brightness: Brightness.light,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
