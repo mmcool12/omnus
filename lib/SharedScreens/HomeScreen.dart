@@ -7,7 +7,7 @@ import 'package:omnus/Components/SearchBar.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
 import 'package:omnus/Firestore/UserFunctions.dart';
-import 'package:omnus/MainScreens/ChefDetailsScreen.dart';
+import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
 //import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
@@ -19,9 +19,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool searching = false;
-  String query = "";
-  Chef hey = new Chef(id: 'sjkjkd', rate: 6, name: 'yummy', menu: {});
+  Future<QuerySnapshot> allChefs;
+
+  @override
+  void initState() {
+    allChefs = SearchFunctions().getAllChefs();
+    super.initState();
+  }
+
+
 
   //Unused
   void showChefPopup(BuildContext context, Chef chef) {
@@ -96,12 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                 ),
                 onPressed: () =>
-                    showSearch(context: context, delegate: SearchBar())
+                    showSearch(context: context, delegate: SearchBar(user: user))
             ),
           ],
         ),
         body: FutureBuilder<QuerySnapshot>(
-            future: SearchFunctions().getAllChefs(),
+            future: allChefs,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Chef> chefs = [];
@@ -113,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: List.generate(chefs.length, (index) {
                     return Padding(
                       padding: const EdgeInsets.all(8),
-                      child: GridCard(chefs: chefs, index: index,),
+                      child: GridCard(chefs: chefs, index: index,user: user),
                     );
                   }),
                 );
@@ -132,11 +138,13 @@ class GridCard extends StatelessWidget {
   const GridCard({
     Key key,
     @required this.chefs,
-    @required this.index
+    @required this.index,
+    @required this.user
   }) : super(key: key);
 
   final List<Chef> chefs;
   final int index;
+  final User user;
 
     String chefType(String type) {
     if (type == 'both') {
@@ -152,9 +160,8 @@ class GridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () => Navigator.push(
-          context, 
-          MaterialPageRoute(builder: (context) => ChefDetailsScreen(chef: chefs[index]))),
+        onTap: () => Navigator.push(context, 
+         MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: chefs[index], user: user))),
         child: Column(
           children: <Widget>[
             Expanded(

@@ -40,7 +40,9 @@ class ProfileScreen extends StatelessWidget {
           actions: <Widget>[
             FlatButton(
                 onPressed: () async {
-                  AuthFunctions().signOut();
+                  await AuthFunctions().signOut().then((onValue) {
+                    Navigator.popUntil(context, (Route<dynamic> route) => route.isFirst);
+                  });
                 },
                 child: Text('Sign out'))
           ],

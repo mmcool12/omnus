@@ -4,11 +4,19 @@ import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:getflutter/shape/gf_avatar_shape.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
-import 'package:omnus/MainScreens/ChefDetailsScreen.dart';
+import 'package:omnus/Models/User.dart';
+import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
 import 'package:omnus/Models/Chef.dart';
 
 class SearchBar extends SearchDelegate<Chef> {
   final recentSearches = [];
+  final User user;
+
+  SearchBar({
+      Key key,
+      @required this.user
+    }) : super();
+
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -57,11 +65,9 @@ class SearchBar extends SearchDelegate<Chef> {
 
                     return Container(
                       child: ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    ChefDetailsScreen(chef: chef))),
+                        onTap: () => Navigator.push(context,  
+                        MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: chef, user: user))),
+
                         leading: Container(
                           //color: Colors.amber,
                           width: 55,
@@ -163,13 +169,11 @@ class SearchBar extends SearchDelegate<Chef> {
               return ListView.builder(
                   itemCount: results.length,
                   itemBuilder: (context, index) {
+                    Chef chef = results[index];
                     return ListTile(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  ChefDetailsScreen(chef: results[index]))),
-                      title: Text(results[index].name),
+                      onTap: () => Navigator.push(context,  
+                        MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: chef, user: user))),
+                      title: Text(chef.name),
                     );
                   });
             }

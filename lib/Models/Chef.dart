@@ -12,6 +12,7 @@ class Chef {
   double rating;
   int numReviews;
   String mainImage;
+  List<dynamic> images;
 
   Chef({this.id, this.rate, this.name, this.menu});
 
@@ -27,6 +28,7 @@ class Chef {
     this.rating = map['rating'].toDouble();
     this.numReviews = map['numReviews'];
     this.mainImage = map['mainImage'];
+    this.images = [];
   }
 
   factory Chef.fromFirestore(DocumentSnapshot snapshot){

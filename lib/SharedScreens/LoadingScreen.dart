@@ -2,11 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:omnus/MainScreens/ChatScreen.dart';
-import 'package:omnus/MainScreens/HomeScreen.dart';
-import 'package:omnus/MainScreens/ProfileScreen.dart';
+import 'package:omnus/SharedScreens/ChatScreen.dart';
+import 'package:omnus/SharedScreens/HomeScreen.dart';
+import 'package:omnus/SharedScreens/ProfileScreen.dart';
 import 'package:omnus/Models/User.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -24,10 +25,8 @@ class LoadingScreen extends StatefulWidget {
 //User user;
 
 class _LoadingScreenState extends State<LoadingScreen> {
-
-  
   int currentIndex = 1;
-  User user;
+  Widget currentScreen;
 
   void handleTap(int index) {
     setState(() {
@@ -35,18 +34,39 @@ class _LoadingScreenState extends State<LoadingScreen> {
     });
   }
 
+  final List<Widget> _children = [
+    ProfileScreen(),
+    HomeScreen(),
+    ChatScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    
-
-    final List<Widget> _children = [
-      ProfileScreen(),
-      HomeScreen(),
-      ChatScreen(),
-    ];
-
-    return Scaffold(
-          body: _children[currentIndex],
+    return WillPopScope(
+      onWillPop: () => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+            title: Text('Do you really want to exit the app'),
+            actions: <Widget>[
+              Row(
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () => exit(0),
+                    child: Text('Yes'),
+                  ),
+                  FlatButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: Text('No'),
+                  ),
+                ],
+              ),
+            ]),
+      ),
+      child: Scaffold(
+          body: IndexedStack(
+            index: currentIndex,
+            children: _children,
+          ),
           bottomNavigationBar: BottomNavigationBar(
               onTap: handleTap,
               currentIndex: currentIndex,
@@ -63,6 +83,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   icon: Icon(Icons.message),
                   title: Text('messages'),
                 ),
-              ]));
+              ])),
+    );
   }
 }

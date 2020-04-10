@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
-import 'package:omnus/MainScreens/MessagingScreen.dart';
+import 'package:omnus/SharedScreens/MessagingScreen.dart';
 import 'package:omnus/Models/Chat.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +47,7 @@ class ChatScreen extends StatelessWidget{
                         backgroundColor: Colors.blueAccent,
                       ),
                       onTap: () => Navigator.push(context, 
-                        MaterialPageRoute(builder: (context) => MessagingScreen(chat: chats[index]))),
+                        MaterialPageRoute(builder: (context) => MessagingScreen(chat: chats[index], user: user))),
                       title: Text(chats[index].chefName ?? "help"),
                     ),
                   );

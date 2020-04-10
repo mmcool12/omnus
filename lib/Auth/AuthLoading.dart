@@ -12,7 +12,7 @@ class AuthLoading extends StatelessWidget {
     return Container(
       child: Center(
         child: SpinKitRing(
-          color: Colors.yellow[800],
+          color: Colors.blue,
           size: ratio*16,
         ),
       ),

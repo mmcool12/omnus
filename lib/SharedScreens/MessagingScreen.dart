@@ -5,14 +5,15 @@ import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/Models/Chat.dart';
 import 'package:omnus/Models/Message.dart';
 import 'package:omnus/Models/User.dart';
-import 'package:provider/provider.dart';
 
 class MessagingScreen extends StatefulWidget{
   final Chat chat;
+  final User user;
 
   MessagingScreen({
     Key key,
-    @required this.chat
+    @required this.chat,
+    @required this.user
   }) : super(key: key);
 
   @override
@@ -27,13 +28,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    User user;
-    DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
-    if (snapshot != null) {
-      if (snapshot.data != null) {
-        user = User.fromFirestore(snapshot);
-      }
-    }
 
     double width = MediaQuery.of(context).size.width;
     //double height = MediaQuery.of(context).size.height;
@@ -41,16 +35,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     void sendMessage(){
       if(textController.text != "") {
-        ChatFunctions().createMessage(widget.chat.id, user.id, textController.text);
+        ChatFunctions().createMessage(widget.chat.id, widget.user.id, textController.text);
         textController.clear();
       }
     }
 
-    @override
-    void dispose() {
-      textController.dispose();
-      super.dispose();
-    }
 
     Widget listview(List<Message> messages) {
       return ListView.separated(
@@ -67,7 +56,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 return Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Align(
-        alignment: message.sender == user.id ? Alignment.centerRight : Alignment.centerLeft,
+        alignment: message.sender == widget.user.id ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
           constraints: BoxConstraints(
             maxWidth: width*.65
@@ -77,8 +66,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
             radius: Radius.circular(25),
             nipRadius: 3,
             nipOffset: 5,
-            color: message.sender == user.id ? Colors.blueAccent : Colors.blueGrey,
-            nip: message.sender == user.id ? BubbleNip.rightBottom : BubbleNip.leftBottom,
+            color: message.sender == widget.user.id ? Colors.blueAccent : Colors.blueGrey,
+            nip: message.sender == widget.user.id ? BubbleNip.rightBottom : BubbleNip.leftBottom,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Text(

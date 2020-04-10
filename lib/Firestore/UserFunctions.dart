@@ -19,6 +19,7 @@ class UserFunctions {
   }
 
   Stream<DocumentSnapshot> getUserStreamByID(String id) {
+    if(id == null) return null;
     return _db.collection('users').document(id).snapshots();
   }
 
