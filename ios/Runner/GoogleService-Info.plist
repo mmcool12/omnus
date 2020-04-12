@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1040673971851-rmq5rdhvtd9vkvcle11bhsrbv2f2m955.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1040673971851-rmq5rdhvtd9vkvcle11bhsrbv2f2m955</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD7nML68MJbFGfMkl3pvo_yLTqoBllOT6E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1040673971851</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.koalemos.cirro</string>
+	<key>PROJECT_ID</key>
+	<string>titan-2a457</string>
+	<key>STORAGE_BUCKET</key>
+	<string>titan-2a457.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1040673971851:ios:4d47e29536b8a96914be8e</string>
+	<key>DATABASE_URL</key>
+	<string>https://titan-2a457.firebaseio.com</string>
+</dict>
+</plist>

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Components/SearchBar.dart';
@@ -86,23 +88,31 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (user != null) {
-      return Scaffold(
-        appBar: AppBar(
+      return PlatformScaffold(
+        appBar: PlatformAppBar(
            title: Text(
              'Search',
-
           //   'Hello, ${user.firstName}',
             style: TextStyle(color: Colors.black),
           ),
-          actions: <Widget>[
-            IconButton(
-                alignment: Alignment.centerLeft,
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.black,
-                ),
-                onPressed: () =>
-                    showSearch(context: context, delegate: SearchBar(user: user))
+          ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
+          trailingActions: <Widget>[
+            Material(
+                          child: PlatformIconButton(
+                  //alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.all(8),
+                  androidIcon: Icon(
+                    Icons.search,
+                    size: 20,
+                    color: Colors.black,
+                  ),
+                  iosIcon: Icon(
+                    CupertinoIcons.search,
+                    color: Colors.black,
+                  ),
+                  onPressed: () =>
+                      showSearch(context: context, delegate: SearchBar(user: user))
+              ),
             ),
           ],
         ),
@@ -161,7 +171,7 @@ class GridCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () => Navigator.push(context, 
-         MaterialPageRoute(builder: (BuildContext context) => ChefDetailsScreen(chef: chefs[index], user: user))),
+         platformPageRoute(context: context, builder: (BuildContext context) => ChefDetailsScreen(chef: chefs[index], user: user))),
         child: Column(
           children: <Widget>[
             Expanded(

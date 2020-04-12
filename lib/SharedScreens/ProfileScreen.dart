@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
@@ -22,12 +23,13 @@ class ProfileScreen extends StatelessWidget {
 
     if (user == null) {
       print(user.profileImage);
-      return Scaffold(
-        appBar: AppBar(
+      return PlatformScaffold(
+        appBar: PlatformAppBar(
           title: Text(
             'Loading',
             style: TextStyle(color: Colors.black),
           ),
+          ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
         ),
       );
     } else {

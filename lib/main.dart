@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
       home: AuthScreen(),
       theme: ThemeData(
+        primaryColorDark: Colors.white,
         appBarTheme: AppBarTheme(
           brightness: Brightness.light,
           color: Colors.white,

@@ -5,6 +5,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/SharedScreens/ChatScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
 import 'package:omnus/SharedScreens/ProfileScreen.dart';
@@ -62,13 +63,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
               ),
             ]),
       ),
-      child: Scaffold(
+      child: PlatformScaffold(
           body: IndexedStack(
+            //key: Key('$currentIndex'),
             index: currentIndex,
             children: _children,
           ),
-          bottomNavigationBar: BottomNavigationBar(
-              onTap: handleTap,
+          bottomNavBar: PlatformNavBar(
+              itemChanged: handleTap,
               currentIndex: currentIndex,
               items: [
                 BottomNavigationBarItem(
@@ -83,7 +85,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   icon: Icon(Icons.message),
                   title: Text('messages'),
                 ),
-              ])),
+              ],
+              ios: (_) => CupertinoTabBarData(
+                backgroundColor: Colors.white.withAlpha(200),
+                ),
+          )
+          ),
     );
   }
 }

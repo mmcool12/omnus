@@ -34,6 +34,8 @@ dependencies:
   firebase_storage: ^3.1.5
   cached_network_image: ^2.0.0
   transparent_image: ^1.0.0
+  flutter_platform_widgets: ^0.32.5
+
 
 
 

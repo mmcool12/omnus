@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/Firestore/ReviewFunctions.dart';
@@ -50,8 +51,8 @@ class ChefDetailsScreen extends StatelessWidget {
 
     double height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      appBar: AppBar(
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
         title: Text(
           'Chef ${chef.name}',
           style: TextStyle(color: Colors.black),
@@ -138,9 +139,9 @@ class ChefDetailsScreen extends StatelessWidget {
                                             chat = Chat.fromFirestore(result));
                                     return Navigator.push(
                                         context,
-                                        MaterialPageRoute(
+                                        platformPageRoute(
                                             builder: (context) =>
-                                                MessagingScreen(chat: chat, user: user)));
+                                                MessagingScreen(chat: chat, user: user), context: context));
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -233,26 +234,29 @@ class ReviewTile extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: ListTile(
-                          leading: Stack(
-                            alignment: AlignmentDirectional.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 55,
-                              ),
-                              Text(
-                                '${reviews[index].rating}',
-                                style: TextStyle(color: Colors.black),
-                              )
-                            ],
-                          ),
-                          title: Text(reviews[index].title),
-                          subtitle: Text(
-                            reviews[index].description,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                        child: Material(
+                          color: Colors.red,
+                                                  child: ListTile(
+                            leading: Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 55,
+                                ),
+                                Text(
+                                  '${reviews[index].rating}',
+                                  style: TextStyle(color: Colors.black),
+                                )
+                              ],
+                            ),
+                            title: Text(reviews[index].title),
+                            subtitle: Text(
+                              reviews[index].description,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       );
@@ -305,22 +309,24 @@ class MenuTiles extends StatelessWidget {
             List<dynamic> keys = chef.menu.keys.toList();
             return Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: ListTile(
-                dense: true,
-                title: Text(
-                  keys[index],
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+              child: Material(
+                              child: ListTile(
+                  dense: true,
+                  title: Text(
+                    keys[index],
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  chef.menu[keys[index]],
-                  style: TextStyle(
-                    fontSize: 20,
+                  subtitle: Text(
+                    chef.menu[keys[index]],
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
+                  isThreeLine: true,
                 ),
-                isThreeLine: true,
               ),
             );
           },
