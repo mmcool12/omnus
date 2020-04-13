@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Auth/AuthScreen.dart';
 import 'package:omnus/SharedScreens/BabyScreen.dart';
 import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
@@ -33,8 +35,9 @@ class MyApp extends StatelessWidget {
           StreamProvider<FirebaseUser>.value(
               value: FirebaseAuth.instance.onAuthStateChanged),
         ],
-        child: MaterialApp(
+        child: PlatformApp(
       home: AuthScreen(),
+      android:(_) => MaterialAppData(
       theme: ThemeData(
         primaryColorDark: Colors.white,
         appBarTheme: AppBarTheme(
@@ -45,6 +48,14 @@ class MyApp extends StatelessWidget {
           ),
           ),
         ),
+      ),
+      ios: (_) => CupertinoAppData(
+        theme: CupertinoThemeData(
+          brightness: Brightness.light,
+          primaryColor: Colors.blueAccent,
+          primaryContrastingColor: Colors.blue
+        )
+      ),
       routes: {
       '/Auth': (context) => BabyScreen(),
       '/Auth/Login': (context) => LoginScreen(),

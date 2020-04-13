@@ -41,22 +41,6 @@ class UserFunctions {
     return await _db.collection('chefs').limit(20).getDocuments();
   }
 
-  createChef(User user) async{
-    DocumentReference ref;
-    await _db.collection('chefs').add({
-      'firstName' : user.firstName,
-      'lastName' : user.lastName,
-      'name' : user.name,
-      'rate' : 0,
-      'menu' : {},
-      'zip' : user.zipcode
-    }).then((result) => ref = result);
-
-    await _db.collection('users').document(user.id).updateData({
-      'chefId': ref.documentID
-    });
-
-  }
 }
 
 class UserStream {

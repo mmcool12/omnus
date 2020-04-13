@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/SharedScreens/ChatScreen.dart';
@@ -74,15 +75,33 @@ class _LoadingScreenState extends State<LoadingScreen> {
               currentIndex: currentIndex,
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
+                  icon: PlatformWidget(
+                    ios: (_) => Icon(
+                      CupertinoIcons.profile_circled,
+                      size: 35,
+                    ),
+                    android: (_) => Icon(Icons.person),
+                  ),
                   title: Text('account'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.fastfood),
+                  icon: PlatformWidget(
+                    ios: (_) => Icon(
+                      CupertinoIcons.home,
+                      size: 35,
+                    ),
+                    android: (_) => Icon(Icons.home),
+                  ),
                   title: Text('home'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.message),
+                  icon: PlatformWidget(
+                    ios: (_) => Icon(
+                      CupertinoIcons.conversation_bubble,
+                      size: 35,
+                    ),
+                    android: (_) => Icon(Icons.message),
+                  ),
                   title: Text('messages'),
                 ),
               ],

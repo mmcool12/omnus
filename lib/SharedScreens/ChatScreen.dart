@@ -8,7 +8,7 @@ import 'package:omnus/Models/User.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
-  
+
   ChatScreen({Key key, })
       : super(key: key);
 
@@ -55,6 +55,7 @@ class ChatScreen extends StatelessWidget {
                           child: Text('delete',style: TextStyle(color: Colors.white, fontSize: 20),),
                         ),
                         child: Material(
+                          color: Colors.transparent,
                           child: ListTile(
                             leading: CircleAvatar(
                               backgroundColor: Colors.blueAccent,

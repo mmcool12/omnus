@@ -21,7 +21,7 @@ class User {
     this.firstName = map['firstName'];
     this.lastName = map['lastName'];
     this.name = this.firstName + ' ' + this.lastName;
-    this.zipcode = map['zipcode'];
+    this.zipcode = map['zip'];
     this.chefId = map['chefId'];
     this.profileImage = map['profileImage'];
   }

@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
+import 'package:omnus/Components/ImageList.dart';
+import 'package:omnus/Components/MenuTiles.dart';
+import 'package:omnus/Components/ReviewTiles.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/Firestore/ReviewFunctions.dart';
 import 'package:omnus/Models/Chat.dart';
@@ -23,28 +26,6 @@ class ChefDetailsScreen extends StatelessWidget {
     @required this.user,
   }) : super(key: key);
 
-  List<Widget> getMenu() {
-    List<Widget> toReturn = [];
-    chef.menu.forEach((key, value) => toReturn.add(ListView.separated(
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(key),
-            subtitle: Text(value),
-            isThreeLine: true,
-          );
-        },
-        separatorBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
-            child: Container(
-              decoration:
-                  BoxDecoration(border: Border(bottom: BorderSide(width: .5))),
-            ),
-          );
-        },
-        itemCount: chef.menu.length)));
-    return toReturn;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +33,7 @@ class ChefDetailsScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return PlatformScaffold(
+      iosContentPadding: true,
       appBar: PlatformAppBar(
         title: Text(
           'Chef ${chef.name}',
@@ -66,7 +48,7 @@ class ChefDetailsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: height * .2,
+                height: height * .15,
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -164,39 +146,9 @@ class ChefDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                height: height * .2,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Container(
-                          width: height * .2,
-                          color: Colors.blueAccent,
-                          child: Center(
-                            child: Text('Image'),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
-                child: Text(
-                  'Menu',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
+              ImageList(height: height, chef: chef, edit: false),
+              SizedBox(height: 20),
               MenuTiles(chef: chef),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-                child: Text(
-                  'Reviews',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
               ReviewTile(chef: chef),
             ],
           ),
@@ -206,141 +158,3 @@ class ChefDetailsScreen extends StatelessWidget {
   }
 }
 
-class ReviewTile extends StatelessWidget {
-  const ReviewTile({
-    Key key,
-    @required this.chef,
-  }) : super(key: key);
-
-  final Chef chef;
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-        future: ReviewFunctions().getReviewsByChefID(chef.id),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data.documents.isNotEmpty) {
-              List<Review> reviews = [];
-              for (DocumentSnapshot snap in snapshot.data.documents)
-                reviews.add(Review.fromFirestore(snap));
-              return Container(
-                decoration:
-                    BoxDecoration(border: Border(top: BorderSide(width: .5))),
-                child: ListView.separated(
-                    primary: false,
-                    shrinkWrap: true,
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Material(
-                          color: Colors.red,
-                                                  child: ListTile(
-                            leading: Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                  size: 55,
-                                ),
-                                Text(
-                                  '${reviews[index].rating}',
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                            title: Text(reviews[index].title),
-                            subtitle: Text(
-                              reviews[index].description,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(width: .5))),
-              ),
-            );
-          },
-                  ),
-              );
-            } else {
-              return Center(
-                child: Text('No reviews',
-                style: TextStyle(
-                  fontSize: 20
-                ),)
-              );
-            }
-          } else {
-            return Text('Loading');
-          }
-        });
-  }
-}
-
-class MenuTiles extends StatelessWidget {
-  const MenuTiles({
-    Key key,
-    @required this.chef,
-  }) : super(key: key);
-
-  final Chef chef;
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> toReturn = [];
-
-    return Container(
-      decoration: BoxDecoration(border: Border(top: BorderSide(width: .5))),
-      child: ListView.separated(
-          primary: false,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            List<dynamic> keys = chef.menu.keys.toList();
-            return Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Material(
-                              child: ListTile(
-                  dense: true,
-                  title: Text(
-                    keys[index],
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    chef.menu[keys[index]],
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  isThreeLine: true,
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(width: .5))),
-              ),
-            );
-          },
-          itemCount: chef.menu.length),
-    );
-  }
-}

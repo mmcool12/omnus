@@ -98,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
           trailingActions: <Widget>[
             Material(
+              color: Colors.transparent,
                           child: PlatformIconButton(
                   //alignment: Alignment.centerLeft,
                   padding: EdgeInsets.all(8),
@@ -181,17 +182,16 @@ class GridCard extends StatelessWidget {
                   future: ImageFunctions().getImage(chefs[index].mainImage),
                   builder: (context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                      return FadeInImage.memoryNetwork(
-                        fadeInDuration: const Duration(milliseconds: 200),
-                        fadeOutDuration: const Duration(milliseconds: 200),
-                        placeholder: kTransparentImage, 
-                        image: snapshot.data
-                      );
+                      return CachedNetworkImage(
+                              imageUrl: snapshot.data,
+                              placeholder: (context, url) => Center(child: PlatformCircularProgressIndicator()),
+                              fit: BoxFit.fitHeight,
+                            );
                       // return Image(
                       //   image: CachedNetworkImageProvider(snapshot.data)
                       // );
                     } else {
-                      return Center(child: Text('Loading'));
+                      return Center(child: PlatformCircularProgressIndicator());
                     }
                   }
                   ),
