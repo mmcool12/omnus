@@ -187,9 +187,6 @@ class GridCard extends StatelessWidget {
                               placeholder: (context, url) => Center(child: PlatformCircularProgressIndicator()),
                               fit: BoxFit.fitHeight,
                             );
-                      // return Image(
-                      //   image: CachedNetworkImageProvider(snapshot.data)
-                      // );
                     } else {
                       return Center(child: PlatformCircularProgressIndicator());
                     }
@@ -220,12 +217,12 @@ class GridCard extends StatelessWidget {
                               vertical: 1)),
                       Row(
                         children: <Widget>[
-                          Text(
-                            chefType(chefs[index].type),
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
+                          // Text(
+                          //   chefType(chefs[index].type),
+                          //   style: TextStyle(
+                          //     fontSize: 20,
+                          //   ),
+                          // ),
                           GFRating(
                             allowHalfRating: true,
                             value: chefs[index].rating,

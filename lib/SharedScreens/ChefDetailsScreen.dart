@@ -148,7 +148,7 @@ class ChefDetailsScreen extends StatelessWidget {
               ),
               ImageList(height: height, chef: chef, edit: false),
               SizedBox(height: 20),
-              MenuTiles(chef: chef),
+              MenuTiles(chef: chef, edit: false),
               ReviewTile(chef: chef),
             ],
           ),

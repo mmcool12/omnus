@@ -158,15 +158,7 @@ class _ChefEditScreenState extends State<ChefEditScreen> {
                       ),
                       ImageList(height: height, chef: chef, edit: true),
                       SizedBox(height: 20),
-                      MenuTiles(chef: chef),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-                        child: Text(
-                          'Reviews',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 30),
-                        ),
-                      ),
+                      MenuTiles(chef: chef, edit: true),
                     ],
                   ),
                 ),

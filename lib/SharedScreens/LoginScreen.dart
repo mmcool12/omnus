@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Auth/AuthLoading.dart';
 
@@ -195,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -244,11 +245,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       (loading ? 
                         Padding(padding: EdgeInsets.only(bottom: 15), child: AuthLoading()) 
                         : Padding(padding: EdgeInsets.all(0))),
-                      emailField(),
+                      Material(color: Colors.transparent, child: emailField()),
                       SizedBox(
                         height: 30,
                       ),
-                      passwordField(),
+                      Material(color: Colors.transparent, child: passwordField()),
                       //forgotPassword(),
                       loginButton(),
                       signUp()

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:omnus/Components/AddMenuItemModal.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
 
@@ -17,6 +19,12 @@ class MenuTiles extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: ExpansionTile(
+        leading: (!edit ? null : 
+          IconButton(
+            icon: Icon(PlatformIcons(context).addCircledOutline), 
+            onPressed: () async => AddMenuItemModal().showModal(context, chef)
+          )
+        ),
           backgroundColor: Colors.white,
           title: Text(
             'Menu',
@@ -75,7 +83,7 @@ class MenuTiles extends StatelessWidget {
                                           '\$${item['price']}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 15,
+                                              fontSize: 17,
                                               color: Colors.teal),
                                         ),
                                       ],
