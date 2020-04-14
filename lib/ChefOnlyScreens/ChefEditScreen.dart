@@ -134,19 +134,7 @@ class _ChefEditScreenState extends State<ChefEditScreen> {
                                                 : ""))
                                           ],
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(3),
-                                            color: Colors.blueAccent,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12.0,
-                                                horizontal: 24.0),
-                                            child: Text('See Preview'),
-                                          ),
-                                        )
+                                        ActiveToggle(chef: chef)
                                       ],
                                     ),
                                   ),
@@ -166,6 +154,72 @@ class _ChefEditScreenState extends State<ChefEditScreen> {
             );
           }
         });
+  }
+}
+
+class ActiveToggle extends StatelessWidget {
+  const ActiveToggle({
+    Key key,
+    @required this.chef,
+  }) : super(key: key);
+
+  final Chef chef;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+
+        var ready = true;
+        var subtitle = 'This means that people will be able to see and search for you are you ready?';
+
+        if (chef.menu.length > 1 && chef.images.length > 1 && chef.profileImage == ""){
+          subtitle = 'Add picture but okay';
+        }
+        if(chef.menu.length == 0 && chef.images.length == 0){
+          ready = false;
+          subtitle = 'Must add menu item and picture to be active';
+        }
+        if(chef.active){
+          subtitle = "This means you will no longer get order request";
+        }
+          showPlatformDialog(
+            context: context, 
+            builder: (_) => PlatformAlertDialog(
+              title: Text('Active'),
+              content: Text(subtitle),
+              actions: <Widget>[
+                PlatformDialogAction(
+                  child: Text('Cancel'), 
+                  onPressed: () => Navigator.pop(context)
+                ),
+                if(ready)(
+                PlatformDialogAction(
+                  child: Text('OK'), 
+                  onPressed: () { 
+                    ChefFunctions().toggleActive(chef);
+                    Navigator.pop(context);
+                  }
+                )
+                )
+              ],
+            )
+          );
+      },
+          child: Container(
+        decoration: BoxDecoration(
+          borderRadius:
+              BorderRadius.circular(3),
+          color: chef.active ? Colors.tealAccent[400] : Colors.red[400],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 24.0),
+          child: Text((chef.active ? 'Active' : 'Inactive')),
+        ),
+      ),
+    );
   }
 }
 

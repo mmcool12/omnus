@@ -14,7 +14,8 @@ class UserFunctions {
       'lastName': lastName,
       'phone': phone,
       'zipcode': zip,
-      'chefId' : ''
+      'chefId' : '',
+      'profileImage' : ''
     });
   }
 

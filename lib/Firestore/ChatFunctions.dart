@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ChatFunctions {
   final Firestore _db = Firestore.instance;
@@ -12,6 +13,10 @@ class ChatFunctions {
 
   Stream<QuerySnapshot> getUsersChats(String id){
     return _db.collection('chat').where('buyerId', isEqualTo: id).snapshots();
+  }
+
+  Stream<QuerySnapshot> getChefsChats(String id){
+    return _db.collection('chat').where('chefId', isEqualTo: id).snapshots();
   }
 
   Stream<DocumentSnapshot> getChatStream(String id){

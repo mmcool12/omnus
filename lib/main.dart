@@ -12,7 +12,6 @@ import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
 import 'package:omnus/SharedScreens/LoginScreen.dart';
 import 'package:omnus/SharedScreens/OnboardScreen.dart';
 import 'package:omnus/SharedScreens/SignupScreen.dart';
-import 'package:omnus/app.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
@@ -36,6 +35,7 @@ class MyApp extends StatelessWidget {
               value: FirebaseAuth.instance.onAuthStateChanged),
         ],
         child: PlatformApp(
+          debugShowCheckedModeBanner: false,
       home: AuthScreen(),
       android:(_) => MaterialAppData(
       theme: ThemeData(

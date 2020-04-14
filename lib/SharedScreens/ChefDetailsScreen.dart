@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Components/ImageList.dart';
 import 'package:omnus/Components/MenuTiles.dart';
 import 'package:omnus/Components/ReviewTiles.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
+import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Firestore/ReviewFunctions.dart';
 import 'package:omnus/Models/Chat.dart';
 import 'package:omnus/Models/Chef.dart';
@@ -55,10 +58,7 @@ class ChefDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Expanded(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.blueAccent,
-                            radius: 56,
-                          ),
+                          child: ProfilePic(chef: chef),
                         ),
                         Expanded(
                           flex: 2,
@@ -123,7 +123,7 @@ class ChefDetailsScreen extends StatelessWidget {
                                         context,
                                         platformPageRoute(
                                             builder: (context) =>
-                                                MessagingScreen(chat: chat, user: user), context: context));
+                                                MessagingScreen(chat: chat, user: user, type: 'user'), context: context));
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -155,6 +155,55 @@ class ChefDetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ProfilePic extends StatefulWidget {
+  const ProfilePic({
+    Key key,
+    @required this.chef,
+  }) : super(key: key);
+
+  final Chef chef;
+
+  @override
+  _ProfilePicState createState() => _ProfilePicState();
+}
+
+class _ProfilePicState extends State<ProfilePic> {
+  Future<dynamic> profilePic;
+
+  @override
+  void initState() {
+    profilePic = ImageFunctions().getImage(widget.chef.profileImage);
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<dynamic>(
+          future: this.profilePic,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              return GFAvatar(
+                backgroundColor: Colors.transparent,
+                radius: 56,
+                backgroundImage: CachedNetworkImageProvider(
+                  snapshot.data ?? "",
+                ),
+              );
+            } else {
+              return GFAvatar(
+                backgroundColor: Colors.blueAccent,
+                radius: 56,
+                child: Text(
+                    widget.chef.firstName.substring(0, 1) +
+                        widget.chef.lastName.substring(0, 1),
+                    style: TextStyle(fontSize: 56)),
+              );
+            }
+          }
+        );
   }
 }
 

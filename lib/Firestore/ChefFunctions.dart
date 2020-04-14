@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
 
 class ChefFunctions{
@@ -11,9 +12,10 @@ class ChefFunctions{
     await _db.collection('chefs').add({
       'firstName' : user.firstName,
       'lastName' : user.lastName,
-      'menu' : {},
+      'menu' : [],
       'zip' : user.zipcode,
       'images' : [],
+      'reviews' : [],
       'rating' : 0,
       'numReviews' : 0,
       'type' : 'none',
@@ -39,6 +41,12 @@ class ChefFunctions{
           item
         ])
       });
+  }
+
+  toggleActive(Chef chef) async {
+    await _db.collection('chefs').document(chef.id).updateData({
+      'active' : !chef.active
+    });
   }
 
 }

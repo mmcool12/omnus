@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -72,7 +73,12 @@ class ProfileScreen extends StatelessWidget {
                       child: Container(
                           child: Column(
                         children: <Widget>[
-                          Text(user.name),
+                          Text(
+                            user.name,
+                            style: TextStyle(
+                              fontSize: 35,
+                            ),
+                          ),
                           FlatButton(
                               color: Colors.blueAccent,
                               onPressed: () async {
@@ -107,11 +113,11 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Padding(padding: EdgeInsets.all(8.0)),
-              SettingsTile(
-                title: 'Payment methods',
-                leading: Icon(Icons.credit_card),
-                onTap: () => null,
-              )
+              // SettingsTile(
+              //   title: 'Payment methods',
+              //   leading: Icon(Icons.credit_card),
+              //   onTap: () => null,
+              // )
             ],
           ),
         ),
@@ -178,7 +184,7 @@ class _ProfilePicState extends State<ProfilePic> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        ImageSourceModal().showModal(context, 'userProfile', widget.user.id);
+        await ImageSourceModal().showModal(context, 'userProfile', widget.user.id);
       },
       child: FutureBuilder<dynamic>(
           future: this.profilePic,
@@ -188,8 +194,8 @@ class _ProfilePicState extends State<ProfilePic> {
               return GFAvatar(
                 backgroundColor: Colors.transparent,
                 radius: 65,
-                backgroundImage: NetworkImage(
-                  snapshot.data ?? 'https://via.placeholder.com/150',
+                backgroundImage: CachedNetworkImageProvider(
+                  snapshot.data ?? "",
                 ),
               );
             } else {

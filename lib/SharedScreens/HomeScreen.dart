@@ -55,24 +55,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
           trailingActions: <Widget>[
-            Material(
-              color: Colors.transparent,
-                          child: PlatformIconButton(
-                  //alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.all(8),
-                  androidIcon: Icon(
-                    Icons.search,
-                    size: 20,
-                    color: Colors.black,
-                  ),
-                  iosIcon: Icon(
-                    CupertinoIcons.search,
-                    color: Colors.black,
-                  ),
-                  onPressed: () =>
-                      showSearch(context: context, delegate: SearchBar(user: user))
-              ),
-            ),
+            // Material(
+            //   color: Colors.transparent,
+            //               child: PlatformIconButton(
+            //       //alignment: Alignment.centerLeft,
+            //       padding: EdgeInsets.all(8),
+            //       androidIcon: Icon(
+            //         Icons.search,
+            //         size: 20,
+            //         color: Colors.black,
+            //       ),
+            //       iosIcon: Icon(
+            //         CupertinoIcons.search,
+            //         color: Colors.black,
+            //       ),
+            //       onPressed: () =>
+            //           showSearch(context: context, delegate: SearchBar(user: user))
+            //   ),
+            // ),
           ],
         ),
         body: FutureBuilder<QuerySnapshot>(

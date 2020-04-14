@@ -52,10 +52,13 @@ class _OnboardScreenState extends State<OnboardScreen> {
     String lastName = lastText.text.trim();
     String phoneNumber = phoneText.text.trim();
     String zipCode = zipText.text.trim();
-
-    await UserFunctions().createFireStoreUser(user.uid, data['email'], firstName, lastName, phoneNumber, zipCode);
-    await Future.delayed(Duration(milliseconds: 300));
-    Navigator.popUntil(context,ModalRoute.withName('/'));
+    try{
+      await UserFunctions().createFireStoreUser(user.uid, data['email'], firstName, lastName, phoneNumber, zipCode);
+      await Future.delayed(Duration(milliseconds: 300));
+      Navigator.popUntil(context,ModalRoute.withName('/'));
+    } catch (e){
+      print(e);
+    }
   }
 
   Widget firstField() {
@@ -248,6 +251,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
     user = Provider.of<FirebaseUser>(context);
 
     return Scaffold(
+      backgroundColor: Colors.blue[400],
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(

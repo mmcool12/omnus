@@ -11,8 +11,9 @@ import 'package:omnus/Models/User.dart';
 class MessagingScreen extends StatefulWidget {
   final Chat chat;
   final User user;
+  final String type;
 
-  MessagingScreen({Key key, @required this.chat, @required this.user})
+  MessagingScreen({Key key, @required this.chat, @required this.user, @required this.type})
       : super(key: key);
 
   @override
@@ -25,19 +26,32 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    //double height = MediaQuery.of(context).size.height;
     final textController = TextEditingController();
 
     void sendMessage() {
       if (textController.text != "") {
+        if(widget.type == 'user') {
         ChatFunctions()
             .createMessage(widget.chat.id, widget.user.id, textController.text);
+        } else{
+          ChatFunctions()
+            .createMessage(widget.chat.id, widget.user.chefId, textController.text);
+        }
         textController.clear();
+      }
+    }
+
+    bool checkSender(Message message){
+      if(widget.type == 'user'){
+        return message.sender == widget.user.id;
+      } else{
+        return message.sender == widget.user.chefId;
       }
     }
 
     Widget listview(List<Message> messages) {
       return ListView.separated(
+        physics: AlwaysScrollableScrollPhysics(),
         reverse: true,
         controller: ScrollController(initialScrollOffset: 20),
         separatorBuilder: (context, index) {
@@ -49,7 +63,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: Align(
-              alignment: message.sender == widget.user.id
+              alignment: checkSender(message)
                   ? Alignment.centerRight
                   : Alignment.centerLeft,
               child: Container(
@@ -59,10 +73,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     radius: Radius.circular(25),
                     nipRadius: 3,
                     nipOffset: 5,
-                    color: message.sender == widget.user.id
+                    color: checkSender(message)
                         ? Colors.blueAccent
                         : Colors.blueGrey,
-                    nip: message.sender == widget.user.id
+                    nip: checkSender(message)
                         ? BubbleNip.rightBottom
                         : BubbleNip.leftBottom,
                     child: Padding(
@@ -99,7 +113,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         .data['messages']) messages.add(Message.fromMap(snap));
                     return listview(messages.reversed.toList());
                   } else {
-                    return Text('Loading');
+                    return PlatformCircularProgressIndicator();
                   }
                 },
               ),
@@ -108,7 +122,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
               color: Colors.grey[200],
               child: Material(
                               child: ListTile(
-                  leading: Icon(Icons.image),
+                  leading: Icon(Icons.image, color: Colors.transparent),
                   title: PlatformTextField(
                     controller: textController,
                     onSubmitted: (string) => sendMessage(),

@@ -197,70 +197,70 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
+      backgroundColor: Colors.blue[400],
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                      Colors.blue[100],
-                      Colors.blue[200],
-                      Colors.blue[300],
-                      Colors.blue[400],
-                    ],
-                        stops: [
-                      0.1,
-                      0.4,
-                      0.7,
-                      0.9
-                    ])),
-              ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 120),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      (loading ? 
-                        Padding(padding: EdgeInsets.only(bottom: 15), child: AuthLoading()) 
-                        : Padding(padding: EdgeInsets.all(0))),
-                      Material(color: Colors.transparent, child: emailField()),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Material(color: Colors.transparent, child: passwordField()),
-                      //forgotPassword(),
-                      loginButton(),
-                      signUp()
-                    ],
-                  ),
+          value: SystemUiOverlayStyle.light,
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Stack(
+      children: <Widget>[
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                Colors.blue[100],
+                Colors.blue[200],
+                Colors.blue[300],
+                Colors.blue[400],
+              ],
+                  stops: [
+                0.1,
+                0.4,
+                0.7,
+                0.9
+              ])),
+        ),
+        Container(
+          height: double.infinity,
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 120),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Sign In',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'OpenSans',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
                 ),
-              )
-            ],
+                SizedBox(
+                  height: 30,
+                ),
+                (loading ? 
+                  Padding(padding: EdgeInsets.only(bottom: 15), child: AuthLoading()) 
+                  : Padding(padding: EdgeInsets.all(0))),
+                Material(color: Colors.transparent, child: emailField()),
+                SizedBox(
+                  height: 30,
+                ),
+                Material(color: Colors.transparent, child: passwordField()),
+                //forgotPassword(),
+                loginButton(),
+                signUp()
+              ],
+            ),
+          ),
+        )
+      ],
+            ),
           ),
         ),
-      ),
     );
   }
 }
