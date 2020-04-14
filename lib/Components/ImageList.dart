@@ -82,6 +82,12 @@ class _ImageListState extends State<ImageList> {
                             ),
                           ));
                     } else {
+                      if(images != null) {
+                        if(widget.edit && images.length-1 != widget.chef.images.length && images[images.length-1] != 'new'){
+                          images.removeAt(images.length-1);
+                          images.add('new');
+                        }
+                      }
                       return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Container(
@@ -91,6 +97,7 @@ class _ImageListState extends State<ImageList> {
                               imageUrl: images[index],
                               placeholder: (context, url) => Center(
                                   child: PlatformCircularProgressIndicator()),
+                              errorWidget: (context, url, obj) => Container(color: Colors.blue, child: Text('Hello')),
                               fit: BoxFit.fitHeight,
                             ),
                           ));

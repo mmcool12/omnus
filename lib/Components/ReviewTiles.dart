@@ -30,6 +30,7 @@ class ReviewTile extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Container(
                           child: ListView.separated(
+                            padding: EdgeInsets.all(0),
                             itemCount: chef.numReviews,
                             shrinkWrap: true,
                             primary: false,
@@ -117,10 +118,22 @@ class ReviewTile extends StatelessWidget {
                                     vertical: 8.0, horizontal: 25),
                               );
                             },
-                          ),
+                          )
                         ),
                       ),
-                    ]),
+                    if(chef.numReviews == 0) (
+                      Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: Text(
+                         'No Reviews',
+                         style: TextStyle(
+                           fontSize: 20
+                         ),
+                        ),
+                     )
+                    )
+                    ]
+                    ),
               );
   }
 }

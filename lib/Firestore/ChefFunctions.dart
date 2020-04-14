@@ -32,4 +32,13 @@ class ChefFunctions{
   Stream<DocumentSnapshot> getChefStreamById(String id) {
     return _db.collection('chefs').document(id).snapshots();
   }
+
+   Future<void> addMenuItem(String chefId, Map<String, dynamic> item) async  {
+    return await _db.collection('chefs').document(chefId).updateData({
+        'menu' : FieldValue.arrayUnion([
+          item
+        ])
+      });
+  }
+
 }
