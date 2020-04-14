@@ -4,13 +4,15 @@ class Meal{
   String description;
   double price;
   String image;
+  String fireImage;
 
   bool get hasImage => this.image == "" ? false : true;
 
-  Meal.fromMap(Map<String, dynamic> map){
+  Meal.fromMap(Map<dynamic, dynamic> map){
     this.title = map['title'];
     this.description = map['description'];
     this.price = map['price'].toDouble();
     this.image = map['image'];
+    this.fireImage = map['fireImage'] ?? "";
   }
 }

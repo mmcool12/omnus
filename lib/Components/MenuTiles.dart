@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Components/AddMenuItemModal.dart';
+import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Components/OrderModal.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
@@ -45,8 +46,8 @@ class MenuTiles extends StatelessWidget {
                   itemBuilder: (context, index) {
                     Map<dynamic, dynamic> item = chef.menu[index];
 
-                    return InkWell(
-                      onTap: () async { OrderModal().showModal(context, chef, Meal.fromMap(item));},
+                    return GestureDetector(
+                      onTap: () =>  OrderModal().showModal(context, chef, Meal.fromMap(item)),
                       child: Container(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -108,6 +109,7 @@ class MenuTiles extends StatelessWidget {
                                                     .getImage(item['image']),
                                                 builder: (context, snapshot) {
                                                   if (snapshot.hasData) {
+                                                    item['fireImage'] = snapshot.data;
                                                     return CachedNetworkImage(
                                                       imageUrl: snapshot.data,
                                                       fit: BoxFit.cover,
