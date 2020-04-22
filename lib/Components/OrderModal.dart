@@ -19,7 +19,7 @@ class OrderModal {
     );
   }
 
-  Widget androidModal(BuildContext context) {}
+  Widget androidModal(BuildContext context) {return Container();}
 
   String getPrice(double price, int quantity) {
     if (price == 0.0) {

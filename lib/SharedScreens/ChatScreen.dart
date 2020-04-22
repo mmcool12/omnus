@@ -19,10 +19,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  @override
 
   String selected = "User";
 
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
 
@@ -133,7 +133,7 @@ class UserMessages extends StatelessWidget {
                           color: Colors.transparent,
                           child: ListTile(
                             leading: GFAvatar(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.blueAccent[400],
                 child: Text(
                     getInititals(chats[index].chefName),
                     style: TextStyle(fontSize: 25)),
@@ -209,7 +209,7 @@ class ChefMessages extends StatelessWidget {
                           color: Colors.transparent,
                           child: ListTile(
                             leading: GFAvatar(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.blueAccent[400],
                 child: Text(
                     getInititals(chats[index].buyerName),
                     style: TextStyle(fontSize: 25)),

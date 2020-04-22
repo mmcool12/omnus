@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Components/CartButton.dart';
@@ -11,11 +9,9 @@ import 'package:omnus/Components/MenuTiles.dart';
 import 'package:omnus/Components/ReviewTiles.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
-import 'package:omnus/Firestore/ReviewFunctions.dart';
 import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/Models/Chat.dart';
 import 'package:omnus/Models/Chef.dart';
-import 'package:omnus/Models/Review.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +56,7 @@ class ChefDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    height: height * .15,
+                    height: height * .2,
                     child: Column(
                       children: <Widget>[
                         Row(
@@ -137,7 +133,7 @@ class ChefDetailsScreen extends StatelessWidget {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(3),
-                                          color: Colors.blueAccent,
+                                          color: Colors.blueAccent[400],
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -163,7 +159,7 @@ class ChefDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Consumer<Cart>(builder: (BuildContext context, Cart value, Widget child) {return CartButton(cart: value, padding: false);},)
+          Consumer<Cart>(builder: (BuildContext context, Cart value, Widget child) {return CartButton(cart: value, padding: false, buyerId: user.id);},)
         ],
       ),
     );
@@ -197,16 +193,24 @@ class _ProfilePicState extends State<ProfilePic> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              return GFAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 56,
-                backgroundImage: CachedNetworkImageProvider(
-                  snapshot.data ?? "",
+              return CachedNetworkImage(
+                imageUrl: snapshot.data ?? null,
+                placeholder: (context, url) => SizedBox(height: 128, width: 128, child: Center(child: PlatformCircularProgressIndicator())),
+                imageBuilder: (context, imageProvider) => 
+                Container(
+                  height: 128, //64*2
+                  width: 128,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: imageProvider, fit: BoxFit.cover
+                    )
+                  ),
                 ),
               );
             } else {
               return GFAvatar(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.blueAccent[400],
                 radius: 56,
                 child: Text(
                     widget.chef.firstName.substring(0, 1) +

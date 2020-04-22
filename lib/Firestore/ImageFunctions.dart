@@ -3,13 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:omnus/Firestore/UserFunctions.dart';
 
 class ImageFunctions {
   final Firestore _db = Firestore.instance;
   final FirebaseStorage _storage =
       FirebaseStorage(storageBucket: 'gs://titan-2a457.appspot.com/');
-  StorageUploadTask _uploadTask;
 
   Future<dynamic> getImage(String filePath) async {
     return _storage.ref().child(filePath).getDownloadURL();
@@ -39,7 +37,7 @@ class ImageFunctions {
       filePath = '$path/$userId.png';
     }
 
-    _uploadTask = _storage.ref().child(filePath).putFile(image);
+    await _storage.ref().child(filePath).putFile(image).onComplete;
     return filePath;
   }
 
@@ -50,10 +48,10 @@ class ImageFunctions {
     if (image != null) {
       String filePath = await uploadImage(image, userId, 'profileImages');
       await _db.collection('users').document(userId).updateData(
-          {'profileImage': filePath}).then((path) => toReturn = "Done");
+          {'profileImage': filePath});
     }
 
-    return toReturn;
+    return "done";
   }
 
   Future<String>  pickThenUploadChefImage(ImageSource source, String chefId) async {
@@ -64,6 +62,20 @@ class ImageFunctions {
           .then((path) => filePath = path);
       await _db.collection('chefs').document(chefId).updateData({
         'images': FieldValue.arrayUnion([filePath])
+      });
+    return "done";
+    }
+    return null;
+  }
+
+  Future<String>  pickThenUploadChefProfileImage(ImageSource source, String chefId) async {
+    File image = await pickImage(source);
+    if (image != null) {
+      String filePath;
+      await uploadImage(image, chefId, "profile/$chefId")
+          .then((path) => filePath = path);
+      await _db.collection('chefs').document(chefId).updateData({
+        'profileImage': filePath
       });
     return "done";
     }

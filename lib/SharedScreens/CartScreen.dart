@@ -4,12 +4,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omnus/Components/CartTile.dart';
 import 'package:omnus/Firestore/OrderFunctions.dart';
 import 'package:omnus/Models/Cart.dart';
-import 'package:omnus/Models/Meal.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget{
-  @override
+  const CartScreen({Key key, this.buyerId}) : super(key: key);
+  final String buyerId;
 
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     Cart cart = Provider.of<Cart>(context);

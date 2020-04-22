@@ -4,9 +4,10 @@ import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/SharedScreens/CartScreen.dart';
 
 class CartButton extends StatelessWidget {
-  const CartButton({Key key, @required this.cart, @required this.padding}) : super(key: key);
+  const CartButton({Key key, @required this.cart, @required this.padding, @required this.buyerId}) : super(key: key);
   final Cart cart;
   final bool padding;
+  final String buyerId;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CartButton extends StatelessWidget {
                 highlightColor: Colors.white,
                 splashColor: Colors.white10,
                 onPressed: () {
-                  Navigator.push(context, platformPageRoute(context: context, builder: (_) => CartScreen()));
+                  Navigator.push(context, platformPageRoute(context: context, builder: (_) => CartScreen(buyerId: buyerId)));
                 },
                 child: Container(
                     width: double.infinity,

@@ -5,14 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Components/CartButton.dart';
 import 'package:omnus/Models/Cart.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
-import 'package:omnus/Components/SearchBar.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
-import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
-//import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:provider/provider.dart';
@@ -103,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 }),
                 Consumer<Cart>(builder: (BuildContext context, Cart cart, Widget child) {
-              return CartButton(cart: cart, padding: true);
+              return CartButton(cart: cart, padding: true, buyerId: user.id);
             },),
           ],
         ),

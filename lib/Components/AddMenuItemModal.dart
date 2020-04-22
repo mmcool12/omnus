@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
@@ -74,7 +73,6 @@ class AddMenuItemModal {
 
   Widget iphoneModal(BuildContext context, Chef chef){
     double height = MediaQuery.of(context).size.height;
-    var done = false;
     TextEditingController nameText = TextEditingController();
     TextEditingController priceText = TextEditingController();
     TextEditingController descText = TextEditingController();
@@ -150,7 +148,6 @@ class AddMenuItemModal {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              done = true;
                               Navigator.pop(context);
                             },
                             child: Text(

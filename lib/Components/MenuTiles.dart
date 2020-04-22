@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Components/AddMenuItemModal.dart';
-import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Components/OrderModal.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/Chef.dart';

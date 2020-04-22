@@ -60,8 +60,10 @@ class _ImageListState extends State<ImageList> {
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: GestureDetector(
                             onTap: () async {
-                              ImageSourceModal()
+                              await ImageSourceModal()
                                   .showModal(context, 'chef', widget.chef.id);
+                              getImages = ImageFunctions().getChefsImages(widget.chef.images);
+                              this.setState(() {});
                             },
                             child: Container(
                               width: widget.height * .2,
@@ -82,12 +84,12 @@ class _ImageListState extends State<ImageList> {
                             ),
                           ));
                     } else {
-                      if(images != null) {
-                        if(widget.edit && images.length-1 != widget.chef.images.length && images[images.length-1] != 'new'){
-                          images.removeAt(images.length-1);
-                          images.add('new');
-                        }
-                      }
+                      // if(images != null) {
+                      //   if(widget.edit && images.length-1 != widget.chef.images.length && images[images.length-1] != 'new'){
+                      //     images.removeAt(images.length-1);
+                      //     images.add('new');
+                      //   }
+                      // }
                       return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Container(

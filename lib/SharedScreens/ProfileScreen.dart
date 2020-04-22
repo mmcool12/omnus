@@ -11,7 +11,6 @@ import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:provider/provider.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
-import 'package:getflutter/shape/gf_avatar_shape.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -80,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           FlatButton(
-                              color: Colors.blueAccent,
+                              color: Colors.blueAccent[400],
                               onPressed: () async {
                                 if (user.chefId == "") {
                                   await ChefFunctions().createChef(user).then(
@@ -102,9 +101,14 @@ class ProfileScreen extends StatelessWidget {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text((user.chefId == ""
+                                child: Text(
+                                  (user.chefId == ""
                                     ? 'Become a chef!'
-                                    : 'Your chef profile')),
+                                    : 'Your chef profile'),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                               ))
                         ],
                       )),
@@ -113,11 +117,20 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Padding(padding: EdgeInsets.all(8.0)),
-              // SettingsTile(
-              //   title: 'Payment methods',
-              //   leading: Icon(Icons.credit_card),
-              //   onTap: () => null,
-              // )
+              
+              Container(height: 1, color: Colors.black),
+              SettingsTile(
+                title: 'Orders',
+                leading: Icon(Icons.fastfood),
+                onTap: () => null,
+                top: true,
+              ),
+              SettingsTile(
+                title: 'Requests',
+                leading: Icon(Icons.radio),
+                onTap: () => null,
+                bottom: true,
+              ),
             ],
           ),
         ),
@@ -130,12 +143,16 @@ class SettingsTile extends StatelessWidget {
   final String title;
   final Widget leading;
   final onTap;
+  final bool top;
+  final bool bottom;
 
   const SettingsTile({
     Key key,
     @required this.title,
     @required this.onTap,
     this.leading,
+    this.top,
+    this.bottom
   }) : super(key: key);
 
   @override
@@ -143,7 +160,7 @@ class SettingsTile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border:
-              Border(top: BorderSide(width: 1), bottom: BorderSide(width: 1)),
+              Border(bottom: BorderSide(width: 0)),
           color: Colors.white),
       child: Material(
         color: Colors.transparent,
@@ -185,23 +202,34 @@ class _ProfilePicState extends State<ProfilePic> {
     return GestureDetector(
       onTap: () async {
         await ImageSourceModal().showModal(context, 'userProfile', widget.user.id);
+        print('hello');
+        profilePic = ImageFunctions().getImage(widget.user.profileImage);
+        this.setState(() {});
       },
       child: FutureBuilder<dynamic>(
           future: this.profilePic,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              return GFAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 65,
-                backgroundImage: CachedNetworkImageProvider(
-                  snapshot.data ?? "",
+              return CachedNetworkImage(
+                imageUrl: snapshot.data ?? null,
+                placeholder: (context, url) => SizedBox(height: 128, width: 128, child: Center(child: PlatformCircularProgressIndicator())),
+                imageBuilder: (context, imageProvider) => 
+                Container(
+                  height: 128, //64*2
+                  width: 128,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: imageProvider, fit: BoxFit.cover
+                    )
+                  ),
                 ),
               );
             } else {
               return GFAvatar(
-                backgroundColor: Colors.blueAccent,
-                radius: 65,
+                backgroundColor: Colors.blueAccent[400],
+                radius: 64,
                 child: Text(
                     widget.user.firstName.substring(0, 1) +
                         widget.user.lastName.substring(0, 1),
@@ -212,43 +240,4 @@ class _ProfilePicState extends State<ProfilePic> {
     );
   }
 
-  Future showChooseProfilePic(BuildContext context) {
-    return showPlatformModalSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Material(
-                    child: InkWell(
-                      onTap: () async => ImageFunctions().pickThenUploadProfile(
-                          ImageSource.camera, widget.user.id),
-                      child: ListTile(
-                        leading: Icon(Icons.camera_alt),
-                        title: Text('Image from Camera'),
-                      ),
-                    ),
-                  ),
-                  Material(
-                    child: InkWell(
-                      onTap: () async {
-                        ImageFunctions().pickThenUploadProfile(
-                            ImageSource.gallery, widget.user.id);
-                        Navigator.pop(context);
-                      },
-                      child: ListTile(
-                        leading: Icon(Icons.photo_size_select_actual),
-                        title: Text('Image from Photos'),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
-  }
 }

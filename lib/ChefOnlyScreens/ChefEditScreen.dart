@@ -3,23 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:getflutter/components/accordian/gf_accordian.dart';
+import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:omnus/Components/ImageList.dart';
 import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Components/MenuTiles.dart';
-import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
-import 'package:omnus/Firestore/ReviewFunctions.dart';
-import 'package:omnus/Firestore/SearchFunctions.dart';
-import 'package:omnus/Models/Chat.dart';
 import 'package:omnus/Models/Chef.dart';
-import 'package:omnus/Models/Review.dart';
-import 'package:omnus/Models/User.dart';
-import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ChefEditScreen extends StatefulWidget {
   final String chefId;
@@ -72,10 +63,7 @@ class _ChefEditScreenState extends State<ChefEditScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Expanded(
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.blueAccent,
-                                    radius: 56,
-                                  ),
+                                  child: ChefPic(chef: chef)
                                 ),
                                 Expanded(
                                   flex: 2,
@@ -219,6 +207,71 @@ class ActiveToggle extends StatelessWidget {
           child: Text((chef.active ? 'Active' : 'Inactive')),
         ),
       ),
+    );
+  }
+}
+
+class ChefPic extends StatefulWidget {
+  const ChefPic({
+    Key key,
+    @required this.chef,
+  }) : super(key: key);
+
+  final Chef chef;
+
+  @override
+  _ChefPicState createState() => _ChefPicState();
+}
+
+class _ChefPicState extends State<ChefPic> {
+  Future<dynamic> profilePic;
+
+  @override
+  void initState() {
+    profilePic = ImageFunctions().getImage(widget.chef.profileImage);
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        await ImageSourceModal().showModal(context, 'chefProfile', widget.chef.id);
+        profilePic = ImageFunctions().getImage(widget.chef.profileImage);
+        this.setState(() {});
+      },
+      child: FutureBuilder<dynamic>(
+          future: this.profilePic,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              return CachedNetworkImage(
+                imageUrl: snapshot.data ?? null,
+                placeholder: (context, url) => SizedBox(height: 128, width: 128, child: Center(child: PlatformCircularProgressIndicator())),
+                imageBuilder: (context, imageProvider) => 
+                Container(
+                  height: 128, //64*2
+                  width: 128,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: imageProvider, fit: BoxFit.cover
+                    )
+                  ),
+                ),
+              );
+            } else {
+              return GFAvatar(
+                backgroundColor: Colors.blueAccent[400],
+                radius: 64,
+                child: Text(
+                    widget.chef.firstName.substring(0, 1) +
+                        widget.chef.lastName.substring(0, 1),
+                    style: TextStyle(fontSize: 60)),
+              );
+            }
+          }),
     );
   }
 }

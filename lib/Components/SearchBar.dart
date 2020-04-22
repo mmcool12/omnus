@@ -76,7 +76,7 @@ class SearchBar extends SearchDelegate<Chef> {
                             alignment: Alignment.topCenter,
                             child: GFAvatar(
                               shape: GFAvatarShape.standard,
-                              backgroundColor: Colors.blueAccent,
+                              backgroundColor: Colors.blueAccent[400],
                             ),
                           ),
                           title: Column(

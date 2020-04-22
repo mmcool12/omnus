@@ -9,7 +9,6 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Auth/AuthScreen.dart';
 import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/SharedScreens/BabyScreen.dart';
-import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
 import 'package:omnus/SharedScreens/LoginScreen.dart';
 import 'package:omnus/SharedScreens/OnboardScreen.dart';
 import 'package:omnus/SharedScreens/SignupScreen.dart';

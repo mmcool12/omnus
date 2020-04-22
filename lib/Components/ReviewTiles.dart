@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:omnus/Firestore/ReviewFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
-import 'package:omnus/Models/Review.dart';
 
 class ReviewTile extends StatelessWidget {
   const ReviewTile({

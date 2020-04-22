@@ -7,11 +7,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:omnus/SharedScreens/CartScreen.dart';
 import 'package:omnus/SharedScreens/ChatScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
 import 'package:omnus/SharedScreens/ProfileScreen.dart';
-import 'package:omnus/Models/User.dart';
 
 class LoadingScreen extends StatefulWidget {
   //final FirebaseUser fire;

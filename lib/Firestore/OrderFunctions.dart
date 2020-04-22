@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:omnus/Models/Cart.dart';
-import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/Meal.dart';
-import 'package:omnus/Models/User.dart';
 
 class OrderFunctions{
 

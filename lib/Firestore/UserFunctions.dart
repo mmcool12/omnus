@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:omnus/Models/User.dart';
 
 class UserFunctions {
   final Firestore _db = Firestore.instance;
