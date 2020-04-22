@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Auth/AuthScreen.dart';
+import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/SharedScreens/BabyScreen.dart';
 import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
 import 'package:omnus/SharedScreens/LoginScreen.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         providers: [
           StreamProvider<FirebaseUser>.value(
               value: FirebaseAuth.instance.onAuthStateChanged),
+              ChangeNotifierProvider(create: (context) => Cart())
         ],
         child: PlatformApp(
           debugShowCheckedModeBanner: false,

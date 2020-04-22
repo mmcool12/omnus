@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:omnus/Components/CartButton.dart';
+import 'package:omnus/Models/Cart.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Components/SearchBar.dart';
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     allChefs = SearchFunctions().getAllChefs();
+    print('hello');
     super.initState();
   }
 
@@ -75,27 +78,35 @@ class _HomeScreenState extends State<HomeScreen> {
             // ),
           ],
         ),
-        body: FutureBuilder<QuerySnapshot>(
-            future: allChefs,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<Chef> chefs = [];
-                for (DocumentSnapshot snap in snapshot.data.documents)
-                  chefs.add(Chef.fromFirestore(snap));
-                chefs.sort((a, b) => b.numReviews.compareTo(a.numReviews));
-                return GridView.count(
-                  crossAxisCount: 1,
-                  children: List.generate(chefs.length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: GridCard(chefs: chefs, index: index,user: user),
+        body: Stack(
+          children: <Widget>[
+            FutureBuilder<QuerySnapshot>(
+                future: allChefs,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Chef> chefs = [];
+                    for (DocumentSnapshot snap in snapshot.data.documents)
+                      chefs.add(Chef.fromFirestore(snap));
+                    chefs.sort((a, b) => b.numReviews.compareTo(a.numReviews));
+                    return GridView.count(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      crossAxisCount: 1,
+                      children: List.generate(chefs.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: GridCard(chefs: chefs, index: index,user: user),
+                        );
+                      }),
                     );
-                  }),
-                );
-              } else {
-                return Text("Loading");
-              }
-            }),
+                  } else {
+                    return Text("Loading");
+                  }
+                }),
+                Consumer<Cart>(builder: (BuildContext context, Cart cart, Widget child) {
+              return CartButton(cart: cart, padding: true);
+            },),
+          ],
+        ),
       );
     } else {
       return Center(child: Text('Loading'));

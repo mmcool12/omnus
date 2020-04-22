@@ -5,6 +5,7 @@ class Meal{
   double price;
   String image;
   String fireImage;
+  String chefId;
 
   bool get hasImage => this.image == "" ? false : true;
 
@@ -14,5 +15,6 @@ class Meal{
     this.price = map['price'].toDouble();
     this.image = map['image'];
     this.fireImage = map['fireImage'] ?? "";
+    this.chefId = map['chefId'];
   }
 }

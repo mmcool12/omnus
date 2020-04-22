@@ -2,8 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
-import 'package:rxdart/rxdart.dart';
-
 class ChatFunctions {
   final Firestore _db = Firestore.instance;
 

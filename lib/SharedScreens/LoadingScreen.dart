@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:omnus/SharedScreens/CartScreen.dart';
 import 'package:omnus/SharedScreens/ChatScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
 import 'package:omnus/SharedScreens/ProfileScreen.dart';
@@ -40,6 +41,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     ProfileScreen(),
     HomeScreen(),
     ChatScreen(),
+    //CartScreen()
   ];
 
   @override
