@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return PlatformScaffold(
         appBar: PlatformAppBar(
            title: Text(
-             'Search',
+             'Home',
           //   'Hello, ${user.firstName}',
             style: TextStyle(color: Colors.black),
           ),
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 }),
                 Consumer<Cart>(builder: (BuildContext context, Cart cart, Widget child) {
-              return CartButton(cart: cart, padding: true, buyerId: user.id);
+              return CartButton(cart: cart, padding: true, buyer: user);
             },),
           ],
         ),

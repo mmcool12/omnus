@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Models/Cart.dart';
+import 'package:omnus/Models/User.dart';
 import 'package:omnus/SharedScreens/CartScreen.dart';
 
 class CartButton extends StatelessWidget {
-  const CartButton({Key key, @required this.cart, @required this.padding, @required this.buyerId}) : super(key: key);
+  const CartButton({Key key, @required this.cart, @required this.padding, @required this.buyer}) : super(key: key);
   final Cart cart;
   final bool padding;
-  final String buyerId;
+  final User buyer;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class CartButton extends StatelessWidget {
                 highlightColor: Colors.white,
                 splashColor: Colors.white10,
                 onPressed: () {
-                  Navigator.push(context, platformPageRoute(context: context, builder: (_) => CartScreen(buyerId: buyerId)));
+                  Navigator.push(context, platformPageRoute(context: context, builder: (_) => CartScreen(buyer: buyer)));
                 },
                 child: Container(
                     width: double.infinity,

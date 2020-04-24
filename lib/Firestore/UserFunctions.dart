@@ -37,15 +37,12 @@ class UserFunctions {
     return _db.collection('chefs').document(id).snapshots();
   }
 
-    Future<QuerySnapshot> getAllChefs() async{
+  Future<QuerySnapshot> getAllChefs() async{
     return await _db.collection('chefs').limit(20).getDocuments();
   }
 
-}
-
-class UserStream {
-  final Stream<DocumentSnapshot> stream;
-
-  UserStream(this.stream);
+  Future<QuerySnapshot> getOrdersById(String id) async {
+    return await _db.collection('orders').where('buyerId', isEqualTo: id).getDocuments();
+  }
 
 }

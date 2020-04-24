@@ -5,10 +5,12 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/ChefOnlyScreens/ChefEditScreen.dart';
+import 'package:omnus/ChefOnlyScreens/RequestsScreen.dart';
 import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/User.dart';
+import 'package:omnus/SharedScreens/OrdersScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 
@@ -122,13 +124,15 @@ class ProfileScreen extends StatelessWidget {
               SettingsTile(
                 title: 'Orders',
                 leading: Icon(Icons.fastfood),
-                onTap: () => null,
+                onTap: () => Navigator.push(context, 
+                  platformPageRoute(context: context, builder: (context) => OrdersScreen(id: user.id))),
                 top: true,
               ),
               SettingsTile(
                 title: 'Requests',
                 leading: Icon(Icons.radio),
-                onTap: () => null,
+                onTap: () => Navigator.push(context, 
+                  platformPageRoute(context: context, builder: (context) => RequestsScreen(id: user.chefId))),
                 bottom: true,
               ),
             ],

@@ -4,11 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omnus/Components/CartTile.dart';
 import 'package:omnus/Firestore/OrderFunctions.dart';
 import 'package:omnus/Models/Cart.dart';
+import 'package:omnus/Models/User.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget{
-  const CartScreen({Key key, this.buyerId}) : super(key: key);
-  final String buyerId;
+  const CartScreen({Key key, this.buyer}) : super(key: key);
+  final User buyer;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class CartScreen extends StatelessWidget{
                     await showPlatformModalSheet(
                       context: context, 
                       builder: (BuildContext context) {
-                        OrderFunctions().createOrder(cart, 'buyerId')
+                        OrderFunctions().createOrder(cart, buyer)
                         .then((results) => Navigator.pop(context));
                         return Center(child: PlatformCircularProgressIndicator());
                       }

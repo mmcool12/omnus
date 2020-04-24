@@ -49,4 +49,8 @@ class ChefFunctions{
     });
   }
 
+  Future<QuerySnapshot> getRequestById(String id) async {
+    return await _db.collection('orders').where('chefId', isEqualTo: id).getDocuments();
+  }
+
 }

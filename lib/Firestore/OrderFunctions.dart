@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/Models/Meal.dart';
+import 'package:omnus/Models/User.dart';
 
 class OrderFunctions{
 
@@ -30,14 +31,19 @@ class OrderFunctions{
     return orderMap;
   }
 
-  Future<String> createOrder(Cart cart, String buyerId) async {
+  Future<String> createOrder(Cart cart, User buyer) async {
     Map<String, List<List<Meal>>> chefSorted = getChefsMeals(cart);
     for(String chefId in chefSorted.keys){
       Cart temp = Cart.fromList(chefSorted[chefId]);
       await _db.collection('orders').add({
-        'buyerId' : buyerId,
+        'buyerId' : buyer.id,
         'chefId' : chefId,
+        'buyerName' : buyer.name,
+        //'chefName' : chefName,
+        'buyerLocation' : 'location',
         'price' : temp.price,
+        'accepted' : false,
+        'completed' : false,
         'meals' : cartToMealMap(temp)
       });
     }

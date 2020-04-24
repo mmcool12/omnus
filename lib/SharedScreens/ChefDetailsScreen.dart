@@ -159,7 +159,7 @@ class ChefDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Consumer<Cart>(builder: (BuildContext context, Cart value, Widget child) {return CartButton(cart: value, padding: false, buyerId: user.id);},)
+          Consumer<Cart>(builder: (BuildContext context, Cart value, Widget child) {return CartButton(cart: value, padding: false, buyer: user);},)
         ],
       ),
     );
