@@ -6,6 +6,7 @@ class Meal{
   String image;
   String fireImage;
   String chefId;
+  String chefName;
 
   bool get hasImage => this.image == "" ? false : true;
 
@@ -16,5 +17,6 @@ class Meal{
     this.image = map['image'];
     this.fireImage = map['fireImage'] ?? "";
     this.chefId = map['chefId'];
+    this.chefName = map['chefName'];
   }
 }

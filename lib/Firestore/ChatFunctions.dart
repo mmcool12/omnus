@@ -53,5 +53,26 @@ class ChatFunctions {
 
   }
 
+  Future<DocumentSnapshot> createChatFromOrder(String buyerId, String buyerName, String chefId, String chefName) async {
+    // First check if chat exists
+    QuerySnapshot snapshot;
+    await _db.collection('chat').where('buyerId', isEqualTo: buyerId).where('chefId', isEqualTo: chefId).getDocuments()
+      .then((result) => snapshot = result);
+      
+    if (snapshot.documents.isEmpty){
+      DocumentReference ref =  await _db.collection('chat').add({
+        'buyerId' : buyerId,
+        'buyerName' : buyerName,
+        'chefId' : chefId,
+        'chefName' : chefName,
+        'messages' : []
+      });
+      return ref.get();
+    } else {
+      return snapshot.documents[0];
+    }
+
+  }
+
 
 }

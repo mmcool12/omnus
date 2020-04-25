@@ -45,6 +45,7 @@ class MenuTiles extends StatelessWidget {
                   itemBuilder: (context, index) {
                     Map<dynamic, dynamic> item = chef.menu[index];
                     item['chefId'] = chef.id;
+                    item['chefName'] = chef.name;
 
                     return GestureDetector(
                       onTap: () =>  OrderModal().showModal(context, Meal.fromMap(item), false),

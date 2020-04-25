@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:omnus/Firestore/ChefFunctions.dart';
+import 'package:omnus/Components/CreateReviewModal.dart';
+import 'package:omnus/Firestore/OrderFunctions.dart';
 import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/Models/Order.dart';
 
@@ -181,13 +182,38 @@ class ActiveList extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 8),
-                      Text(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
                         (request.accepted ? 'Accepted' : 'Not yet accepted'),
                         style: TextStyle(
                           fontSize: 22,
                           color: (request.accepted ? Colors.green : Colors.black),
                         ),
-                      )
+                      ),
+                          if(!request.accepted)
+                          GestureDetector(
+                            onTap: () async => OrderFunctions().cancelOrder(request.id),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                fontSize: 20,
+                              ),
+                                ),
+                                SizedBox(width: 2),
+                                Icon(
+                                  CupertinoIcons.clear_circled_solid,
+                                  color: Colors.red,
+                                  size: 25,
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -313,7 +339,7 @@ class CompletedList extends StatelessWidget {
                           ),
                           if(request.accepted)
                           GestureDetector(
-                            onTap: null,
+                            onTap: () async => CreateReviewModal().showModal(context, request),
                             child: Row(
                               children: <Widget>[
                                 Text(

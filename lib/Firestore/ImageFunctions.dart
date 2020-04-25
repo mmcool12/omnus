@@ -43,9 +43,8 @@ class ImageFunctions {
 
   Future<String> pickThenUploadProfile(
       ImageSource source, String userId) async {
-    String toReturn;
     File image = await pickImage(source);
-    if (image != null) {
+    if (image != null ) {
       String filePath = await uploadImage(image, userId, 'profileImages');
       await _db.collection('users').document(userId).updateData(
           {'profileImage': filePath});

@@ -128,7 +128,7 @@ class ChefDetailsScreen extends StatelessWidget {
                                             context,
                                             platformPageRoute(
                                                 builder: (context) =>
-                                                    MessagingScreen(chat: chat, user: user, type: 'user'), context: context));
+                                                    MessagingScreen(chat: chat, id: user.id, type: 'user'), context: context));
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(

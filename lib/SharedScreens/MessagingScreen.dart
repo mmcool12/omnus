@@ -6,14 +6,13 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Firestore/ChatFunctions.dart';
 import 'package:omnus/Models/Chat.dart';
 import 'package:omnus/Models/Message.dart';
-import 'package:omnus/Models/User.dart';
 
 class MessagingScreen extends StatefulWidget {
   final Chat chat;
-  final User user;
+  final String id;
   final String type;
 
-  MessagingScreen({Key key, @required this.chat, @required this.user, @required this.type})
+  MessagingScreen({Key key, @required this.chat, @required this.id, @required this.type})
       : super(key: key);
 
   @override
@@ -32,10 +31,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
       if (textController.text != "") {
         if(widget.type == 'user') {
         ChatFunctions()
-            .createMessage(widget.chat.id, widget.user.id, textController.text);
+            .createMessage(widget.chat.id, widget.id, textController.text);
         } else{
           ChatFunctions()
-            .createMessage(widget.chat.id, widget.user.chefId, textController.text);
+            .createMessage(widget.chat.id, widget.id, textController.text);
         }
         textController.clear();
       }
@@ -43,9 +42,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     bool checkSender(Message message){
       if(widget.type == 'user'){
-        return message.sender == widget.user.id;
+        return message.sender == widget.id;
       } else{
-        return message.sender == widget.user.chefId;
+        return message.sender == widget.id;
       }
     }
 

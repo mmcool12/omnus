@@ -38,8 +38,8 @@ class OrderFunctions{
       await _db.collection('orders').add({
         'buyerId' : buyer.id,
         'chefId' : chefId,
+        'chefName' : temp.items[0][0].chefName,
         'buyerName' : buyer.name,
-        //'chefName' : chefName,
         'buyerLocation' : 'location',
         'price' : temp.price,
         'accepted' : false,
@@ -49,5 +49,23 @@ class OrderFunctions{
     }
     return "sucsess";
     
+  }
+
+  cancelOrder(String orderId) async {
+    return await _db.collection('orders').document(orderId).updateData({
+      'completed' : true,
+    });
+  }
+
+  acceptOrder(String orderId) async {
+    return await _db.collection('orders').document(orderId).updateData({
+      'accepted' : true,
+    });
+  }
+
+  completeOrder(String orderId) async {
+    return await _db.collection('orders').document(orderId).updateData({
+      'completed' : true,
+    });
   }
 }

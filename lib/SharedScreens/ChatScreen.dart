@@ -142,7 +142,7 @@ class UserMessages extends StatelessWidget {
                                 context,
                                 platformPageRoute(
                                     builder: (context) => MessagingScreen(
-                                        chat: chats[index], user: user, type: 'user'),
+                                        chat: chats[index], id: user.id, type: 'user'),
                                     context: context)),
                             title: Text(chats[index].chefName ?? "help"),
                           ),
@@ -218,7 +218,7 @@ class ChefMessages extends StatelessWidget {
                                 context,
                                 platformPageRoute(
                                     builder: (context) => MessagingScreen(
-                                        chat: chats[index], user: user, type: 'chef'),
+                                        chat: chats[index], id: user.id, type: 'chef'),
                                     context: context)),
                             title: Text(chats[index].buyerName),
                           ),

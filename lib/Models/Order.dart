@@ -7,7 +7,7 @@ class Order{
   String buyerName;
   String buyerLocation;
   String chefId;
-  //String chefName;
+  String chefName;
   double price;
   bool accepted;
   bool completed;
@@ -21,7 +21,7 @@ class Order{
     this.chefId = map['chefId'];
     this.buyerName = map['buyerName'];
     this.buyerLocation = map['buyerLocation'];
-    //this.chefName = map['chefName'];
+    this.chefName = map['chefName'];
     this.price = map['price'].toDouble();
     this.accepted = map['accepted'];
     this.completed = map['completed'];
