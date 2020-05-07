@@ -41,9 +41,9 @@ class OrderModal {
 
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: Container(
-          height: meal.hasImage ? height * .5 : height * .35,
+          height: meal.hasImage ? 400 : 248,
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -60,7 +60,7 @@ class OrderModal {
                 SizedBox(height: 15),
                 (meal.hasImage
                     ? Container(
-                        height: height * .2,
+                        height: 152,
                         child: CachedNetworkImage(
                           imageUrl: meal.fireImage,
                           placeholder: (context, url) =>

@@ -48,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Container(
-              height: height*.05,
+              height: kToolbarHeight,
               width: double.infinity,
               child: PlatformWidget(
                 android: (_) => UserMessages(user: user),
@@ -218,7 +218,7 @@ class ChefMessages extends StatelessWidget {
                                 context,
                                 platformPageRoute(
                                     builder: (context) => MessagingScreen(
-                                        chat: chats[index], id: user.id, type: 'chef'),
+                                        chat: chats[index], id: user.chefId, type: 'chef'),
                                     context: context)),
                             title: Text(chats[index].buyerName),
                           ),

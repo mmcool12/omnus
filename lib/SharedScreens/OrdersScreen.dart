@@ -118,7 +118,7 @@ class ActiveList extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: height*.075 + height*(.04*request.meals.length),
+                  height: 72 + (32.0 * request.meals.length),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -140,7 +140,7 @@ class ActiveList extends StatelessWidget {
                         itemBuilder: (context, index) {
                           Map<dynamic, dynamic> meal = request.meals[index];
                           return Container(
-                            height: height*.04,
+                            height: 32,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -263,7 +263,7 @@ class CompletedList extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: height*.075 + height*(.04*request.meals.length),
+                  height: 72 + (32.0 * request.meals.length),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -285,7 +285,7 @@ class CompletedList extends StatelessWidget {
                         itemBuilder: (context, index) {
                           Map<dynamic, dynamic> meal = request.meals[index];
                           return Container(
-                            height: height*.04,
+                            height: 32,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[

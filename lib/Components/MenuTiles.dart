@@ -58,7 +58,7 @@ class MenuTiles extends StatelessWidget {
                               Expanded(
                                   flex: 3,
                                   child: Container(
-                                    height: height * .12,
+                                    height: 100,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
@@ -104,7 +104,7 @@ class MenuTiles extends StatelessWidget {
                                       ? Container()
                                       : Center(
                                           child: Container(
-                                            height: height * .1,
+                                            height: 80,
                                             child: FutureBuilder<dynamic>(
                                                 future: ImageFunctions()
                                                     .getImage(item['image']),

@@ -24,7 +24,7 @@ class CartTile extends StatelessWidget {
         child: Card(
           elevation: 2,
           child: Container(
-            height: height*.1,
+            height: 80,
             child: ListTile(
               leading: Padding(
                 padding: const EdgeInsets.fromLTRB(0,16,0,0),

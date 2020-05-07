@@ -42,7 +42,7 @@ class ReviewTile extends StatelessWidget {
                                       Expanded(
                                           flex: 3,
                                           child: Container(
-                                            height: height * .12,
+                                            height: 100,
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
@@ -82,26 +82,21 @@ class ReviewTile extends StatelessWidget {
                                           )),
                                       Expanded(
                                           flex: 1,
-                                          child: Container(
-                                            height: height*.1,
-                                            child: Stack(
-                                              alignment: Alignment.center,
-                                              children: <Widget>[
-                                                Center(
-                                                  child: Icon(
-                                                    Icons.star,
-                                                    color: Colors.amber,
-                                                    size: 90,
-                                                  ),
+                                          child: Stack(
+                                            alignment: Alignment.center,
+                                            children: <Widget>[
+                                              Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                                size: 80,
+                                              ),
+                                              Text(
+                                                '${review['rating']}',
+                                                style: TextStyle(
+                                                  fontSize: 25
                                                 ),
-                                                Text(
-                                                  '${review['rating']}',
-                                                  style: TextStyle(
-                                                    fontSize: 25
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           )
                                       )
                                     ],
