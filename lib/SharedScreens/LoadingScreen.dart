@@ -10,6 +10,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/SharedScreens/ChatScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
 import 'package:omnus/SharedScreens/ProfileScreen.dart';
+import 'package:omnus/SharedScreens/SearchScreen.dart';
 
 class LoadingScreen extends StatefulWidget {
   //final FirebaseUser fire;
@@ -36,10 +37,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   final List<Widget> _children = [
-    ProfileScreen(),
     HomeScreen(),
-    ChatScreen(),
-    //CartScreen()
+    SearchScreen(),
+    ProfileScreen(),
   ];
 
   @override
@@ -71,28 +71,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
             children: _children,
           ),
           bottomNavBar: PlatformNavBar(
+            backgroundColor: Colors.white,
               itemChanged: handleTap,
               currentIndex: currentIndex,
               items: [
                 BottomNavigationBarItem(
                   icon: PlatformWidget(
                     ios: (_) => Icon(
-                      CupertinoIcons.profile_circled,
+                      Icons.lightbulb_outline,
                       size: 35,
                     ),
-                    android: (_) => Icon(Icons.person),
+                    android: (_) => Icon(Icons.lightbulb_outline),
                   ),
-                  title: Text('account'),
-                ),
-                BottomNavigationBarItem(
-                  icon: PlatformWidget(
-                    ios: (_) => Icon(
-                      CupertinoIcons.home,
-                      size: 35,
-                    ),
-                    android: (_) => Icon(Icons.home),
-                  ),
-                  title: Text('home'),
+                  title: Text('discover'),
                 ),
                 BottomNavigationBarItem(
                   icon: PlatformWidget(
@@ -104,9 +95,20 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   ),
                   title: Text('messages'),
                 ),
+                BottomNavigationBarItem(
+                  icon: PlatformWidget(
+                    ios: (_) => Icon(
+                      CupertinoIcons.profile_circled,
+                      size: 35,
+                    ),
+                    android: (_) => Icon(Icons.person),
+                  ),
+                  title: Text('account'),
+                ),
               ],
               ios: (_) => CupertinoTabBarData(
-                backgroundColor: Colors.white.withAlpha(200),
+                iconSize: 10,
+                backgroundColor: Colors.white,
                 ),
           )
           ),

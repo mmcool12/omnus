@@ -48,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return PlatformScaffold(
         iosContentBottomPadding: true,
         appBar: PlatformAppBar(
+          backgroundColor: Colors.white,
            title: Text(
              'Home',
           //   'Hello, ${user.firstName}',
