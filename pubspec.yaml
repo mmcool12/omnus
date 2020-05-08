@@ -36,6 +36,7 @@ dependencies:
   transparent_image: ^1.0.0
   flutter_platform_widgets: ^0.40.0
   fluttertoast: ^4.0.0
+  google_fonts: ^1.0.0
 
 
 

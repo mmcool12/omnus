@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:omnus/Components/CartButton.dart';
 import 'package:omnus/Models/Cart.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
@@ -36,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     User user;
-
     DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
     if (snapshot != null) {
       if (snapshot.data != null) {
@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (user != null) {
       return PlatformScaffold(
+        iosContentBottomPadding: true,
         appBar: PlatformAppBar(
            title: Text(
              'Home',
@@ -84,15 +85,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     for (DocumentSnapshot snap in snapshot.data.documents)
                       chefs.add(Chef.fromFirestore(snap));
                     chefs.sort((a, b) => b.numReviews.compareTo(a.numReviews));
-                    return GridView.count(
+                    return ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
-                      crossAxisCount: 1,
-                      children: List.generate(chefs.length, (index) {
+                      itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: GridCard(chefs: chefs, index: index,user: user),
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridCard(chef: chefs[index], user: user),
                         );
-                      }),
+                      },
+                      itemCount: chefs.length,
                     );
                   } else {
                     return Text("Loading");
@@ -113,13 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
 class GridCard extends StatelessWidget {
   const GridCard({
     Key key,
-    @required this.chefs,
-    @required this.index,
+    @required this.chef,
     @required this.user
   }) : super(key: key);
 
-  final List<Chef> chefs;
-  final int index;
+  final Chef chef;
   final User user;
 
     String chefType(String type) {
@@ -134,74 +133,69 @@ class GridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double textScale = MediaQuery.of(context).textScaleFactor;
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      color: Colors.green,
       child: InkWell(
         onTap: () => Navigator.push(context, 
-         platformPageRoute(context: context, builder: (BuildContext context) => ChefDetailsScreen(chef: chefs[index], user: user))),
-        child: Column(
+         platformPageRoute(context: context, builder: (BuildContext context) => ChefDetailsScreen(chef: chef, user: user))),
+        child: Stack(
           children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Container(
-                child: FutureBuilder<dynamic>(
-                  future: ImageFunctions().getImage(chefs[index].mainImage),
-                  builder: (context, snapshot) {
-                    if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                      return CachedNetworkImage(
+            Container(
+              height: 240,
+              decoration: BoxDecoration(borderRadius:  BorderRadius.circular(10)),
+              width: double.infinity,
+              child: FutureBuilder<dynamic>(
+                future: ImageFunctions().getImage(chef.mainImage),
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
                               imageUrl: snapshot.data,
                               placeholder: (context, url) => Center(child: PlatformCircularProgressIndicator()),
-                              fit: BoxFit.fitHeight,
-                            );
-                    } else {
-                      return Center(child: PlatformCircularProgressIndicator());
-                    }
+                              fit: BoxFit.cover,
+                            ),
+                    );
+                  } else {
+                    return Center(child: PlatformCircularProgressIndicator());
                   }
-                  ),
-              ),
+                }
+                ),
             ),
-            Expanded(
+            Positioned(
+              bottom: 0,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        chefs[index].name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 1)),
-                      Row(
-                        children: <Widget>[
-                          // Text(
-                          //   chefType(chefs[index].type),
-                          //   style: TextStyle(
-                          //     fontSize: 20,
-                          //   ),
-                          // ),
-                          GFRating(
-                            allowHalfRating: true,
-                            value: chefs[index].rating,
-                            color: Colors.amber,
-                            borderColor: Colors.amber,
-                            size: 25,
-                          ),
-                          Text(
-                            '(${chefs[index].numReviews})'
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      chef.name,
+                      style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20 * textScale,
+                        shadows: [
+                          BoxShadow( 
+                            offset: Offset(1.0, 1.0),
+                            color: Colors.black38.withOpacity(.5)
                           )
-                        ],
-                      ),
-                    ],
-                  ),
+                        ]
+                      )
+                    ),
+                    Text(
+                      chef.menu[0]['title'],
+                      style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18 * textScale,
+                      )
+                    )
+                  ],
                 ),
               ),
             )

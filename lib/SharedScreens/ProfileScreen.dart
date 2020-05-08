@@ -76,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                           Text(
                             user.name,
                             style: TextStyle(
-                              fontSize: 35,
+                              fontSize: 30,// * MediaQuery.of(context).textScaleFactor,
                             ),
                           ),
                           FlatButton(

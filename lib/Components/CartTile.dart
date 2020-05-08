@@ -31,7 +31,7 @@ class CartTile extends StatelessWidget {
                 child: Text('${meal.length}'),
               ),
               title: Text(item.title),
-              subtitle: Text(item.description),
+              subtitle: Text(item.description, overflow: TextOverflow.ellipsis, maxLines: 2),
               isThreeLine: true,
               trailing: Padding(
                 padding: const EdgeInsets.fromLTRB(0,0,0,0),

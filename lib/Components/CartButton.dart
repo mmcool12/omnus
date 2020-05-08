@@ -12,12 +12,12 @@ class CartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    double navbarHeight = MediaQuery.of(context).padding.bottom;
     double width = MediaQuery.of(context).size.width;
 
     if (cart.hasItems) {
       return Positioned(
-          bottom: this.padding ? kBottomNavigationBarHeight - 4 : 0,
+          bottom: this.padding ? navbarHeight : 0,
           width: width,
           child: Padding(
             padding: this.padding ? const EdgeInsets.symmetric(horizontal: 8.0) : const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
