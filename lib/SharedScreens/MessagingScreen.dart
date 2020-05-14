@@ -12,7 +12,8 @@ class MessagingScreen extends StatefulWidget {
   final String id;
   final String type;
 
-  MessagingScreen({Key key, @required this.chat, @required this.id, @required this.type})
+  MessagingScreen(
+      {Key key, @required this.chat, @required this.id, @required this.type})
       : super(key: key);
 
   @override
@@ -20,39 +21,34 @@ class MessagingScreen extends StatefulWidget {
 }
 
 class _MessagingScreenState extends State<MessagingScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     final textController = TextEditingController();
 
-    void sendMessage() {
+    void sendMessage() async {
       if (textController.text != "") {
-        if(widget.type == 'user') {
-        ChatFunctions()
-            .createMessage(widget.chat.id, widget.id, textController.text);
-        } else{
-          ChatFunctions()
-            .createMessage(widget.chat.id, widget.id, textController.text);
-        }
+          await ChatFunctions()
+              .createMessage(widget.chat.id, widget.id, textController.text);
         textController.clear();
       }
     }
 
-    bool checkSender(Message message){
-      if(widget.type == 'user'){
+    bool checkSender(Message message) {
+      if (widget.type == 'user') {
         return message.sender == widget.id;
-      } else{
+      } else {
         return message.sender == widget.id;
       }
     }
 
     Widget listview(List<Message> messages) {
+     //messages.removeRange(messages.length ~/ 3, messages.length-1);
       return ListView.separated(
+        shrinkWrap: true,
         physics: AlwaysScrollableScrollPhysics(),
         reverse: true,
-        controller: ScrollController(initialScrollOffset: 20),
+        controller: ScrollController(initialScrollOffset: -kBottomNavigationBarHeight),
         separatorBuilder: (context, index) {
           return Padding(padding: EdgeInsets.symmetric(vertical: 2.0));
         },
@@ -94,12 +90,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     return PlatformScaffold(
         appBar: PlatformAppBar(
-          title:
-              Text(widget.chat.chefName, style: TextStyle(color: Colors.black)),
-                      ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
-
+          title: Text(
+              widget.id == widget.chat.chefId
+                  ? widget.chat.buyerName
+                  : widget.chat.chefName,
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          ios: (_) =>
+              CupertinoNavigationBarData(transitionBetweenRoutes: false),
         ),
         body: Column(
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
@@ -120,18 +121,19 @@ class _MessagingScreenState extends State<MessagingScreen> {
             Container(
               color: Colors.grey[200],
               child: Material(
-                              child: ListTile(
-                  leading: Icon(Icons.image, color: Colors.transparent),
-                  title: PlatformTextField(
-                    controller: textController,
-                    onSubmitted: (string) => sendMessage(),
-                    ios: (_) => CupertinoTextFieldData(
-                      
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: ListTile(
+                    leading: Icon(Icons.image, color: Colors.transparent),
+                    title: PlatformTextField(
+                      controller: textController,
+                      textCapitalization: TextCapitalization.sentences,
+                      onSubmitted: (string) async => sendMessage(),
                     ),
-                  ),
-                  trailing: PlatformIconButton(
-                    icon: Icon(Icons.send),
-                    onPressed: () => sendMessage(),
+                    trailing: PlatformIconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () async => sendMessage(),
+                    ),
                   ),
                 ),
               ),

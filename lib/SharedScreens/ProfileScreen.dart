@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'package:getflutter/components/avatar/gf_avatar.dart';
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    User user;
+    User user = User();
 
     DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
     if (snapshot != null) {
@@ -26,17 +27,7 @@ class ProfileScreen extends StatelessWidget {
     }
 
     if (user == null) {
-      print(user.profileImage);
-      return PlatformScaffold(
-        appBar: PlatformAppBar(
-          title: Text(
-            'Loading',
-            style: TextStyle(color: Colors.black),
-          ),
-          ios: (_) =>
-              CupertinoNavigationBarData(transitionBetweenRoutes: false),
-        ),
-      );
+      return Center(child: PlatformCircularProgressIndicator());
     } else {
       return PlatformScaffold(
         iosContentPadding: true,
@@ -71,48 +62,52 @@ class ProfileScreen extends StatelessWidget {
                     ProfilePic(user: user),
                     Expanded(
                       child: Container(
-                          child: Column(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
                         children: <Widget>[
-                          Text(
-                            user.name,
-                            style: TextStyle(
-                              fontSize: 30,// * MediaQuery.of(context).textScaleFactor,
+                            AutoSizeText(
+                              user.name ?? "",
+                              style: TextStyle(
+                                fontSize: 35,// * MediaQuery.of(context).textScaleFactor,
+                              ),
+                              maxLines: 1,
                             ),
-                          ),
-                          FlatButton(
-                              color: Colors.blueAccent[400],
-                              onPressed: () async {
-                                if (user.chefId == "") {
-                                  await ChefFunctions().createChef(user).then(
-                                      (id) => Navigator.push(
-                                          context,
-                                          platformPageRoute(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  ChefEditScreen(chefId: id))));
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      platformPageRoute(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              ChefEditScreen(
-                                                  chefId: user.chefId)));
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  (user.chefId == ""
-                                    ? 'Become a chef!'
-                                    : 'Your chef profile'),
-                                    style: TextStyle(
-                                      color: Colors.white,
+                            FlatButton(
+                                color: Colors.blueAccent[400],
+                                onPressed: () async {
+                                  if (user.chefId == "") {
+                                    await ChefFunctions().createChef(user).then(
+                                        (id) => Navigator.push(
+                                            context,
+                                            platformPageRoute(
+                                                context: context,
+                                                builder: (BuildContext context) =>
+                                                    ChefEditScreen(chefId: id, userId: user.id))));
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        platformPageRoute(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                ChefEditScreen(
+                                                    chefId: user.chefId, userId: user.id)));
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    (user.chefId == ""
+                                      ? 'Become a chef!'
+                                      : 'Your chef profile'),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                              ))
+                                ))
                         ],
-                      )),
+                      ),
+                          )),
                     )
                   ],
                 ),
@@ -201,8 +196,13 @@ class _ProfilePicState extends State<ProfilePic> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+  String initials = ""; 
+  initials += widget.user.firstName == null ? "" : widget.user.firstName.substring(0, 1);
+  initials += widget.user.lastName == null ? "" : widget.user.lastName.substring(0, 1);
+
     return GestureDetector(
       onTap: () async {
         await ImageSourceModal().showModal(context, 'userProfile', widget.user.id);
@@ -235,8 +235,7 @@ class _ProfilePicState extends State<ProfilePic> {
                 backgroundColor: Colors.blueAccent[400],
                 radius: 64,
                 child: Text(
-                    widget.user.firstName.substring(0, 1) +
-                        widget.user.lastName.substring(0, 1),
+                    initials,
                     style: TextStyle(fontSize: 65)),
               );
             }

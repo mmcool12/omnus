@@ -406,7 +406,7 @@ class NewList extends StatelessWidget {
                                       size: 25,
                                     ),
                                     onPressed: () async {
-                                      await OrderFunctions().cancelOrder(request.id);
+                                      await OrderFunctions().rejectOrder(request.id);
                                       refresh();
                                     },
                                     label: Text(

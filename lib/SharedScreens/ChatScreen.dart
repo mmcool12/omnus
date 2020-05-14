@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -19,6 +20,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  FirebaseMessaging fcm = FirebaseMessaging();
+
 
   String selected = "User";
 
@@ -33,8 +36,9 @@ class _ChatScreenState extends State<ChatScreen> {
         user = User.fromFirestore(snapshot);
       }
     }
-
-
+    if (user == null){
+      return Center(child: PlatformCircularProgressIndicator());
+    } else {
     return PlatformScaffold(
       iosContentPadding: true,
         appBar: PlatformAppBar(
@@ -74,6 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
           )
         ]
         )));
+    }
   }
 }
 

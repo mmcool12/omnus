@@ -10,6 +10,7 @@ class Order{
   String chefName;
   double price;
   bool accepted;
+  bool rejected;
   bool completed;
   List<dynamic> meals;
 
@@ -24,6 +25,7 @@ class Order{
     this.chefName = map['chefName'];
     this.price = map['price'].toDouble();
     this.accepted = map['accepted'];
+    this.rejected = map['rejected'];
     this.completed = map['completed'];
     this.meals = map['meals'];
   }

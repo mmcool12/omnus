@@ -37,6 +37,9 @@ dependencies:
   flutter_platform_widgets: ^0.40.0
   fluttertoast: ^4.0.0
   google_fonts: ^1.0.0
+  firebase_messaging: ^6.0.13
+  overlay_support: ^1.0.3
+  auto_size_text: ^2.1.0
 
 
 

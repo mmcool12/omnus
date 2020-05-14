@@ -23,6 +23,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
     orders = UserFunctions().getOrdersById(widget.id);
     super.initState();
   }
+
+  refresh() {
+    orders = UserFunctions().getOrdersById(widget.id);
+    this.setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -56,7 +62,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    ActiveList(active: active, height: height),
+                    ActiveList(active: active, height: height, refresh: refresh),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16,8,0,0),
                       child: Text(
@@ -95,10 +101,12 @@ class ActiveList extends StatelessWidget {
     Key key,
     @required this.active,
     @required this.height,
+    @required this.refresh,
   }) : super(key: key);
 
   final List<DocumentSnapshot> active;
   final double height;
+  final dynamic refresh;
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +202,10 @@ class ActiveList extends StatelessWidget {
                       ),
                           if(!request.accepted)
                           GestureDetector(
-                            onTap: () async => OrderFunctions().cancelOrder(request.id),
+                            onTap: () async {
+                              await OrderFunctions().cancelOrder(request.id);
+                              refresh();
+                            },
                             child: Row(
                               children: <Widget>[
                                 Text(
