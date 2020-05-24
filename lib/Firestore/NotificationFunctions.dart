@@ -32,15 +32,17 @@ class NotificationFunctions {
   }
 
   tokenCheck(String userId) async {
-    print('Hello');
+    print('Token Check');
     String token = await askPermission();
     if(token != ""){
+      print('Check DB');
       User user = User.fromFirestore( await _db.collection('users').document(userId).get());
       await saveToken(token, user);
     }
   }
 
   saveToken(String token, User user) async {
+    print('called');
     if(!user.tokens.contains(token)){
       await _db.collection('users').document(user.id).updateData({
         'tokens' : FieldValue.arrayUnion([token])
@@ -50,6 +52,13 @@ class NotificationFunctions {
           'tokens' : FieldValue.arrayUnion([token])
         });
       }
+    }
+  }
+
+  saveNewToken(User user) async {
+    String token = await fcm.getToken();
+    if (token != "") {
+      saveToken(token, user);
     }
   }
 

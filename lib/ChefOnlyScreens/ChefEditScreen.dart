@@ -165,7 +165,7 @@ class ActiveToggle extends StatelessWidget {
       onTap: () async {
 
         var ready = true;
-        var subtitle = 'This means that people will be able to see and search for you are you ready?';
+        var subtitle = 'This means other people will be able to see and search for your profile. Are you ready?';
 
         if (chef.menu.length > 1 && chef.images.length > 1 && chef.profileImage == ""){
           subtitle = 'Add picture but okay';
@@ -179,8 +179,8 @@ class ActiveToggle extends StatelessWidget {
         }
         String token = await FirebaseMessaging().getToken();
         if( token == "" && !chef.active){
-          ready = false;
-          subtitle = "You must enable notifications to become a chef";
+          //ready = false;
+          subtitle = "It is recommended for you to enable notifications so you are alerted when a request is made. Do you want to be active anyways?";
           //await NotificationFunctions().enableNotifications(chef, userId);
         }
           showPlatformDialog(

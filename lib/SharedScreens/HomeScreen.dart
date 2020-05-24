@@ -48,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (user != null) {
+      NotificationFunctions().saveNewToken(user);
       return PlatformScaffold(
         iosContentBottomPadding: true,
         appBar: PlatformAppBar(
@@ -87,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<Chef> chefs = [];
                     for (DocumentSnapshot snap in snapshot.data.documents)
                       chefs.add(Chef.fromFirestore(snap));
+                    chefs.removeWhere((chef) => chef.id == user.chefId);
                     chefs.sort((a, b) => b.numReviews.compareTo(a.numReviews));
                     return ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
