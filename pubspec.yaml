@@ -34,7 +34,7 @@ dependencies:
   firebase_storage: ^3.1.5
   cached_network_image: ^2.0.0
   transparent_image: ^1.0.0
-  flutter_platform_widgets: ^0.40.0
+  flutter_platform_widgets: ^0.50.0
   fluttertoast: ^4.0.0
   google_fonts: ^1.0.0
   firebase_messaging: ^6.0.13
