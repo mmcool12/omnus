@@ -126,6 +126,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   child: ListTile(
                     leading: Icon(Icons.image, color: Colors.transparent),
                     title: PlatformTextField(
+                      autocorrect: true,
                       controller: textController,
                       textCapitalization: TextCapitalization.sentences,
                       onSubmitted: (string) async => sendMessage(),

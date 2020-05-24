@@ -14,7 +14,7 @@ class NotificationFunctions {
     String token;
     token = await fcm.getToken();
     print(token);
-    return token == null;
+    return token != null;
   }
 
   Future<String> askPermission() async {
@@ -36,18 +36,18 @@ class NotificationFunctions {
     String token = await askPermission();
     if(token != ""){
       User user = User.fromFirestore( await _db.collection('users').document(userId).get());
-      saveToken(token, user);
+      await saveToken(token, user);
     }
   }
 
   saveToken(String token, User user) async {
     if(!user.tokens.contains(token)){
       await _db.collection('users').document(user.id).updateData({
-        'token' : FieldValue.arrayUnion([token])
+        'tokens' : FieldValue.arrayUnion([token])
       });
       if (user.chefId != ""){
         await _db.collection('chefs').document(user.chefId).updateData({
-          'token' : FieldValue.arrayUnion([token])
+          'tokens' : FieldValue.arrayUnion([token])
         });
       }
     }

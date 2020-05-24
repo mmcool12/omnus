@@ -8,7 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omnus/SharedScreens/ChatScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
 import 'package:omnus/SharedScreens/ProfileScreen.dart';
@@ -43,7 +42,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     ProfileScreen(),
     HomeScreen(),
     ChatScreen(),
-    //CartScreen()
   ];
 
   void initState() {
@@ -55,12 +53,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
         if(title.contains('rejected') || title.contains('cancelled')){
           bad = true;
         }
-          showSimpleNotification(
-            Text(title),
-            background: bad ? Colors.redAccent : Colors.tealAccent,
-          );
-          return null;
-        }
+        
+        showSimpleNotification(
+          Text(title),
+          background: bad ? Colors.redAccent : Colors.tealAccent,
+        );
+        return null;
+      }
     );
   }
 
