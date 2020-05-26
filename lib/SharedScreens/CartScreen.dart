@@ -4,7 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omnus/Components/CartTile.dart';
 import 'package:omnus/Firestore/OrderFunctions.dart';
 import 'package:omnus/Models/Cart.dart';
+import 'package:omnus/Models/Meal.dart';
 import 'package:omnus/Models/User.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget{
@@ -48,6 +50,15 @@ class CartScreen extends StatelessWidget{
                 splashColor: Colors.white10,
                 onPressed: () async {
                   if(cart.hasItems) {
+                    for (List<Meal> meals in cart.items){
+                      if (meals[0].chefId == buyer.chefId){
+                        showSimpleNotification(
+                          Text('You cannot order from yourself'),
+                          background: Colors.redAccent
+                        );
+                        return null;
+                      }
+                    }
                     await showPlatformModalSheet(
                       context: context, 
                       builder: (BuildContext context) {
@@ -58,17 +69,15 @@ class CartScreen extends StatelessWidget{
                     );
                     cart.clear();
                     Future.delayed(Duration(milliseconds: 300), () async {
-                      Fluttertoast.showToast(
-                      msg: 'Request Complete',
-                      backgroundColor: Colors.tealAccent[400],
-                      gravity: ToastGravity.CENTER,
-                    );
+                      showSimpleNotification(
+                        Text('Request complete'),
+                        background: Colors.tealAccent[400]
+                      );
                   });
                   } else{
-                    Fluttertoast.showToast(
-                      msg: "Add items to cart to order",
-                      backgroundColor: Colors.redAccent,
-                      gravity: ToastGravity.CENTER
+                    showSimpleNotification(
+                      Text('Your cart is empty'),
+                      background: Colors.redAccent
                     );
                   }
                 },
