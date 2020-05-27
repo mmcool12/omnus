@@ -99,7 +99,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   icon: PlatformWidget(
                     ios: (_) => Icon(
                       CupertinoIcons.profile_circled,
-                      size: 35,
+                      size: 32,
                     ),
                     android: (_) => Icon(Icons.person),
                   ),
@@ -109,7 +109,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   icon: PlatformWidget(
                     ios: (_) => Icon(
                       CupertinoIcons.home,
-                      size: 35,
+                      size: 32,
                     ),
                     android: (_) => Icon(Icons.home),
                   ),
@@ -119,7 +119,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   icon: PlatformWidget(
                     ios: (_) => Icon(
                       CupertinoIcons.conversation_bubble,
-                      size: 35,
+                      size: 32,
                     ),
                     android: (_) => Icon(Icons.message),
                   ),
@@ -127,7 +127,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 ),
               ],
               ios: (_) => CupertinoTabBarData(
-                backgroundColor: Colors.white.withAlpha(200),
+                backgroundColor: Colors.white,
                 ),
           )
           ),

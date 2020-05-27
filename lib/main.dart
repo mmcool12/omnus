@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
           ios: (_) => CupertinoAppData(
               theme: CupertinoThemeData(
                   brightness: Brightness.light,
+                  barBackgroundColor: Colors.white,
                   primaryColor: Colors.blueAccent,
                   primaryContrastingColor: Colors.blue)),
           routes: {
