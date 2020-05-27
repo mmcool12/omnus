@@ -29,7 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   final kBoxDecorationStyle = BoxDecoration(
-    color: Color(0xFF6CA8F1),
+    //color: Color(0xFF6CA8F1),
+    color: Colors.teal[300],
     borderRadius: BorderRadius.circular(10.0),
     boxShadow: [
       BoxShadow(
@@ -152,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           'LOGIN',
           style: TextStyle(
-            color: Colors.blueAccent,
+            color: Colors.tealAccent[700],
             letterSpacing: 1.5,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -211,10 +212,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                Colors.blue[100],
-                Colors.blue[200],
-                Colors.blue[300],
-                Colors.blue[400],
+                // Colors.blue[100],
+                // Colors.blue[200],
+                // Colors.blue[300],
+                // Colors.blue[400],
+                Colors.teal[50],
+                Colors.tealAccent[100],
+                Colors.tealAccent[400],
+                Colors.tealAccent[700],
               ],
                   stops: [
                 0.1,
