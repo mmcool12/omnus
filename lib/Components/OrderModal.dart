@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/Models/Meal.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
 class OrderModal {
@@ -171,11 +171,11 @@ class _PillCounterState extends State<PillCounter> {
                 List<Meal> temp = [];
                 for (var i = 0; i < quantity; i++) temp.add(widget.meal);
                 widget.cart.add(temp);
-                Fluttertoast.showToast(
-                    msg: 'Added $quantity items',
-                    backgroundColor: Colors.tealAccent[400],
-                    gravity: ToastGravity.CENTER);
-                Future.delayed(const Duration(milliseconds: 500),
+                showSimpleNotification(
+                  Text('You added $quantity items'),
+                  background: Colors.tealAccent[400]
+                );
+                Future.delayed(const Duration(milliseconds: 300),
                     () => Navigator.pop(context));
               },
               child: Container(
