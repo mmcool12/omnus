@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omnus/Components/CartTile.dart';
 import 'package:omnus/Firestore/OrderFunctions.dart';
 import 'package:omnus/Models/Cart.dart';
