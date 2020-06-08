@@ -75,12 +75,14 @@ class EditBioTagModal {
 
   Widget iphoneModal(BuildContext context, Chef chef){
     double height = MediaQuery.of(context).size.height;
-    TextEditingController nameText = TextEditingController();
-    TextEditingController descText = TextEditingController();
+    TextEditingController tagText = TextEditingController();
+    tagText.text = chef.tags[0] as String;
+    TextEditingController bioText = TextEditingController();
+    bioText.text = chef.bio;
 
     bool checkDone(){
-      if(nameText.text.isNotEmpty && 
-        descText.text.isNotEmpty ){
+      if(tagText.text.isNotEmpty && 
+        bioText.text.isNotEmpty ){
           return true;
         } else {
           return false;
@@ -105,13 +107,9 @@ class EditBioTagModal {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-              Material(color: Colors.transparent, child: dishNameField(nameText)),
-                              ],
-                            ),
+                            Material(color: Colors.transparent, child: typeField(tagText)),
                             SizedBox(height: 10),
-                            Material(color: Colors.transparent, child: dishDescriptionField(descText))
+                            Material(color: Colors.transparent, child: bioField(bioText))
                           ]
                         ),
                 ),
@@ -146,12 +144,12 @@ class EditBioTagModal {
                       GestureDetector(
                         onTap: () async {
                           if(checkDone()){
-                            await ChefFunctions().addMenuItem(chef.id, packageMeal());
+                            await ChefFunctions().updateBioTag(chef, tagText.text, bioText.text);
                             Navigator.pop(context);
                           }
                         },
                         child: Text(
-                            'Add',
+                            'Confirm',
                           style: TextStyle(
                             color: Colors.greenAccent[700],
                             fontWeight: FontWeight.bold,
@@ -172,13 +170,13 @@ class EditBioTagModal {
   }
 
 
-      Widget dishDescriptionField(TextEditingController controller) {
+      Widget bioField(TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
-          'Description',
+          'Bio',
           style: kLabelStyle,
         ),
         SizedBox(height: 10),
@@ -188,7 +186,6 @@ class EditBioTagModal {
           height: 90,
           child: TextFormField(
             autovalidate: true,
-            validator: (text) => text == "" ? 'Must include description' : null,
             controller: controller,
             minLines: 2,
             maxLines: 3,
@@ -198,7 +195,7 @@ class EditBioTagModal {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                hintText: 'Description',
+                hintText: 'Add a bio',
                 hintStyle: kHintTextStyle,
             ),
           ),
@@ -206,48 +203,15 @@ class EditBioTagModal {
       ],
     );
   }
-   
-    Widget dishPriceField(TextEditingController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Text(
-          'Price',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 10),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60,
-          child: TextFormField(
-            autovalidate: true,
-            validator: (text) => text.isEmpty ? "Must add price" : null,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            textInputAction: TextInputAction.done,
-            controller: controller,
-            obscureText: false,
-            style: TextStyle(color: Colors.white, fontFamily: 'OpenSans'),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                hintText: 'Price',
-                hintStyle: kHintTextStyle
-            ),
-          ),
-        )
-      ],
-    );
-  }
+  
 
-  Widget dishNameField(TextEditingController controller) {
+  Widget typeField(TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
-          'Dish Name',
+          'Type',
           style: kLabelStyle,
         ),
         SizedBox(height: 10),
@@ -257,7 +221,7 @@ class EditBioTagModal {
           height: 60,
           child: TextFormField(
             autovalidate: true,
-            validator: (text) => text.isEmpty ? "Must include name" : null,
+            //validator: (text) => text.isEmpty ? "Must include name" : null,
             controller: controller,
             obscureText: false,
             textInputAction: TextInputAction.done,
@@ -265,7 +229,7 @@ class EditBioTagModal {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                hintText: 'Dish Name',
+                hintText: 'Type of food (e.g. American)',
                 hintStyle: kHintTextStyle
             ),
           ),
