@@ -29,6 +29,7 @@ class LoadingScreen extends StatefulWidget {
 //User user;
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  final FirebaseMessaging fcm = FirebaseMessaging();
   int currentIndex = 0;
   Widget currentScreen;
   PlatformTabController tabController;
