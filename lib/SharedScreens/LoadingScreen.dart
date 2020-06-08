@@ -27,8 +27,14 @@ class LoadingScreen extends StatefulWidget {
 //User user;
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  int currentIndex = 1;
+  int currentIndex = 0;
   Widget currentScreen;
+  PlatformTabController tabController;
+  @override
+  void initState() {
+    tabController = PlatformTabController(initialIndex: 0);
+    super.initState();
+  }
 
   void handleTap(int index) {
     setState(() {
@@ -64,17 +70,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
               ),
             ]),
       ),
-      child: PlatformScaffold(
-          body: IndexedStack(
-            //key: Key('$currentIndex'),
-            index: currentIndex,
-            children: _children,
-          ),
-          bottomNavBar: PlatformNavBar(
-            backgroundColor: Colors.white,
-              itemChanged: handleTap,
-              currentIndex: currentIndex,
-              items: [
+      child: PlatformTabScaffold(
+          bodyBuilder: (BuildContext context, int index) {
+            return _children[index];
+          },
+          tabController: tabController,
+          items: [
                 BottomNavigationBarItem(
                   icon: PlatformWidget(
                     ios: (_) => Icon(
@@ -88,12 +89,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 BottomNavigationBarItem(
                   icon: PlatformWidget(
                     ios: (_) => Icon(
-                      CupertinoIcons.conversation_bubble,
+                      CupertinoIcons.search,
                       size: 35,
                     ),
-                    android: (_) => Icon(Icons.message),
+                    android: (_) => Icon(Icons.search),
                   ),
-                  title: Text('messages'),
+                  title: Text('search'),
                 ),
                 BottomNavigationBarItem(
                   icon: PlatformWidget(
@@ -105,12 +106,18 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   ),
                   title: Text('account'),
                 ),
-              ],
-              ios: (_) => CupertinoTabBarData(
-                iconSize: 10,
-                backgroundColor: Colors.white,
-                ),
-          )
+                if(false)
+                  BottomNavigationBarItem(
+                    icon: PlatformWidget(
+                      ios: (_) => Icon(
+                        CupertinoIcons.profile_circled,
+                        size: 35,
+                      ),
+                      android: (_) => Icon(Icons.person),
+                    ),
+                    title: Text('account'),
+                  ),
+              ], 
           ),
     );
   }
