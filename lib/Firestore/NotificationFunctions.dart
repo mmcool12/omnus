@@ -12,7 +12,7 @@ class NotificationFunctions {
   Future<bool> checkToken() async {
     String token;
     token = await fcm.getToken();
-    print(token);
+    //print(token);
     return token != null;
   }
 
@@ -31,7 +31,7 @@ class NotificationFunctions {
   }
 
   tokenCheck(String userId) async {
-    print('Token Check');
+    //print('Token Check');
     String token = await askPermission();
     if(token != ""){
       print('Check DB');
@@ -41,7 +41,7 @@ class NotificationFunctions {
   }
 
   saveToken(String token, User user) async {
-    print('called');
+    //print('called');
     if(!user.tokens.contains(token)){
       await _db.collection('users').document(user.id).updateData({
         'tokens' : FieldValue.arrayUnion([token])

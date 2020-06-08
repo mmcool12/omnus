@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    print('bye');
+    //print('bye');
     allChefs = SearchFunctions().getAllChefs();
     //NotificationFunctions().tokenCheck(user.uid);
     super.initState();
