@@ -91,8 +91,8 @@ class ProfileScreen extends StatelessWidget {
                                         platformPageRoute(
                                             context: context,
                                             builder: (BuildContext context) =>
-                                                ChefEditScreen(
-                                                    chefId: user.chefId, userId: user.id)));
+                                                ChefEditScreenNew(
+                                                    chefId: user.chefId)));
                                   }
                                 },
                                 child: Padding(
