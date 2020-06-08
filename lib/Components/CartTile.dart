@@ -15,7 +15,6 @@ class CartTile extends StatelessWidget {
     Cart cart = Provider.of<Cart>(context, listen: false);
     
     Meal item = this.meal[0];
-    double height = MediaQuery.of(context).size.height;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

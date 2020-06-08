@@ -27,8 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-
+    
     User user;
     DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
     if (snapshot != null) {

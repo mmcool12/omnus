@@ -42,8 +42,9 @@ class ImageFunctions {
   }
 
 
-  Future<File> pickImage(ImageSource source) async {
-    return await ImagePicker.pickImage(source: source);
+  Future<PickedFile> pickImage(ImageSource source) async {
+    final _picker = ImagePicker();
+    return await _picker.getImage(source: source);
   }
 
   Future<String> uploadImage(File image, String userId, String path) async {
@@ -60,7 +61,8 @@ class ImageFunctions {
 
   Future<String> pickThenUploadProfile(
       ImageSource source, String userId) async {
-    File image = await pickImage(source);
+    PickedFile picked = await pickImage(source);
+    File image = File(picked.path);
     if (image != null ) {
       String filePath = await uploadImage(image, userId, 'profileImages');
       await _db.collection('users').document(userId).updateData(
@@ -71,7 +73,8 @@ class ImageFunctions {
   }
 
   Future<String>  pickThenUploadChefImage(ImageSource source, String chefId) async {
-    File image = await pickImage(source);
+    PickedFile picked = await pickImage(source);
+    File image = File(picked.path);
     if (image != null) {
       String filePath;
       await uploadImage(image, chefId, "chef$chefId")
@@ -85,7 +88,8 @@ class ImageFunctions {
   }
 
   Future<String>  pickThenUploadChefProfileImage(ImageSource source, String chefId) async {
-    File image = await pickImage(source);
+    PickedFile picked = await pickImage(source);
+    File image = File(picked.path);
     if (image != null) {
       String filePath;
       await uploadImage(image, chefId, "profile/$chefId")

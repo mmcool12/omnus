@@ -14,7 +14,6 @@ class CartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double navbarHeight = MediaQuery.of(context).padding.bottom;
     double width = MediaQuery.of(context).size.width;
 
     if (cart.hasItems) {

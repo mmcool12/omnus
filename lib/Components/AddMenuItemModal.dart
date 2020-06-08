@@ -74,7 +74,6 @@ class AddMenuItemModal {
   }
 
   Widget iphoneModal(BuildContext context, Chef chef){
-    double height = MediaQuery.of(context).size.height;
     TextEditingController nameText = TextEditingController();
     TextEditingController priceText = TextEditingController();
     TextEditingController descText = TextEditingController();

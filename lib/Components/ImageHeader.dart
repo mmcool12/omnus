@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
@@ -14,7 +12,6 @@ import 'package:omnus/Models/Chat.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
 import 'package:omnus/SharedScreens/MessagingScreen.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ImageHeader extends SliverPersistentHeaderDelegate {
   ImageHeader(
@@ -172,11 +169,9 @@ class ImageHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  // TODO: implement maxExtent
   double get maxExtent => (height / 3);
 
   @override
-  // TODO: implement minExtent
   double get minExtent => (height / 9);
 
   @override

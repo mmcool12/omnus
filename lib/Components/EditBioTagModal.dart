@@ -74,7 +74,6 @@ class EditBioTagModal {
   }
 
   Widget iphoneModal(BuildContext context, Chef chef){
-    double height = MediaQuery.of(context).size.height;
     TextEditingController tagText = TextEditingController();
     tagText.text = chef.tags[0] as String;
     TextEditingController bioText = TextEditingController();

@@ -11,7 +11,6 @@ import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Components/MenuTiles.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
-import 'package:omnus/Firestore/NotificationFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
 
 class ChefEditScreen extends StatefulWidget {

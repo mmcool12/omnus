@@ -43,7 +43,6 @@ class CreateReviewModal {
   }
 
   Widget iphoneModal(BuildContext context, Order order){
-    double height = MediaQuery.of(context).size.height;
     TextEditingController titleText = TextEditingController();
     TextEditingController ratingText = TextEditingController();
     TextEditingController descText = TextEditingController();

@@ -4,18 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
-import 'package:omnus/Components/CartButton.dart';
 import 'package:omnus/Components/EditBioTagModal.dart';
 import 'package:omnus/Components/ImageHeader.dart';
 import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Components/MenuTiles.dart';
-import 'package:omnus/Components/ReviewTiles.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
-import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/Models/Chef.dart';
-import 'package:omnus/Models/User.dart';
-import 'package:provider/provider.dart';
 
 class ChefEditScreenNew extends StatefulWidget {
   final String chefId;
