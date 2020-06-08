@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -99,44 +101,47 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
 
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              child: StreamBuilder<DocumentSnapshot>(
-                stream: ChatFunctions().getChatStream(widget.chat.id),
-                builder: (context, snapshot) {
-                  List<Message> messages = [];
-                  if (snapshot.hasData && snapshot.data.exists) {
-                    for (Map<dynamic, dynamic> snap in snapshot
-                        .data['messages']) messages.add(Message.fromMap(snap));
-                    return listview(messages.reversed.toList());
-                  } else {
-                    return PlatformCircularProgressIndicator();
-                  }
-                },
+        body: Padding(
+          padding:  EdgeInsets.only(bottom: window.viewInsets.bottom > 0 ? 0 : kBottomNavigationBarHeight-4),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: ChatFunctions().getChatStream(widget.chat.id),
+                  builder: (context, snapshot) {
+                    List<Message> messages = [];
+                    if (snapshot.hasData && snapshot.data.exists) {
+                      for (Map<dynamic, dynamic> snap in snapshot
+                          .data['messages']) messages.add(Message.fromMap(snap));
+                      return listview(messages.reversed.toList());
+                    } else {
+                      return PlatformCircularProgressIndicator();
+                    }
+                  },
+                ),
               ),
-            ),
-            Container(
-              color: Colors.grey[200],
-              child: Material(
-                              child: ListTile(
-                  leading: Icon(Icons.image, color: Colors.transparent),
-                  title: PlatformTextField(
-                    controller: textController,
-                    onSubmitted: (string) => sendMessage(),
-                    ios: (_) => CupertinoTextFieldData(
-                      
+              Container(
+                color: Colors.grey[200],
+                child: Material(
+                                child: ListTile(
+                    leading: Icon(Icons.image, color: Colors.transparent),
+                    title: PlatformTextField(
+                      controller: textController,
+                      onSubmitted: (string) => sendMessage(),
+                      ios: (_) => CupertinoTextFieldData(
+                        
+                      ),
                     ),
-                  ),
-                  trailing: PlatformIconButton(
-                    icon: Icon(Icons.send),
-                    onPressed: () => sendMessage(),
+                    trailing: PlatformIconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () => sendMessage(),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }
