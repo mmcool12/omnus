@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:omnus/Firestore/ChefFunctions.dart';
+import 'package:omnus/Models/Chef.dart';
 
 class ImageFunctions {
   final Firestore _db = Firestore.instance;
@@ -24,6 +26,21 @@ class ImageFunctions {
     }
     return images;
   }
+
+  Future<List<dynamic>> getChefsImagesFromID(String chefId) async {
+    DocumentSnapshot snapshot = await ChefFunctions().getChef(chefId);
+    Chef chef  = Chef.fromFirestore(snapshot);
+    List<dynamic> images = [];
+    for (String path in chef.images) {
+      await _storage
+          .ref()
+          .child(path)
+          .getDownloadURL()
+          .then((path) => images.add(path));
+    }
+    return images;
+  }
+
 
   Future<File> pickImage(ImageSource source) async {
     return await ImagePicker.pickImage(source: source);
