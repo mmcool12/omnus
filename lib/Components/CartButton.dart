@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Models/Cart.dart';
@@ -17,7 +19,7 @@ class CartButton extends StatelessWidget {
 
     if (cart.hasItems) {
       return Positioned(
-          bottom: this.padding ? navbarHeight : 0,
+          bottom: this.padding ? window.viewPadding.bottom + kBottomNavigationBarHeight : kBottomNavigationBarHeight - 20,
           width: width,
           child: Padding(
             padding: this.padding ? const EdgeInsets.symmetric(horizontal: 8.0) : const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
