@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -8,9 +10,9 @@ class CreateReviewModal {
   showModal(BuildContext context, Order order) async {
     showPlatformModalSheet(
       context: context,
-      builder: (_) => PlatformWidget(
-          android: (_) => androidModal(context, order),
-          ios: (_) => iphoneModal(context, order)),
+      builder: (context) => PlatformWidget(
+          android: (context) => androidModal(context, order),
+          ios: (context) => iphoneModal(context, order)),
     );
   }
 
@@ -61,17 +63,13 @@ class CreateReviewModal {
         return checkDone();
       },
       child: SafeArea(
-        child: CupertinoPageScaffold(
-          backgroundColor: Colors.transparent,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SingleChildScrollView(
-                                    child: Container(
-                        height: height * .33,
+                  Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -80,20 +78,20 @@ class CreateReviewModal {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Expanded( flex: 2, child: Material(color: Colors.transparent, child: reviewTitleField(titleText))),
-                                    SizedBox(width: 15),
-                                    Expanded(child: Material(color: Colors.transparent, child: reviewRatingField(ratingText))),
+                  Expanded( flex: 2, child: Material(color: Colors.transparent, child: reviewTitleField(titleText))),
+                  SizedBox(width: 15),
+                  Expanded(child: Material(color: Colors.transparent, child: reviewRatingField(ratingText))),
                                   ],
                                 ),
                                 SizedBox(height: 10),
-                                Expanded(child: Material(color: Colors.transparent, child: dishDescriptionField(descText)))
+                                Material(color: Colors.transparent, child: dishDescriptionField(descText))
                               ]
                             ),
                         )),
-                  ),
                   Padding(padding: EdgeInsets.symmetric(vertical: 6)),
                   Container(
                     width: double.infinity,
@@ -141,19 +139,20 @@ class CreateReviewModal {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(height: window.viewInsets.bottom/2)
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
+     );
   }
 
 
       Widget dishDescriptionField(TextEditingController controller) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
@@ -188,6 +187,7 @@ class CreateReviewModal {
    
     Widget reviewRatingField(TextEditingController controller) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
@@ -221,6 +221,7 @@ class CreateReviewModal {
 
   Widget reviewTitleField(TextEditingController controller) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,18 +13,18 @@ class AddMenuItemModal {
   showModal(BuildContext context, Chef chef) async {
     showPlatformModalSheet(
       context: context,
-      builder: (_) => PlatformWidget(
-          android: (_) => androidModal(context, chef),
-          ios: (_) => iphoneModal(context, chef)),
+      builder: (context) => PlatformWidget(
+          android: (context) => androidModal(context, chef),
+          ios: (context) => iphoneModal(context, chef)),
     );
   }
 
   Widget androidModal(BuildContext context, Chef chef) {
     var type = "";
     var id = "";
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      child: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -96,97 +98,89 @@ class AddMenuItemModal {
       };
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        return checkDone();
-      },
-      child: SafeArea(
-        child: CupertinoPageScaffold(
-          backgroundColor: Colors.transparent,
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SingleChildScrollView(
-                                    child: Container(
-                        height: height * .33,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
+    return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                
+                width: double.infinity,
+                decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Row(
                               children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Expanded( flex: 2, child: Material(color: Colors.transparent, child: dishNameField(nameText))),
-                                    SizedBox(width: 15),
-                                    Expanded(child: Material(color: Colors.transparent, child: dishPriceField(priceText))),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Expanded(child: Material(color: Colors.transparent, child: dishDescriptionField(descText)))
-                              ]
+              Expanded( flex: 2, child: Material(color: Colors.transparent, child: dishNameField(nameText))),
+              SizedBox(width: 15),
+              Expanded(child: Material(color: Colors.transparent, child: dishPriceField(priceText))),
+                              ],
                             ),
-                        )),
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(vertical: 6)),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[50],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                                'Cancel',
-                              style: TextStyle(
-                                color: Colors.blue[700],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 21,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              if(checkDone()){
-                                await ChefFunctions().addMenuItem(chef.id, packageMeal());
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text(
-                                'Add',
-                              style: TextStyle(
-                                color: Colors.greenAccent[700],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 21,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                            SizedBox(height: 10),
+                            Material(color: Colors.transparent, child: dishDescriptionField(descText))
+                          ]
+                        ),
+                ),
               ),
-            ),
+              SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey[50],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () async {
+                          print('pressed');
+                          return Navigator.pop(context);
+                        },
+                        child: Text(
+                            'Cancel',
+                          style: TextStyle(
+                            color: Colors.blue[700],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 21,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          if(checkDone()){
+                            await ChefFunctions().addMenuItem(chef.id, packageMeal());
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Text(
+                            'Add',
+                          style: TextStyle(
+                            color: Colors.greenAccent[700],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 21,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: window.viewInsets.bottom/2)
+            ],
           ),
         ),
-      ),
     );
   }
 
@@ -194,6 +188,7 @@ class AddMenuItemModal {
       Widget dishDescriptionField(TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
           'Description',
@@ -228,6 +223,7 @@ class AddMenuItemModal {
     Widget dishPriceField(TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
           'Price',
@@ -261,6 +257,7 @@ class AddMenuItemModal {
   Widget dishNameField(TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
           'Dish Name',
