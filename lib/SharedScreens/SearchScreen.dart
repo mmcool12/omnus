@@ -7,8 +7,11 @@ class SearchScreen extends StatelessWidget {
     return PlatformScaffold(
       appBar: PlatformAppBar(
         title: Text('Search'),
+        ios: (_) =>
+              CupertinoNavigationBarData(transitionBetweenRoutes: false),
       ),
       body: Center(child: Text('Search')),
+      
     );
   }
 
