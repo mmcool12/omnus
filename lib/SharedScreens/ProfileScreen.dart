@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
 import 'package:omnus/ChefOnlyScreens/ChefEditScreen.dart';
+import 'package:omnus/ChefOnlyScreens/ChefEditScreenNew.dart';
 import 'package:omnus/ChefOnlyScreens/RequestsScreen.dart';
 import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
@@ -96,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                                       platformPageRoute(
                                           context: context,
                                           builder: (BuildContext context) =>
-                                              ChefEditScreen(
+                                              ChefEditScreenNew(
                                                   chefId: user.chefId)));
                                 }
                               },
