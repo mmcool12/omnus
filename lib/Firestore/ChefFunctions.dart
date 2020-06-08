@@ -12,10 +12,11 @@ class ChefFunctions{
     await _db.collection('chefs').add({
       'firstName' : user.firstName,
       'lastName' : user.lastName,
-      'bio' : "",
+      'bio' : '',
       'menu' : [],
       'zip' : user.zipcode,
       'images' : [],
+      'tags' : [],
       'reviews' : [],
       'rating' : 0,
       'numReviews' : 0,
@@ -58,10 +59,36 @@ class ChefFunctions{
     return await _db.collection('orders').where('chefId', isEqualTo: id).getDocuments();
   }
 
-  changeBio(Chef chef, String bio) async {
+  updateBio(Chef chef, String bio) async {
     await _db.collection('chefs').document(chef.id).updateData({
-      'bio' : bio,
+      'bio' : bio.trimRight(),
     });
+  }
+
+  String cleanTags(String tags){
+    tags = tags.trimRight();
+    int space = tags.indexOf(' ');
+    if (space > 0){
+      tags.substring(0, space);
+      return tags.trimRight();
+    } else {
+      return tags;
+    }
+  }
+
+  updateTags(Chef chef, String tags) async {
+    await _db.collection('chefs').document(chef.id).updateData({
+      'tags' : [tags],
+    });
+  }
+
+  updateBioTag(Chef chef, String tags, String bio) async {
+    if (chef.tags[0] != cleanTags(tags)){
+      updateTags(chef, cleanTags(tags));
+    } 
+    if (chef.bio != bio.trimRight()){
+      updateBio(chef, bio.trimRight());
+    }
   }
 
 }
