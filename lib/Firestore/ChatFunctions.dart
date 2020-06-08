@@ -1,10 +1,14 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/widgets.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
+import 'package:overlay_support/overlay_support.dart';
 class ChatFunctions {
   final Firestore _db = Firestore.instance;
-
+  final FirebaseMessaging fcm = FirebaseMessaging();
+  
   Future<QuerySnapshot> getChats() async {
     return await _db.collection('chat').getDocuments();
   }
@@ -21,15 +25,23 @@ class ChatFunctions {
     return _db.collection('chat').document(id).snapshots();
   }
 
+
   createMessage(String docId, String senderId, String message) async {
-    await _db.collection('chat').document(docId).updateData({
-      'messages' : FieldValue.arrayUnion([
-        {
-          'message' : message,
-          'sender' : senderId
-        }
-      ])},
-    );
+    try {
+      await _db.collection('chat').document(docId).updateData({
+        'messages' : FieldValue.arrayUnion([
+          {
+            'message' : message,
+            'sender' : senderId
+          }
+        ])},
+      );
+    } catch (error) {
+      print(error);
+      showSimpleNotification(
+        Text('Could not send message, try again'),
+      );
+    }
   }
 
   Future<DocumentSnapshot> createChat(User buyer, Chef chef) async {

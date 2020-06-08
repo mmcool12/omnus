@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -10,15 +11,18 @@ import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Components/MenuTiles.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
+import 'package:omnus/Firestore/NotificationFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
 
 class ChefEditScreen extends StatefulWidget {
   final String chefId;
+  final String userId;
 
   @override
   const ChefEditScreen({
     Key key,
     @required this.chefId,
+    @required this.userId
   }) : super(key: key);
 
   @override
@@ -122,7 +126,7 @@ class _ChefEditScreenState extends State<ChefEditScreen> {
                                                 : ""))
                                           ],
                                         ),
-                                        ActiveToggle(chef: chef)
+                                        ActiveToggle(chef: chef, userId: widget.userId,)
                                       ],
                                     ),
                                   ),
@@ -149,17 +153,19 @@ class ActiveToggle extends StatelessWidget {
   const ActiveToggle({
     Key key,
     @required this.chef,
+    @required this.userId
   }) : super(key: key);
 
   final Chef chef;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
 
         var ready = true;
-        var subtitle = 'This means that people will be able to see and search for you are you ready?';
+        var subtitle = 'This means other people will be able to see and search for your profile. Are you ready?';
 
         if (chef.menu.length > 1 && chef.images.length > 1 && chef.profileImage == ""){
           subtitle = 'Add picture but okay';
@@ -170,6 +176,12 @@ class ActiveToggle extends StatelessWidget {
         }
         if(chef.active){
           subtitle = "This means you will no longer get order request";
+        }
+        String token = await FirebaseMessaging().getToken();
+        if( token == "" && !chef.active){
+          //ready = false;
+          subtitle = "It is recommended for you to enable notifications so you are alerted when a request is made. Do you want to be active anyways?";
+          //await NotificationFunctions().enableNotifications(chef, userId);
         }
           showPlatformDialog(
             context: context, 

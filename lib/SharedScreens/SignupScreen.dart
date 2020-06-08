@@ -28,7 +28,8 @@ class _SignupScreenState extends State<SignupScreen> {
   );
 
   final kBoxDecorationStyle = BoxDecoration(
-    color: Color(0xFF6CA8F1),
+    //color: Color(0xFF6CA8F1),
+    color: Colors.teal[300],
     borderRadius: BorderRadius.circular(10.0),
     boxShadow: [
       BoxShadow(
@@ -182,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Text(
           'SIGNUP',
           style: TextStyle(
-            color: Colors.blueAccent,
+            color: Colors.tealAccent[700],
             letterSpacing: 1.5,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -229,7 +230,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[400],
+      backgroundColor: Colors.tealAccent[700],
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -244,10 +245,14 @@ class _SignupScreenState extends State<SignupScreen> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                      Colors.blue[100],
-                      Colors.blue[200],
-                      Colors.blue[300],
-                      Colors.blue[400],
+                      // Colors.blue[100],
+                      // Colors.blue[200],
+                      // Colors.blue[300],
+                      // Colors.blue[400],
+                      Colors.teal[50],
+                      Colors.tealAccent[100],
+                      Colors.tealAccent[400],
+                      Colors.tealAccent[700],
                     ],
                         stops: [
                       0.1,

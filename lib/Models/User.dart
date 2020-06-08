@@ -11,6 +11,7 @@ class User {
   String zipcode;
   String chefId;
   String profileImage;
+  List<dynamic> tokens;
   
 
 
@@ -24,6 +25,7 @@ class User {
     this.zipcode = map['zip'];
     this.chefId = map['chefId'];
     this.profileImage = map['profileImage'];
+    this.tokens = map['tokens'];
   }
 
   factory User.fromFirestore(DocumentSnapshot snapshot){

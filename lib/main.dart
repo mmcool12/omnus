@@ -12,59 +12,57 @@ import 'package:omnus/SharedScreens/BabyScreen.dart';
 import 'package:omnus/SharedScreens/LoginScreen.dart';
 import 'package:omnus/SharedScreens/OnboardScreen.dart';
 import 'package:omnus/SharedScreens/SignupScreen.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
-
-void main(){
+void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.black.withOpacity(0),
     // statusBarBrightness: Brightness.dark,
     // statusBarIconBrightness: Brightness.dark
   ));
 
-  runApp(MyApp());  
-} 
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          StreamProvider<FirebaseUser>.value(
-              value: FirebaseAuth.instance.onAuthStateChanged),
-              ChangeNotifierProvider(create: (context) => Cart())
-        ],
+      providers: [
+        StreamProvider<FirebaseUser>.value(
+            value: FirebaseAuth.instance.onAuthStateChanged),
+        ChangeNotifierProvider(create: (context) => Cart())
+      ],
+      child: OverlaySupport(
         child: PlatformApp(
           debugShowCheckedModeBanner: false,
-      home: AuthScreen(),
-      android:(_) => MaterialAppData(
-      theme: ThemeData(
-        primaryColorDark: Colors.white,
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-          color: Colors.white,
-          iconTheme: IconThemeData(
-            color: Colors.black
+          home: AuthScreen(),
+          android: (_) => MaterialAppData(
+            theme: ThemeData(
+              primaryColorDark: Colors.white,
+              appBarTheme: AppBarTheme(
+                brightness: Brightness.light,
+                color: Colors.white,
+                iconTheme: IconThemeData(color: Colors.black),
+              ),
+            ),
           ),
-          ),
+          ios: (_) => CupertinoAppData(
+              theme: CupertinoThemeData(
+                  brightness: Brightness.light,
+                  barBackgroundColor: Colors.white,
+                  primaryColor: Colors.blueAccent,
+                  primaryContrastingColor: Colors.blue)),
+          routes: {
+            '/Auth': (context) => BabyScreen(),
+            '/Auth/Login': (context) => LoginScreen(),
+            '/Auth/Signup': (context) => SignupScreen(),
+            '/Auth/Onboard': (context) => OnboardScreen(),
+          },
         ),
       ),
-      ios: (_) => CupertinoAppData(
-        theme: CupertinoThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.blueAccent,
-          primaryContrastingColor: Colors.blue
-        )
-      ),
-      routes: {
-      '/Auth': (context) => BabyScreen(),
-      '/Auth/Login': (context) => LoginScreen(),
-      '/Auth/Signup': (context) => SignupScreen(),
-      '/Auth/Onboard': (context) => OnboardScreen(),
-      
-    },
-    ),
-        );
+    );
   }
 }

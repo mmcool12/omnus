@@ -102,7 +102,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
             );
           } else {
             return PlatformScaffold(
-              appBar: PlatformAppBar(title: Text('Your Requets')),
+              appBar: PlatformAppBar(title: Text('Your Requests')),
               body: Center(child: Text('No active requests')),
             );
           }
@@ -406,7 +406,7 @@ class NewList extends StatelessWidget {
                                       size: 25,
                                     ),
                                     onPressed: () async {
-                                      await OrderFunctions().cancelOrder(request.id);
+                                      await OrderFunctions().rejectOrder(request.id);
                                       refresh();
                                     },
                                     label: Text(

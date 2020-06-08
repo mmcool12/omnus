@@ -40,7 +40,7 @@ class BabyScreen extends StatelessWidget {
         child: Text(
           'LOGIN',
           style: TextStyle(
-            color: Colors.blueAccent,
+            color: Colors.tealAccent[700],
             letterSpacing: 1.5,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class BabyScreen extends StatelessWidget {
         child: Text(
           'SIGNUP',
           style: TextStyle(
-            color: Colors.blueAccent,
+            color: Colors.tealAccent[700],
             letterSpacing: 1.5,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -112,10 +112,14 @@ class BabyScreen extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                        Colors.blue[100],
-                        Colors.blue[200],
-                        Colors.blue[300],
-                        Colors.blue[400],
+                        // Colors.blue[100],
+                        // Colors.blue[200],
+                        // Colors.blue[300],
+                        // Colors.blue[400],
+                        Colors.teal[50],
+                        Colors.tealAccent[100],
+                        Colors.tealAccent[400],
+                        Colors.tealAccent[700],
                       ],
                           stops: [
                         0.1,
@@ -131,12 +135,13 @@ class BabyScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        FlutterLogo(
-                          colors: Colors.lightBlue,
-                          size: 150,
+                        Image.asset(
+                          'logo.png',
+                          width: 160,
+                          height: 160,
                         ),
                         SizedBox(
-                          height: 150
+                          height: 130
                         ),
                         loginButton(context),
                         signupButton(context),

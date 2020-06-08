@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:omnus/Components/CartButton.dart';
 import 'package:omnus/Models/Cart.dart';
-import 'package:getflutter/components/rating/gf_rating.dart';
+import 'package:omnus/Firestore/NotificationFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
 import 'package:omnus/SharedScreens/ChefDetailsScreen.dart';
@@ -24,8 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    print('bye');
     allChefs = SearchFunctions().getAllChefs();
-    print('hello');
+    //NotificationFunctions().tokenCheck(user.uid);
     super.initState();
   }
 
@@ -45,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (user != null) {
+      NotificationFunctions().saveNewToken(user);
       return PlatformScaffold(
         iosContentBottomPadding: true,
         appBar: PlatformAppBar(
@@ -64,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<Chef> chefs = [];
                     for (DocumentSnapshot snap in snapshot.data.documents)
                       chefs.add(Chef.fromFirestore(snap));
+                    //chefs.removeWhere((chef) => chef.id == user.chefId);
                     chefs.sort((a, b) => b.numReviews.compareTo(a.numReviews));
                     return ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
@@ -117,7 +122,7 @@ class GridCard extends StatelessWidget {
     double textScale = MediaQuery.of(context).textScaleFactor;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      color: Colors.green,
+      color: Colors.white,
       child: InkWell(
         onTap: () => Navigator.push(context, 
          platformPageRoute(context: context, builder: (BuildContext context) => ChefDetailsScreen(chef: chef, user: user))),
@@ -160,9 +165,10 @@ class GridCard extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                         fontSize: 20 * textScale,
                         shadows: [
-                          BoxShadow( 
+                          Shadow( 
                             offset: Offset(1.0, 1.0),
-                            color: Colors.black38.withOpacity(.5)
+                            blurRadius: 2,
+                            //color: Colors.black38.withOpacity(.5)
                           )
                         ]
                       )

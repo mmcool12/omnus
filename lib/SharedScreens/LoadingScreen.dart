@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -11,6 +12,7 @@ import 'package:omnus/SharedScreens/ChatScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
 import 'package:omnus/SharedScreens/ProfileScreen.dart';
 import 'package:omnus/SharedScreens/SearchScreen.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class LoadingScreen extends StatefulWidget {
   //final FirebaseUser fire;
@@ -30,11 +32,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
   int currentIndex = 0;
   Widget currentScreen;
   PlatformTabController tabController;
-  @override
-  void initState() {
-    tabController = PlatformTabController(initialIndex: 0);
-    super.initState();
-  }
 
   void handleTap(int index) {
     setState(() {
@@ -47,6 +44,26 @@ class _LoadingScreenState extends State<LoadingScreen> {
     SearchScreen(),
     ProfileScreen(),
   ];
+
+  void initState() {
+    tabController = PlatformTabController(initialIndex: 0);
+    fcm.configure(
+      onMessage: (Map<String, dynamic> message) {
+        String title = message['aps']['alert']['title'];
+        bool bad = false;
+        if(title.contains('rejected') || title.contains('cancelled')){
+          bad = true;
+        }
+        
+        showSimpleNotification(
+          Text(title),
+          background: bad ? Colors.redAccent : Colors.tealAccent,
+        );
+        return null;
+      }
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

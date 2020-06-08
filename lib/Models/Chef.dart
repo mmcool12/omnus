@@ -17,6 +17,7 @@ class Chef {
   bool active; 
   String profileImage;
   List<dynamic> reviews;
+  List<dynamic> tokens;
 
   Chef({this.id, this.name, this.menu});
 
@@ -34,6 +35,7 @@ class Chef {
     this.tags = map['tags'];
     this.active = map['active'];
     this.profileImage = map['profileImage'];
+    this.tokens = map['tokens'];
     this.numReviews = this.reviews.length;
     this.mainImage = this.images.isEmpty ? "" : this.images[0];
     this.name = this.firstName.trim() + ' ' + this.lastName.trim();

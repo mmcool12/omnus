@@ -5,6 +5,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:omnus/Firestore/NotificationFunctions.dart';
 import 'package:omnus/Firestore/UserFunctions.dart';
 import 'package:omnus/SharedScreens/BabyScreen.dart';
 import 'package:omnus/SharedScreens/LoadingScreen.dart';
@@ -20,6 +21,7 @@ class AuthScreen extends StatelessWidget {
     if (user == null){
       return BabyScreen();
     } else{
+      NotificationFunctions().tokenCheck(user.uid);
       return MultiProvider(
         providers: [
           StreamProvider<DocumentSnapshot>(

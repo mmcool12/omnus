@@ -43,6 +43,7 @@ class OrderFunctions{
         'buyerLocation' : 'location',
         'price' : temp.price,
         'accepted' : false,
+        'rejected' : false,
         'completed' : false,
         'meals' : cartToMealMap(temp)
       });
@@ -60,6 +61,12 @@ class OrderFunctions{
   acceptOrder(String orderId) async {
     return await _db.collection('orders').document(orderId).updateData({
       'accepted' : true,
+    });
+  }
+
+  rejectOrder(String orderId) async {
+    return await _db.collection('orders').document(orderId).updateData({
+      'rejected' : true,
     });
   }
 
