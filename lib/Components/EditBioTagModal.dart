@@ -250,7 +250,7 @@ class EditBioTagModal {
   );
 
   final kBoxDecorationStyle = BoxDecoration(
-    color: Colors.blueAccent.shade100,//Color(0xFF6CA8F1),
+    color: Colors.teal[300],//Color(0xFF6CA8F1),
     borderRadius: BorderRadius.circular(10.0),
     boxShadow: [
       BoxShadow(

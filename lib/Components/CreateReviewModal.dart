@@ -58,95 +58,90 @@ class CreateReviewModal {
         }
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        return checkDone();
-      },
-      child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                  Expanded( flex: 2, child: Material(color: Colors.transparent, child: reviewTitleField(titleText))),
-                  SizedBox(width: 15),
-                  Expanded(child: Material(color: Colors.transparent, child: reviewRatingField(ratingText))),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Material(color: Colors.transparent, child: dishDescriptionField(descText))
-                              ]
-                            ),
-                        )),
-                  Padding(padding: EdgeInsets.symmetric(vertical: 6)),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[50],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                                'Cancel',
-                              style: TextStyle(
-                                color: Colors.blue[700],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 21,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              if(checkDone()){
-                                double rating = (double.parse(ratingText.text) > 5 ? 5.0 : double.parse(ratingText.text));
-                                await ReviewFunctions().createReview(order, descText.text, rating, titleText.text);
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text(
-                                'Add',
-                              style: TextStyle(
-                                color: Colors.greenAccent[700],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 21,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
+    return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
                       ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                Expanded( flex: 2, child: Material(color: Colors.transparent, child: reviewTitleField(titleText))),
+                SizedBox(width: 15),
+                Expanded(child: Material(color: Colors.transparent, child: reviewRatingField(ratingText))),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Material(color: Colors.transparent, child: dishDescriptionField(descText))
+                            ]
+                          ),
+                      )),
+                Padding(padding: EdgeInsets.symmetric(vertical: 6)),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[50],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                              'Cancel',
+                            style: TextStyle(
+                              color: Colors.blue[700],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 21,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            if(checkDone()){
+                              double rating = (double.parse(ratingText.text) > 5 ? 5.0 : double.parse(ratingText.text));
+                              await ReviewFunctions().createReview(order, descText.text, rating, titleText.text);
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text(
+                              'Add',
+                            style: TextStyle(
+                              color: Colors.greenAccent[700],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 21,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: window.viewInsets.bottom/2)
-                ],
-              ),
+                ),
+                SizedBox(height: window.viewInsets.bottom/2)
+              ],
             ),
           ),
         ),
-     );
+      );
   }
 
 
@@ -264,7 +259,7 @@ class CreateReviewModal {
   );
 
   final kBoxDecorationStyle = BoxDecoration(
-    color: Colors.blueAccent.shade100,//Color(0xFF6CA8F1),
+    color: Colors.teal[300],//Color(0xFF6CA8F1),
     borderRadius: BorderRadius.circular(10.0),
     boxShadow: [
       BoxShadow(
