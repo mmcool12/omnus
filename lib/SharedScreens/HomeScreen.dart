@@ -50,31 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: PlatformAppBar(
           backgroundColor: Colors.white,
            title: Text(
-             'Home',
-          //   'Hello, ${user.firstName}',
+             'Discover',
             style: TextStyle(color: Colors.black),
           ),
           ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
-          trailingActions: <Widget>[
-            // Material(
-            //   color: Colors.transparent,
-            //               child: PlatformIconButton(
-            //       //alignment: Alignment.centerLeft,
-            //       padding: EdgeInsets.all(8),
-            //       androidIcon: Icon(
-            //         Icons.search,
-            //         size: 20,
-            //         color: Colors.black,
-            //       ),
-            //       iosIcon: Icon(
-            //         CupertinoIcons.search,
-            //         color: Colors.black,
-            //       ),
-            //       onPressed: () =>
-            //           showSearch(context: context, delegate: SearchBar(user: user))
-            //   ),
-            // ),
-          ],
         ),
         body: Stack(
           children: <Widget>[
