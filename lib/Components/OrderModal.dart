@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +44,7 @@ class OrderModal {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: Container(
-          height: meal.hasImage ? 400 : 248,
-          width: double.infinity,
+                    width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
@@ -52,28 +52,15 @@ class OrderModal {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
                   'Request ${meal.title}',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
                 SizedBox(height: 15),
-                (meal.hasImage
-                    ? Container(
-                        height: 152,
-                        child: CachedNetworkImage(
-                          imageUrl: meal.fireImage,
-                          placeholder: (context, url) =>
-                              PlatformCircularProgressIndicator(),
-                          fit: BoxFit.fitHeight,
-                        ),
-                      )
-                    : Container()),
-                (meal.hasImage ? SizedBox(height: 15) : Container()),
-                RichText(
-                  textAlign: TextAlign.left,
-                  maxLines: 4,
-                  text: TextSpan(
+                AutoSizeText.rich(
+                  TextSpan(
                       style: TextStyle(fontSize: 20, color: Colors.black),
                       children: [
                         TextSpan(
@@ -81,11 +68,13 @@ class OrderModal {
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(text: meal.description)
                       ]),
+                  textAlign: TextAlign.left,
+                  maxLines: 6,
                 ),
                 Row(
                   children: <Widget>[],
                 ),
-                Spacer(),
+                SizedBox(height: 24),
                 PillCounter(orderStyle: orderStyle, meal: meal, cart: cart)
               ],
             ),
