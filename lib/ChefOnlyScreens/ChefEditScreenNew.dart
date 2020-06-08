@@ -5,6 +5,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/components/rating/gf_rating.dart';
 import 'package:omnus/Components/CartButton.dart';
+import 'package:omnus/Components/EditBioTagModal.dart';
 import 'package:omnus/Components/ImageHeader.dart';
 import 'package:omnus/Components/ImageSourceModal.dart';
 import 'package:omnus/Components/MenuTiles.dart';
@@ -88,7 +89,7 @@ class _ChefEditScreenNewState extends State<ChefEditScreenNew> {
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'American',
+                                          chef.tags[0],
                                           style: const TextStyle(
                                               fontFamily: 'Apple SD Gothic Neo',
                                               fontSize: 22,
@@ -112,6 +113,7 @@ class _ChefEditScreenNewState extends State<ChefEditScreenNew> {
                                         ),
                                         const SizedBox(width: 4),
                                         GestureDetector(
+                                          onTap: () async => await EditBioTagModal().showModal(context, chef),
                                           child: Icon(PlatformIcons(context).create)
                                         )
                                       ],
@@ -126,7 +128,7 @@ class _ChefEditScreenNewState extends State<ChefEditScreenNew> {
                                               MediaQuery.of(context).size.width *
                                                   .6,
                                           child: Text(
-                                              'There are days which occur in this climate, at almost any season of the year, in the world.',
+                                              chef.bio,
                                               maxLines: 3 ,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(

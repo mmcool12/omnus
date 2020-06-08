@@ -78,7 +78,7 @@ class _ChefDetailsScreenState extends State<ChefDetailsScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'American',
+                                      widget.chef.tags.isEmpty ? "" : widget.chef.tags[0],
                                       style: const TextStyle(
                                           fontFamily: 'Apple SD Gothic Neo',
                                           fontSize: 24,
@@ -112,7 +112,7 @@ class _ChefDetailsScreenState extends State<ChefDetailsScreen> {
                                           MediaQuery.of(context).size.width *
                                               .6,
                                       child: Text(
-                                          'There are days which occur in this climate, at almost any season of the year, in the world.',
+                                        widget.chef.bio,
                                           maxLines: 3 ,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
