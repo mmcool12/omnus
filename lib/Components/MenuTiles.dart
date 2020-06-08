@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class MenuTiles extends StatelessWidget {
 
   final Chef chef;
   final bool edit;
+  //'\$${(item['price'] == item['price'].roundToDouble() ? item['price'].round() : item['price'])}'
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +23,14 @@ class MenuTiles extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: ExpansionTile(
-        initiallyExpanded: true,
-        leading: (!edit ? null : 
-          IconButton(
-            icon: Icon(PlatformIcons(context).addCircledOutline), 
-            onPressed: () async => AddMenuItemModal().showModal(context, chef)
-          )
-        ),
+          initiallyExpanded: true,
+          leading: (!edit
+              ? null
+              : IconButton(
+                  icon: Icon(PlatformIcons(context).addCircledOutline),
+                  onPressed: () async {
+                      await AddMenuItemModal().showModal(context, chef);
+                  })),
           backgroundColor: Colors.white,
           title: Text(
             'Menu',
@@ -35,123 +38,145 @@ class MenuTiles extends StatelessWidget {
           ),
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
               child: Container(
-                child: ListView.separated(
-                  padding: EdgeInsets.all(0),
-                  itemCount: chef.menu.length,
-                  shrinkWrap: true,
-                  primary: false,
-                  itemBuilder: (context, index) {
-                    Map<dynamic, dynamic> item = chef.menu[index];
-                    item['chefId'] = chef.id;
-                    item['chefName'] = chef.name;
+                child: GridView.count(
+                    crossAxisCount: 2,
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    mainAxisSpacing: 24,
+                    crossAxisSpacing: 24,
+                    shrinkWrap: true,
+                    primary: false,
+                    children: List.generate(
+                      edit ? chef.menu.length + 1 : chef.menu.length,
+                      (index) {
+                        if (index == chef.menu.length) {
+                          return GestureDetector(
+                            onTap: () async => AddMenuItemModal()
+                                .showModal(context, chef),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: const Color(0x36000000),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 6)
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                    size: 50,
+                                  )
+                                )),
+                          );
+                        } else {
+                          Map<dynamic, dynamic> item = chef.menu[index];
+                          item['chefId'] = chef.id;
+                          item['chefName'] = chef.name;
+                          Meal meal = Meal.fromMap(item);
 
-                    return GestureDetector(
-                      onTap: () =>  OrderModal().showModal(context, Meal.fromMap(item), false),
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    height: 100,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                item['title'],
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 22),
-                                              ),
-                                              Text(
-                                                item['description'],
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 15),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ],
-                                          ),
-                                          Text(
-                                            '\$${(item['price'] == item['price'].roundToDouble() ? item['price'].round() : item['price'])}',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 17,
-                                                color: Colors.teal),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                              Expanded(
-                                  flex: 1,
-                                  child: (item['image'] == ""
-                                      ? Container()
-                                      : Center(
+                          return GestureDetector(
+                            onTap: () => OrderModal()
+                                .showModal(context, Meal.fromMap(item), false),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xffffffff),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: const Color(0x36000000),
+                                      offset: Offset(0, 3),
+                                      blurRadius: 6)
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 6,
                                           child: Container(
-                                            height: 80,
-                                            child: FutureBuilder<dynamic>(
-                                                future: ImageFunctions()
-                                                    .getImage(item['image']),
-                                                builder: (context, snapshot) {
-                                                  if (snapshot.hasData) {
-                                                    item['fireImage'] = snapshot.data;
-                                                    return CachedNetworkImage(
-                                                      imageUrl: snapshot.data,
-                                                      fit: BoxFit.cover,
-                                                      placeholder: (context,
-                                                              url) =>
-                                                          Center(
-                                                              child:
-                                                                  PlatformCircularProgressIndicator()),
-                                                    );
-                                                  } else {
-                                                    return Container();
-                                                  }
-                                                }),
+                                            child: AutoSizeText(
+                                              meal.title,
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                fontFamily: 'Apple SD Gothic Neo',
+                                                fontSize: 22,
+                                                color: const Color(0xff4e4e4e),
+                                                letterSpacing: 0.17,
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.15,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
                                           ),
-                                        )))
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 25),
-                    );
-                  },
-                ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: AutoSizeText(
+                                            '\$${meal.price.round()}',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontFamily: 'Apple SD Gothic Neo',
+                                              fontSize: 32,
+                                              color: const Color(0xff4e4e4e),
+                                              letterSpacing: 0.2,
+                                              fontWeight: FontWeight.w700,
+                                              height: 1,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    AutoSizeText(
+                                      meal.description,
+                                      maxLines: 4,
+                                      minFontSize: 10,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontFamily: 'Apple SD Gothic Neo',
+                                        fontSize: 16,
+                                        color: const Color(0xff4e4e4e),
+                                        letterSpacing: 0.12,
+                                        height: 1.5,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    )
+                    // separatorBuilder: (context, index) {
+                    //   return Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //         vertical: 8.0, horizontal: 25),
+                    //   );
+                    // },
+                    ),
               ),
             ),
-            if(chef.menu.length == 0) (
-                      Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Text(
-                         'No Menu Items',
-                         style: TextStyle(
-                           fontSize: 20
-                         ),
-                        ),
-                     )
-                    )
+            if (chef.menu.length == 0)
+              (Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'No Menu Items',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ))
           ]),
     );
   }
