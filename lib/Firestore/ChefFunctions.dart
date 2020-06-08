@@ -12,6 +12,7 @@ class ChefFunctions{
     await _db.collection('chefs').add({
       'firstName' : user.firstName,
       'lastName' : user.lastName,
+      'bio' : "",
       'menu' : [],
       'zip' : user.zipcode,
       'images' : [],
@@ -35,6 +36,10 @@ class ChefFunctions{
     return _db.collection('chefs').document(id).snapshots();
   }
 
+  Future<DocumentSnapshot> getChef(String id){
+    return _db.collection('chefs').document(id).get();
+  }
+
    Future<void> addMenuItem(String chefId, Map<String, dynamic> item) async  {
     return await _db.collection('chefs').document(chefId).updateData({
         'menu' : FieldValue.arrayUnion([
@@ -51,6 +56,12 @@ class ChefFunctions{
 
   Future<QuerySnapshot> getRequestById(String id) async {
     return await _db.collection('orders').where('chefId', isEqualTo: id).getDocuments();
+  }
+
+  changeBio(Chef chef, String bio) async {
+    await _db.collection('chefs').document(chef.id).updateData({
+      'bio' : bio,
+    });
   }
 
 }
