@@ -6,6 +6,8 @@ class Chef {
   String lastName;
   String name;
   String zip;
+  String bio;
+  List<dynamic> tags;
   List<dynamic> menu;
   String type;
   double rating;
@@ -22,12 +24,14 @@ class Chef {
     this.id = id;
     this.firstName = map['firstName'];
     this.lastName = map['lastName'];
+    this.bio = map ['bio'];
     this.zip = map['zip'];
     this.menu = map['menu'];
     this.type = map['type'];
     this.rating = map['rating'].toDouble();
     this.reviews = map['reviews'];
     this.images = map['images'];
+    this.tags = map['tags'];
     this.active = map['active'];
     this.profileImage = map['profileImage'];
     this.numReviews = this.reviews.length;
