@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Components/AddMenuItemModal.dart';
+import 'package:omnus/Components/EditMenuItemModal.dart';
 import 'package:omnus/Components/OrderModal.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/Meal.dart';
@@ -49,7 +50,8 @@ class MenuTiles extends StatelessWidget {
                       (index) {
                         if (index == chef.menu.length) {
                           return GestureDetector(
-                            onTap: () async => AddMenuItemModal()
+                            onTap: () async =>
+                            AddMenuItemModal()
                                 .showModal(context, chef),
                             child: Container(
                                 decoration: BoxDecoration(
@@ -76,7 +78,8 @@ class MenuTiles extends StatelessWidget {
                           Meal meal = Meal.fromMap(item);
 
                           return GestureDetector(
-                            onTap: () => OrderModal()
+                            onTap: () async =>  edit ? EditMenuItemModal().showModal(context, chef) :
+                            OrderModal()
                                 .showModal(context, Meal.fromMap(item), false),
                             child: Container(
                               decoration: BoxDecoration(
