@@ -123,17 +123,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   ),
                   title: Text('account'),
                 ),
-                if(false)
-                  BottomNavigationBarItem(
-                    icon: PlatformWidget(
-                      ios: (_) => Icon(
-                        CupertinoIcons.profile_circled,
-                        size: 35,
-                      ),
-                      android: (_) => Icon(Icons.person),
+                BottomNavigationBarItem(
+                  icon: PlatformWidget(
+                    ios: (_) => Icon(
+                      Icons.local_dining,
+                      size: 35,
                     ),
-                    title: Text('account'),
+                    android: (_) => Icon(Icons.person),
                   ),
+                  title: Text('account'),
+                ),
               ], 
           ),
     );
