@@ -124,7 +124,7 @@ class ImageHeader extends SliverPersistentHeaderDelegate {
           fadeOpacity('in', opacity,
               Persistent(width: width, height: height, chef: chef)),
           Positioned(
-            top: opacity > .75 ? window.viewPadding.top > 75 ? 0 : -8 : 0,
+            top: opacity > .75 ? window.viewPadding.top > 75 ? -4 : -8 : 0,
             left: -16,
             child: SafeArea(
               child: PlatformIconButton(
@@ -304,12 +304,15 @@ class ActiveToggle extends StatelessWidget {
         },
         child: Material(
           color: Colors.transparent,
-          child: IconButton(
-            icon: Icon(Icons.monetization_on,
-            color: chef.active ? Colors.green : Colors.redAccent,
-            size: 32,),
-            onPressed: null
-          ),
+          child: Text(
+            chef.active ? 'Active' : 'Hidden',
+            style: TextStyle(
+                    fontFamily: 'Acumin Pro',
+                    fontSize: 20,
+                    color: chef.active ? Colors.tealAccent: Colors.redAccent,
+                    fontWeight: FontWeight.w900,
+                  ),
+          )
         ));
   }
 }

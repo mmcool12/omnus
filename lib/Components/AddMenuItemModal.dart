@@ -176,7 +176,7 @@ class AddMenuItemModal {
                   ),
                 ),
               ),
-              SizedBox(height: window.viewInsets.bottom/2)
+              SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
             ],
           ),
         ),
