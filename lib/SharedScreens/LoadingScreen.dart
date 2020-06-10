@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:omnus/ChefOnlyScreens/ChefScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
 import 'package:omnus/SharedScreens/ProfileScreen.dart';
 import 'package:omnus/SharedScreens/SearchScreen.dart';
@@ -43,6 +44,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     HomeScreen(),
     SearchScreen(),
     ProfileScreen(),
+    ChefScreen()
   ];
 
   void initState() {
@@ -131,7 +133,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                     ),
                     android: (_) => Icon(Icons.person),
                   ),
-                  title: Text('account'),
+                  title: Text('chef'),
                 ),
               ], 
           ),
