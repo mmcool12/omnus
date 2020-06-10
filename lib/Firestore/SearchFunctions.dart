@@ -34,4 +34,8 @@ class SearchFunctions {
       return await _db.collection('chefs').where('type', whereIn: toSearch).getDocuments();
   }
 
+  Future<QuerySnapshot> getChefByTag(String tag) async {
+    return await _db.collection('chefs').where('tags', arrayContains: tag).getDocuments();
+  }
+
 }
