@@ -18,10 +18,10 @@ class CartButton extends StatelessWidget {
 
     if (cart.hasItems) {
       return Positioned(
-          bottom: this.padding ? window.viewPadding.bottom + kBottomNavigationBarHeight : kBottomNavigationBarHeight - 20,
+          bottom: 0,
           width: width,
           child: Padding(
-            padding: this.padding ? const EdgeInsets.symmetric(horizontal: 8.0) : const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Container(
               width: double.infinity,
               child: FlatButton(
