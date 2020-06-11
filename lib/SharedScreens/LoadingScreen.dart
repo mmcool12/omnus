@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/ChefOnlyScreens/ChefScreen.dart';
 import 'package:omnus/SharedScreens/HomeScreen.dart';
-import 'package:omnus/SharedScreens/ProfileScreen.dart';
+import 'package:omnus/SharedScreens/OrdersScreen.dart';
 import 'package:omnus/SharedScreens/SearchScreen.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -43,7 +43,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   final List<Widget> _children = [
     HomeScreen(),
     SearchScreen(),
-    ProfileScreen(),
+    OrdersScreen(),
     ChefScreen()
   ];
 
@@ -118,12 +118,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 BottomNavigationBarItem(
                   icon: PlatformWidget(
                     ios: (_) => Icon(
-                      CupertinoIcons.profile_circled,
+                      Icons.receipt,
                       size: 35,
                     ),
                     android: (_) => Icon(Icons.person),
                   ),
-                  title: Text('account'),
+                  title: Text('orders'),
                 ),
                 BottomNavigationBarItem(
                   icon: PlatformWidget(
