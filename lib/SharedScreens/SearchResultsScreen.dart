@@ -5,7 +5,6 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Components/CartButton.dart';
 import 'package:omnus/Components/GridCard.dart';
 import 'package:omnus/Models/Cart.dart';
-import 'package:omnus/Firestore/NotificationFunctions.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
 import 'package:omnus/Models/User.dart';
