@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Components/CartButton.dart';
 import 'package:omnus/Components/GridCard.dart';
+import 'package:omnus/Components/ProfileModal.dart';
 import 'package:omnus/Models/Cart.dart';
 import 'package:omnus/Firestore/NotificationFunctions.dart';
 import 'package:omnus/Firestore/SearchFunctions.dart';
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    //print('bye');
+    print('bye');
     allChefs = SearchFunctions().getAllChefs();
     //NotificationFunctions().tokenCheck(user.uid);
     super.initState();
@@ -52,6 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
              'Discover',
             style: TextStyle(color: Colors.black),
           ),
+          trailingActions: <Widget>[
+            GestureDetector( 
+              onTap: () async => ProfileModal().showModal(context, user),
+              child: Icon(CupertinoIcons.profile_circled),)
+          ],
           ios: (_) => CupertinoNavigationBarData(transitionBetweenRoutes: false),
         ),
         body: Stack(
