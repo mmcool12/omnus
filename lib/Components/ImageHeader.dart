@@ -72,6 +72,7 @@ class ImageHeader extends SliverPersistentHeaderDelegate {
                               },
                               child: Container(
                                 color: Colors.grey[350],
+                                width: width,
                                 child: Center(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -137,8 +138,17 @@ class ImageHeader extends SliverPersistentHeaderDelegate {
               ),
             ),
           ),
+          (edit ?
           Positioned(
               top: opacity > .75 ? window.viewPadding.top > 75 ? 8 : 12 : 22,
+              right: 8,
+              child: SafeArea(
+                child: ActiveToggle(chef: chef),
+              )
+              ) 
+              :
+              Positioned(
+              top: opacity > .75 ? window.viewPadding.top > 75 ? 0 : -8 : 4,
               right: 8,
               child: SafeArea(
                 child: (edit ? 
@@ -162,6 +172,7 @@ class ImageHeader extends SliverPersistentHeaderDelegate {
                                   context: context));
                         })
                 ),
+              )
               )),
         ],
       ),
