@@ -79,7 +79,7 @@ class ProfileModal {
 
   Widget iphoneModal(BuildContext context, User user) {
     return Container(
-      height: MediaQuery.of(context).size.height * .95,
+      height: MediaQuery.of(context).size.height * .945,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(8))),
@@ -108,7 +108,7 @@ class ProfileModal {
           ),
           const Spacer(),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: GestureDetector(
               onTap: () async {
                 await AuthFunctions().signOut().then((onValue) {
