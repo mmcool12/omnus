@@ -59,6 +59,14 @@ class ChefFunctions{
     return await _db.collection('orders').where('chefId', isEqualTo: id).getDocuments();
   }
 
+  Future<QuerySnapshot> getPastRequestById(String id) async {
+    return await _db.collection('orders').where('chefId', isEqualTo: id).where('completed', isEqualTo: true).getDocuments();
+  }
+
+  Future<QuerySnapshot> getActiveRequestById(String id) async {
+    return await _db.collection('orders').where('chefId', isEqualTo: id).where('completed', isEqualTo: false).getDocuments();
+  }
+
   updateBio(Chef chef, String bio) async {
     await _db.collection('chefs').document(chef.id).updateData({
       'bio' : bio.trimRight(),
