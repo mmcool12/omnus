@@ -1,31 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:omnus/Auth/AuthFunctions.dart';
-import 'package:omnus/ChefOnlyScreens/ChefEditScreen.dart';
-import 'package:omnus/ChefOnlyScreens/ChefEditScreenNew.dart';
-import 'package:omnus/ChefOnlyScreens/RequestsScreen.dart';
 import 'package:omnus/Components/ImageSourceModal.dart';
-import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/User.dart';
-import 'package:omnus/SharedScreens/OrdersScreen.dart';
-import 'package:provider/provider.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final User user;
+  const ProfileScreen({
+    Key key,
+    @required this.user
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    User user = User();
-
-    DocumentSnapshot snapshot = Provider.of<DocumentSnapshot>(context);
-    if (snapshot != null) {
-      if (snapshot.data != null) {
-        user = User.fromFirestore(snapshot);
-      }
-    }
+    
 
     if (user == null) {
       return Center(child: PlatformCircularProgressIndicator());
@@ -74,38 +66,6 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               maxLines: 1,
                             ),
-                            FlatButton(
-                                color: Colors.blueAccent[400],
-                                onPressed: () async {
-                                  if (user.chefId == "") {
-                                    await ChefFunctions().createChef(user).then(
-                                        (id) => Navigator.push(
-                                            context,
-                                            platformPageRoute(
-                                                context: context,
-                                                builder: (BuildContext context) =>
-                                                    ChefEditScreen(chefId: id, userId: user.id))));
-                                  } else {
-                                    Navigator.push(
-                                        context,
-                                        platformPageRoute(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                ChefEditScreenNew(
-                                                    chefId: user.chefId)));
-                                  }
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    (user.chefId == ""
-                                      ? 'Become a chef!'
-                                      : 'Your chef profile'),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                ))
                         ],
                       ),
                           )),
@@ -114,23 +74,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Padding(padding: EdgeInsets.all(8.0)),
-              
-              Container(height: 1, color: Colors.black),
-              SettingsTile(
-                title: 'Orders',
-                leading: Icon(Icons.fastfood),
-                onTap: () => Navigator.push(context, 
-                  platformPageRoute(context: context, builder: (context) => OrdersScreen(id: user.id))),
-                top: true,
-              ),
-              if(user.chefId != "")
-              SettingsTile(
-                title: 'Requests',
-                leading: Icon(Icons.error),
-                onTap: () => Navigator.push(context, 
-                  platformPageRoute(context: context, builder: (context) => RequestsScreen(chefId: user.chefId))),
-                bottom: true,
-              ),
             ],
           ),
         ),
