@@ -84,7 +84,7 @@ class _ChefEditScreenNewState extends State<ChefEditScreenNew> {
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          chef.tags[0],
+                                          chef.tags.isEmpty ? "Add a tag" :  chef.tags[0],
                                           style: const TextStyle(
                                               fontFamily: 'Apple SD Gothic Neo',
                                               fontSize: 22,
@@ -123,7 +123,7 @@ class _ChefEditScreenNewState extends State<ChefEditScreenNew> {
                                               MediaQuery.of(context).size.width *
                                                   .6,
                                           child: Text(
-                                              chef.bio,
+                                              chef.bio.length == 0 ? "Add a bio" : chef.bio,
                                               maxLines: 3 ,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
