@@ -8,18 +8,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:omnus/Firestore/ChefFunctions.dart';
 import 'package:omnus/Firestore/ImageFunctions.dart';
 import 'package:omnus/Models/Chef.dart';
+import 'package:omnus/Models/Meal.dart';
 
 class EditMenuItemModal {
-  showModal(BuildContext context, Chef chef) async {
+  showModal(BuildContext context, Meal meal) async {
     showPlatformModalSheet(
       context: context,
       builder: (context) => PlatformWidget(
-          android: (context) => androidModal(context, chef),
-          ios: (context) => iphoneModal(context, chef)),
+          android: (context) => androidModal(context, meal),
+          ios: (context) => iphoneModal(context, meal)),
     );
   }
 
-  Widget androidModal(BuildContext context, Chef chef) {
+  Widget androidModal(BuildContext context, Meal meal) {
     var type = "";
     var id = "";
     return Padding(
@@ -73,10 +74,14 @@ class EditMenuItemModal {
     );
   }
 
-  Widget iphoneModal(BuildContext context, Chef chef) {
+  Widget iphoneModal(BuildContext context, Meal meal) {
     TextEditingController nameText = TextEditingController();
+    nameText.text = meal.title;
     TextEditingController priceText = TextEditingController();
+    priceText.text = meal.price.toString();
     TextEditingController descText = TextEditingController();
+    descText.text = meal.description;
+
 
     bool checkDone() {
       if (nameText.text.isNotEmpty &&
@@ -96,6 +101,8 @@ class EditMenuItemModal {
         'image': ''
       };
     }
+    
+    Map<String, dynamic> oldMeal = packageMeal();
 
     return SafeArea(
       child: Padding(
@@ -146,13 +153,19 @@ class EditMenuItemModal {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Delete',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
+                          child: GestureDetector(
+                            onTap: () async {
+                              await ChefFunctions().removeMenuItem(meal.chefId, oldMeal);
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         )),
                   )
@@ -173,7 +186,6 @@ class EditMenuItemModal {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () async {
-                        print('pressed');
                         return Navigator.pop(context);
                       },
                       child: Text(
@@ -190,8 +202,8 @@ class EditMenuItemModal {
                       onTap: () async {
                         if (checkDone()) {
                           await ChefFunctions()
-                              .addMenuItem(chef.id, packageMeal());
-                          Navigator.pop(context);
+                              .updateMenuItem(meal.chefId, oldMeal, packageMeal());
+                          Navigator.pop(context); 
                         }
                       },
                       child: Text(
