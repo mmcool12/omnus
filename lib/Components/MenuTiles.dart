@@ -22,13 +22,6 @@ class MenuTiles extends StatelessWidget {
       color: Colors.transparent,
       child: ExpansionTile(
           initiallyExpanded: true,
-          leading: (!edit
-              ? null
-              : IconButton(
-                  icon: Icon(PlatformIcons(context).addCircledOutline),
-                  onPressed: () async {
-                      await AddMenuItemModal().showModal(context, chef);
-                  })),
           backgroundColor: Colors.white,
           title: Text(
             'Menu',
@@ -78,9 +71,9 @@ class MenuTiles extends StatelessWidget {
                           Meal meal = Meal.fromMap(item);
 
                           return GestureDetector(
-                            onTap: () async =>  edit ? EditMenuItemModal().showModal(context, chef) :
+                            onTap: () async =>  edit ? EditMenuItemModal().showModal(context, meal) :
                             OrderModal()
-                                .showModal(context, Meal.fromMap(item), false),
+                                .showModal(context, meal, false),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: const Color(0xffffffff),
