@@ -66,7 +66,8 @@ class ReviewTile extends StatelessWidget {
                                 const SizedBox(width: 8),
                                 GFRating(
                                   itemCount: 5,
-                                  value: chef.rating,
+                                  value: review.rating,
+                                  allowHalfRating: true,
                                   size: 20,
                                   color: Colors.amber,
                                   borderColor: Colors.grey,
