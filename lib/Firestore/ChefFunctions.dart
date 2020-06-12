@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:omnus/Models/Chef.dart';
+import 'package:omnus/Models/Meal.dart';
 import 'package:omnus/Models/User.dart';
 
 class ChefFunctions{
@@ -47,6 +48,22 @@ class ChefFunctions{
           item
         ])
       });
+  }
+
+  Future<void> removeMenuItem(String chefId, Map<String, dynamic> item) async {
+    return await _db.collection('chefs').document(chefId).updateData({
+      'menu' : FieldValue.arrayRemove([
+        item
+      ])
+    });
+  }
+
+  Future<void> updateMenuItem(String chefId, Map<String, dynamic> oldMeal, Map<String, dynamic> newMeal) async {
+    if(oldMeal['title'] != newMeal['title'] || oldMeal['description'] != newMeal['description'] || oldMeal['price'] != newMeal['price']){
+      await removeMenuItem(chefId, oldMeal);
+      return await addMenuItem(chefId, newMeal);
+    }
+    return;
   }
 
   toggleActive(Chef chef) async {
