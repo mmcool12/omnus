@@ -8,7 +8,7 @@ import 'package:omnus/SharedScreens/SearchResultsScreen.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
-  final searchTerms = <String>['American', 'Italian', 'Thai'];
+  final searchTerms = <String>['American', 'Italian', 'Thai', '10 or under'];
 
   @override
   Widget build(BuildContext context) {
@@ -29,54 +29,77 @@ class SearchScreen extends StatelessWidget {
           ),
           body: Stack(
             children: <Widget>[
-              ListView.separated(
-                itemBuilder: (BuildContext context, int index) {
-                  String term = searchTerms[index];
-                  return GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => Navigator.push(
-                        context,
-                        platformPageRoute(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                SearchResultsScreen(tag: term, user: user))),
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.fastfood,
-                              size: 32,
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              term,
-                              style: TextStyle(
-                                fontFamily: 'Apple SD Gothic Neo',
-                                fontSize: 22,
-                                color: Colors.black,
-                                letterSpacing: 0.17,
-                                fontWeight: FontWeight.w600,
-                                height: 1.5,
+              GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  padding: EdgeInsets.all(12),
+                  children: List.generate(
+                    searchTerms.length,
+                    (index) {
+                      String term = searchTerms[index];
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => Navigator.push(
+                            context,
+                            platformPageRoute(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    SearchResultsScreen(
+                                        tag: term, user: user))),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffffffff),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: const Color(0x36000000),
+                                  offset: Offset(0, 3),
+                                  blurRadius: 6)
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              (term.startsWith("1")
+                                  ? Text(
+                                      '\$10',
+                                      style: TextStyle(
+                                        fontFamily: 'Apple SD Gothic Neo',
+                                        fontSize: 56,
+                                        color: const Color(0xff4e4e4e),
+                                        letterSpacing: 0.2,
+                                        fontWeight: FontWeight.w700,
+                                        height: 1
+                                      ),
+                                    )
+                                  : Icon(
+                                      Icons.fastfood,
+                                      size: 56,
+                                    )),
+                              term.startsWith('1') ? SizedBox(): const SizedBox(height: 4),
+                              Text(
+                                term,
+                                style: TextStyle(
+                                  fontFamily: 'Apple SD Gothic Neo',
+                                  fontSize: 24,
+                                  color: Colors.black,
+                                  letterSpacing: 0.17,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.5,
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            Icon(Icons.arrow_forward_ios)
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  );
+                      );
+                    },
+                  )),
+              Consumer<Cart>(
+                builder: (BuildContext context, Cart cart, Widget child) {
+                  return CartButton(cart: cart, padding: false, buyer: user);
                 },
-                itemCount: searchTerms.length,
-                separatorBuilder: (context, index) =>
-                    Divider(thickness: 1, height: 0),
               ),
-              Consumer<Cart>(builder: (BuildContext context, Cart cart, Widget child) {
-              return CartButton(cart: cart, padding: false, buyer: user);
-            },),
             ],
           ));
     } else {
