@@ -8,7 +8,7 @@ class Review {
   String buyerName;
   String title;
   String description;
-  int rating;
+  double rating;
 
   Review();
 
@@ -19,7 +19,7 @@ class Review {
     this.buyerName = data['buyerName'];
     this.title = data['title'];
     this.description = data['description'];
-    this.rating = data['rating'];
+    this.rating = data['rating'].toDouble();
 
   }
 
